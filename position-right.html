@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>A Map of Asbestos Emission Risk in Ankara-2017</title>
+    <title>A Map of Potentially Affected Areas from Asbestos Emission in Ankara-2017</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -109,11 +109,16 @@
         //definition of circle of risk zone
         var riskZone=L.circle([39.92702,32.84872], {radius: 4000}).bindPopup("Risk Zone ca. 4km in radius");
 
+
         var map = L.map('map', {
-          zoom: 10,
-          center: [39.9, 33.1],
-          layers: [grayscale,riskZone]
+          zoom: 13,
+          center: [39.92702,32.84872],
+          layers: [grayscale,riskZone],
+
         });
+
+        map.setMaxBounds(map.getBounds());
+        map.setMinZoom(12);
 
         var baseLayers = {
 		        "Grayscale": grayscale,
@@ -127,8 +132,14 @@
 
         L.control.layers(baseLayers, overlayElements).addTo(map);
 
+        var customIcon = L.icon({
+          iconUrl: 'assets/mapiconscollection-markers/caution.png',
+          iconSize:     [32, 37]
+          //iconAnchor:   [39.94702,32.84872],
+          //popupAnchor:  [39.92702,32.84872]
+        });
 
-        var marker = L.marker([39.92702,32.84872]).bindPopup("Hey there").addTo(map);
+        var marker = L.marker([39.92702,32.84872], {icon: customIcon}).bindPopup("Demolished Coal-Gas Plant").addTo(map);
 
         var sidebar = L.control.sidebar({ container: 'sidebar', position: 'right' })
             .addTo(map)
