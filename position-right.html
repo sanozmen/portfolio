@@ -19,6 +19,8 @@
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 
+<link rel="stylesheet" href="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.css" />
+
 
     <style>
         body {
@@ -63,10 +65,10 @@
 
                 <p class="lorem" style="margin-top:20px">Click logo on the right to back to the home page.</p>
 
-                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >This is an experimental and very basic map based on Leaflet.js library whose self capabilities were brought together with various different plugins. While creating this map, I tried to show different functionalities of Leaflet by using plugins like dynamic side bar, geolocator, geocoder, cursor coordinate display, measurement tool to its own capabilities such as creating some overlaying features, adding layer control, setting max. bounds, max.&min. zoom.  </p>
+                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >This is an experimental and very basic map based on Leaflet.js library whose self capabilities were brought together with various different plugins. While creating this map, I tried to show different functionalities of Leaflet by using plugins like dynamic side bar, geolocator, geocoder, cursor coordinate display, measurement tool to its own capabilities such as creating some overlaying features, adding layer control, setting max. bounds, max.&min. zoom., hover popup, click popup  </p>
 
                 <!-- just added this button as a reminder for using this bar as button container in future works-->
-                <button type="button" class="btn btn-primary">Primary</button>
+                <!-- <button type="button" class="btn btn-primary">Primary</button> -->
 
             </div>
 
@@ -98,6 +100,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script>
+
 
     <script>
 
@@ -118,13 +122,26 @@
         var riskZone=L.circle([39.92702,32.84872], {radius: 4000}).bindPopup("Risk Zone ca. 4km in radius");
         //first definition of custom icon
         var customIcon = L.icon({
-          iconUrl: 'assets/markers/caution.png',
-          iconSize:     [32, 37]
+          iconUrl: 'assets/markers/caution.png', 
+          iconSize:     [32, 37],
           //iconAnchor:   [39.94702,32.84872],
           //popupAnchor:  [39.92702,32.84872]
         });
+        var popupContent= "<img src=images/coalgas.jpg>"
         //then creation of marker with custom properties
-        var plant= L.marker([39.92702,32.84872], {icon: customIcon}).bindPopup("Demolished Coal-Gas Plant");
+        var plant= L.marker([39.92702,32.84872], {icon: customIcon}).bindPopup(popupContent, {
+            maxWidth: "auto"
+        }
+            );
+
+        plant.on('mouseover', function (e) {
+            this.openPopup();
+        });
+        plant.on('mouseout', function (e) {
+            this.closePopup();
+        });
+       
+
 
         //initiating the map variable
         var map = L.map('map', {
@@ -165,6 +182,7 @@
       //add mouse position
       L.control.mousePosition().addTo(map);
       L.Control.geocoder().addTo(map);
+      L.control.polylineMeasure({position:'topleft', unit:'metres', showBearings:true, clearMeasurementsOnStop: false, showClearControl: true, showUnitControl: true}).addTo(map);
     </script>
 </body>
 </html>
