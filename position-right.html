@@ -5,7 +5,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
   integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
   crossorigin=""/>
@@ -45,23 +45,25 @@
                 <!-- <li class="disabled"><a href="#messages" role="tab"><i class="fa fa-envelope"></i></a></li> -->
             </ul>
 
-            <ul role="tablist">
+            <!--<ul role="tablist">
                 <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
-            </ul>
+            </ul> -->
         </div>
 
         <!-- Tab panes -->
         <div class="leaflet-sidebar-content">
             <div class="leaflet-sidebar-pane" id="home">
                 <h1 class="leaflet-sidebar-header">
-                    Minimize the bar
+                   <!-- in case of necessity write a title here such as "Minimize the bar" -->
+                   <p style="font-size: 15px">Minimize the Bar</p>
                     <span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span>
                 </h1>
 
                 <p class="lorem" style="margin-top:20px">Click logo on the right to back to the home page.</p>
 
-                <p style="margin-top:300px">This is an experimental map based on Leaflet.js library whose self capabilities were brought together with various different plugins.</p>
+                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif" align=justify >This is an experimental and very basic map based on Leaflet.js library whose self capabilities were brought together with various different plugins. While creating this map, I tried to show different capabilities of Leaflet by using plugings like dynamic side bar, geolocator, geocoder, cursor coordinate display, measurement tool to its own capabilities such as creating some overlaying features, adding layer control, setting max. bounds, max.&min. zoom.  </p>
 
+                <!-- just added this button as a reminder for using this bar as button container in future works-->
                 <button type="button" class="btn btn-primary">Primary</button>
 
             </div>
@@ -118,7 +120,8 @@
         });
 
         map.setMaxBounds(map.getBounds());
-        map.setMinZoom(12);
+        map.setMinZoom(11);
+        map.setMaxZoom(13);
 
         var baseLayers = {
 		        "Grayscale": grayscale,
