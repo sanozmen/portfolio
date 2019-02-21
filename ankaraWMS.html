@@ -54,17 +54,17 @@
 						<h2>Menu</h2>
 						<ul>
 							<li><a href="index.html">Home</a></li>
-							<li><a href="generic.html">Ipsum veroeros</a></li>
+							<li><a href="generic.html">About me</a></li>
 							<li><a href="generic.html">Tempus etiam</a></li>
 							<li><a href="generic.html">Consequat dolor</a></li>
 							<li><a href="elements.html">Elements</a></li>
 						</ul>
 					</nav>
 
-				
+
                             <div id="map"></div>
 
-							
+
 
 				<!-- Footer -->
 					<footer id="footer">
@@ -119,13 +119,13 @@
 			<script>
 
     //map with WMS layer(s)
-        
+
     var map = L.map('map',{scrollWheelZoom:false}).setView([43.64701, -79.39425], 3);
-        
+
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-        
+
     var nexrad = L.tileLayer.wms("http://www.mapelse.me:8080/geoserver/sf/wms", {
       layers: 'sf:roads',
       format: 'image/png',
@@ -134,7 +134,7 @@
     }).addTo(map);
 
 L.control.locate().addTo(map);
-    
+
 </script>
 
 	</body>
