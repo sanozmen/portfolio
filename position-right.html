@@ -17,6 +17,8 @@
 <!-- bootstrap css-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+
 
     <style>
         body {
@@ -61,7 +63,7 @@
 
                 <p class="lorem" style="margin-top:20px">Click logo on the right to back to the home page.</p>
 
-                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif" align=justify >This is an experimental and very basic map based on Leaflet.js library whose self capabilities were brought together with various different plugins. While creating this map, I tried to show different capabilities of Leaflet by using plugings like dynamic side bar, geolocator, geocoder, cursor coordinate display, measurement tool to its own capabilities such as creating some overlaying features, adding layer control, setting max. bounds, max.&min. zoom.  </p>
+                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >This is an experimental and very basic map based on Leaflet.js library whose self capabilities were brought together with various different plugins. While creating this map, I tried to show different functionalities of Leaflet by using plugins like dynamic side bar, geolocator, geocoder, cursor coordinate display, measurement tool to its own capabilities such as creating some overlaying features, adding layer control, setting max. bounds, max.&min. zoom.  </p>
 
                 <!-- just added this button as a reminder for using this bar as button container in future works-->
                 <button type="button" class="btn btn-primary">Primary</button>
@@ -95,7 +97,11 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
     <script>
+
+        //basemaps defined below
 
         var grayscale=L.tileLayer('https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
           attribution: 'Map data &copy; OpenStreetMap contributors'
@@ -110,40 +116,45 @@
 });
         //definition of circle of risk zone
         var riskZone=L.circle([39.92702,32.84872], {radius: 4000}).bindPopup("Risk Zone ca. 4km in radius");
-
-
-        var map = L.map('map', {
-          zoom: 12,
-          center: [39.95702,32.87872],
-          layers: [grayscale,riskZone],
-
-        });
-
-        map.setMaxBounds(map.getBounds());
-        map.setMinZoom(11);
-        map.setMaxZoom(13);
-
-        var baseLayers = {
-		        "Grayscale": grayscale,
-		        "Standart": osm,
-            "Satellite": Esri_WorldImagery
-	           };
-
-        var overlayElements = {
-          "Risk Zone": riskZone
-        }
-
-        L.control.layers(baseLayers, overlayElements).addTo(map);
-
+        //first definition of custom icon
         var customIcon = L.icon({
           iconUrl: 'assets/markers/caution.png',
           iconSize:     [32, 37]
           //iconAnchor:   [39.94702,32.84872],
           //popupAnchor:  [39.92702,32.84872]
         });
+        //then creation of marker with custom properties
+        var plant= L.marker([39.92702,32.84872], {icon: customIcon}).bindPopup("Demolished Coal-Gas Plant");
 
-        var marker = L.marker([39.92702,32.84872], {icon: customIcon}).bindPopup("Demolished Coal-Gas Plant").addTo(map);
+        //initiating the map variable
+        var map = L.map('map', {
+          zoom: 12,
+          center: [39.95702,32.87872],
+          layers: [grayscale,riskZone,plant],
 
+        });
+        //setting the basic attributes of the map
+        map.setMaxBounds(map.getBounds());
+        map.setMinZoom(11);
+        map.setMaxZoom(13);
+
+        //grouping base layers defined above and assigning them to a var 
+        var baseLayers = {
+		        "Grayscale": grayscale,
+		        "Standart": osm,
+            "Satellite": Esri_WorldImagery
+	           };
+
+         //grouping overlaying features     
+        var overlayElements = {
+          "Risk Zone": riskZone,
+          "Coal-Gas Plant": plant
+        }
+
+        //Adding all layers and feautes to map
+        L.control.layers(baseLayers, overlayElements).addTo(map);
+
+        //initiating the side bar
         var sidebar = L.control.sidebar({ container: 'sidebar', position: 'right' })
             .addTo(map)
             .open('home');
@@ -153,6 +164,7 @@
 
       //add mouse position
       L.control.mousePosition().addTo(map);
+      L.Control.geocoder().addTo(map);
     </script>
 </body>
 </html>
