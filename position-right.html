@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>A Map</title>
+    <title>A Map of Asbestos Emission Risk in Ankara-2017</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
-        integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
-        crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+  integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+  crossorigin=""/>
 
     <link rel="stylesheet" href="assets/css/leaflet-sidebar.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -83,9 +83,9 @@
     <div id="map"></div>
 
 
-    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
-        integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
-        crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+    integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+    crossorigin=""></script>
     <script src="assets/js/leaflet-sidebar.js"></script>
     <script src="assets/js/L.Control.MousePosition.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.66.1/dist/L.Control.Locate.min.js" charset="utf-8"></script>
@@ -106,10 +106,13 @@
         var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
 	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 });
+        //definition of circle of risk zone
+        var exposed=L.circle([39.92702,32.84872], {radius: 4000}).bindPopup("Risk Zone which is in 4km radius");
+
         var map = L.map('map', {
           zoom: 10,
           center: [39.9, 33.1],
-          layers: [grayscale]
+          layers: [grayscale,exposed]
         });
 
         var baseLayers = {
@@ -118,7 +121,11 @@
             "Satellite": Esri_WorldImagery
 	           };
 
-        L.control.layers(baseLayers).addTo(map);
+        var overlayElements = {
+          "Risk Zone": exposed
+        }
+
+        L.control.layers(baseLayers, overlayElements).addTo(map);
 
 
         var marker = L.marker([39.92, 32.78]).bindPopup("Hey there").addTo(map);
