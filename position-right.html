@@ -21,8 +21,6 @@
 
     <link rel="stylesheet" href="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.css" />
 
-
-
     <style>
         body {
             padding: 0;
@@ -110,7 +108,7 @@
 
     <script>
         //mapbox
-        L.mapbox.accessToken = 'pk.eyJ1Ijoic2Fub3ptZW4iLCJhIjoib2xwbVQtQSJ9.1ldcOvJz39J-WFX89QdO_Q';
+
         //basemaps defined below
 
         var grayscale=L.tileLayer('https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
@@ -128,12 +126,18 @@
         var riskZone1=L.circle([39.92702,32.84872], {radius: 4000, color: '#a50f15'}).bindPopup("1st Degree Risk Zone ca. 4km in radius");
         var riskZone2=L.circle([39.92702,32.84872], {radius: 8000, color: '#de2d26'}).bindPopup("2nd Degree Risk Zone ca. 8km in radius");
         //dump site
-        var dumpSite=L.marker([40.0142, 32.75625]).bindPopup("Dump Site");
+        var customIcon1 = L.icon({
+          iconUrl: 'assets/markers/skull.png',
+          iconSize:     [32, 37],
+          //iconAnchor:   [39.94702,32.84872],
+          //popupAnchor:  [39.92702,32.84872]
+        });
+        var dumpSite=L.marker([40.0142, 32.75625],{icon:customIcon1}).bindPopup("Dump Site");
 
         //route
         var route= new L.GeoJSON.AJAX("assets/js/route.geojson");
         //first definition of custom icon
-        var customIcon = L.icon({
+        var customIcon2 = L.icon({
           iconUrl: 'assets/markers/caution.png',
           iconSize:     [32, 37],
           //iconAnchor:   [39.94702,32.84872],
@@ -142,7 +146,7 @@
 
         var popupContent= "<img src=images/coalgas.jpg>" + "<br>" +" <br>A photo from the site whilst demolishing is underway "
         //then creation of marker with custom properties
-        var plant= L.marker([39.92702,32.84872], {icon: customIcon}).bindPopup(popupContent, {
+        var plant= L.marker([39.92702,32.84872], {icon: customIcon2}).bindPopup(popupContent, {
             maxWidth: "auto"
         }
             );
