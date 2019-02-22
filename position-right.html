@@ -135,7 +135,7 @@
         var dumpSite=L.marker([40.0142, 32.75625],{icon:customIcon1}).bindPopup("Dump Site");
 
         //route
-        var route= new L.GeoJSON.AJAX("assets/js/route.geojson");
+        var route= new L.GeoJSON.AJAX("assets/js/route.geojson").bindPopup("Route from the dismantling site to the dump site");
         //first definition of custom icon
         var customIcon2 = L.icon({
           iconUrl: 'assets/markers/caution.png',
