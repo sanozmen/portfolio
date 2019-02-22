@@ -67,7 +67,7 @@
 
                 <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >This is an experimental and very basic map based on Leaflet.js library whose self capabilities were brought together with various different plugins. While creating this map, I tried to show different functionalities of Leaflet by using plugins like <i>dynamic side bar, geolocator, geocoder, cursor coordinate display, measurement tool </i> to its own capabilities such as <i>creating some overlaying features, adding layer control, setting max. bounds, max.&min. zoom., hover popup, click popup etc. </i> </p>
 
-                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify ><i>This map has first been put together when public deeply concerned that <br><a href="https://www.sozcu.com.tr/2017/gundem/ankara-buyuksehir-belediyesine-havagazi-fabrikasi-soku-1957314/" target="_blank">destruction of old coal-gas plant</a> in Ankara (2017) was carried out in a lawless manner that put healths of thousands of people living in the vicinity (ca. 4km) into high risk. As of Feb,2019 it has been revised and updated.<i></p>
+                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify ><i>This map has first been put together when public deeply concerned that <a href="https://www.sozcu.com.tr/2017/gundem/ankara-buyuksehir-belediyesine-havagazi-fabrikasi-soku-1957314/" target="_blank">destruction of old coal-gas plant</a> in Ankara (2017) was carried out in a lawless manner that put healths of thousands of people living in the vicinity (ca. 4km) into high risk. As of Feb,2019 it has been revised and updated.<i></p>
 
                 <!-- just added this button as a reminder for using this bar as button container in future works-->
                 <!-- <button type="button" class="btn btn-primary">Primary</button> -->
@@ -124,7 +124,7 @@
         var riskZone=L.circle([39.92702,32.84872], {radius: 4000}).bindPopup("Risk Zone ca. 4km in radius");
         //first definition of custom icon
         var customIcon = L.icon({
-          iconUrl: 'assets/markers/caution.png', 
+          iconUrl: 'assets/markers/caution.png',
           iconSize:     [32, 37],
           //iconAnchor:   [39.94702,32.84872],
           //popupAnchor:  [39.92702,32.84872]
@@ -142,7 +142,7 @@
         plant.on('mouseout', function (e) {
             this.closePopup();
         });
-       
+
 
 
         //initiating the map variable
@@ -157,14 +157,14 @@
         map.setMinZoom(11);
         map.setMaxZoom(13);
 
-        //grouping base layers defined above and assigning them to a var 
+        //grouping base layers defined above and assigning them to a var
         var baseLayers = {
 		        "Grayscale": grayscale,
 		        "Standart": osm,
             "Satellite": Esri_WorldImagery
 	           };
 
-         //grouping overlaying features     
+         //grouping overlaying features
         var overlayElements = {
           "Risk Zone": riskZone,
           "Coal-Gas Plant": plant
