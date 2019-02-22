@@ -12,14 +12,15 @@
 
     <link rel="stylesheet" href="assets/css/leaflet-sidebar.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.66.1/dist/L.Control.Locate.min.css" />
-<link rel="stylesheet" href="assets/css/L.Control.MousePosition.css" />
-<!-- bootstrap css-->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.66.1/dist/L.Control.Locate.min.css" />
+    <link rel="stylesheet" href="assets/css/L.Control.MousePosition.css" />
+    <!-- bootstrap css-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 
-<link rel="stylesheet" href="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.css" />
+    <link rel="stylesheet" href="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.css" />
+
 
 
     <style>
@@ -67,7 +68,7 @@
 
                 <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >This is an experimental and very basic map based on Leaflet.js library whose self capabilities were brought together with various different plugins. While creating this map, I tried to show different functionalities of Leaflet by using plugins like <i>dynamic side bar, geolocator, geocoder, cursor coordinate display, measurement tool </i> to its own capabilities such as <i>creating some overlaying features, adding layer control, setting max. bounds, max.&min. zoom., hover popup, click popup etc. </i> </p>
 
-                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify ><i>This map has first been put together when public raised deep concerns such that alleged inapropriate <a href="http://www.hurriyetdailynews.com/dismantling-of-asbestos-filled-factory-halted-in-ankara--110351" target="_blank">dismantling of old coal-gas plant</a> in Ankara (2017) risked healths of thousands of people living nearby (ca. 4km) by causing an uncontrolloed release of dangerous chemical of <a href="https://www.cancer.gov/about-cancer/causes-prevention/risk/substances/asbestos/asbestos-fact-sheet" target="_blank">asbestos</a>. As of Feb,2019 the map has been revised and recreated.<i></p>
+                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify ><i>This map has first been put together when public raised deep concerns such that alleged inapropriate <a href="http://www.hurriyetdailynews.com/dismantling-of-asbestos-filled-factory-halted-in-ankara--110351" target="_blank">dismantling of old coal-gas plant</a> in city center of Ankara (2017) risked healths of thousands of people living nearby (ca. 4km) by causing an uncontrolloed release of dangerous chemical of <a href="https://www.cancer.gov/about-cancer/causes-prevention/risk/substances/asbestos/asbestos-fact-sheet" target="_blank">asbestos</a>. As of Feb,2019 the map has been revised and recreated.<i></p>
 
                 <!-- just added this button as a reminder for using this bar as button container in future works-->
                 <!-- <button type="button" class="btn btn-primary">Primary</button> -->
@@ -105,6 +106,7 @@
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script>
 
+    <script src="assets/js/leaflet-ajax.js" ></script>
 
     <script>
 
@@ -126,6 +128,9 @@
         var riskZone2=L.circle([39.92702,32.84872], {radius: 8000, color: '#de2d26'}).bindPopup("2nd Degree Risk Zone ca. 8km in radius");
         //dump site
         var dumpSite=L.marker([40.017272, 32.764833]).bindPopup("Dump Site");
+
+        //route
+        var route= new L.GeoJSON.AJAX("assets/js/route.json");
         //first definition of custom icon
         var customIcon = L.icon({
           iconUrl: 'assets/markers/caution.png',
@@ -154,7 +159,7 @@
         var map = L.map('map', {
           zoom: 12,
           center: [39.95702,32.87872],
-          layers: [grayscale,plant,riskZone2,riskZone1, dumpSite]
+          layers: [grayscale,plant,riskZone2,riskZone1, dumpSite,route]
 
         });
         //setting the basic attributes of the map
