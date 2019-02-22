@@ -96,6 +96,7 @@
     crossorigin=""></script>
     <script src="assets/js/leaflet-sidebar.js"></script>
     <script src="assets/js/L.Control.MousePosition.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.66.1/dist/L.Control.Locate.min.js" charset="utf-8"></script>
     <!-- below is for bootstrap -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -121,7 +122,10 @@
 	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 });
         //definition of circle of risk zone
-        var riskZone=L.circle([39.92702,32.84872], {radius: 4000}).bindPopup("Risk Zone ca. 4km in radius");
+        var riskZone1=L.circle([39.92702,32.84872], {radius: 4000, color: '#a50f15'}).bindPopup("1st Degree Risk Zone ca. 4km in radius");
+        var riskZone2=L.circle([39.92702,32.84872], {radius: 8000, color: '#de2d26'}).bindPopup("2nd Degree Risk Zone ca. 8km in radius");
+        //dump site
+        var dumpSite=L.marker([40.017272, 32.764833]).bindPopup("Dump Site");
         //first definition of custom icon
         var customIcon = L.icon({
           iconUrl: 'assets/markers/caution.png',
@@ -129,6 +133,7 @@
           //iconAnchor:   [39.94702,32.84872],
           //popupAnchor:  [39.92702,32.84872]
         });
+
         var popupContent= "<img src=images/coalgas.jpg>" + "<br>" +" <br>A photo from the site whilst demolishing is underway "
         //then creation of marker with custom properties
         var plant= L.marker([39.92702,32.84872], {icon: customIcon}).bindPopup(popupContent, {
@@ -149,7 +154,7 @@
         var map = L.map('map', {
           zoom: 12,
           center: [39.95702,32.87872],
-          layers: [grayscale,riskZone,plant],
+          layers: [grayscale,plant,riskZone2,riskZone1, dumpSite]
 
         });
         //setting the basic attributes of the map
@@ -166,8 +171,10 @@
 
          //grouping overlaying features
         var overlayElements = {
-          "Risk Zone": riskZone,
-          "Coal-Gas Plant": plant
+          "Risk Zone 1": riskZone1,
+          "Risk Zone 2": riskZone2,
+          "Coal-Gas Plant": plant,
+          "Dump Site": dumpSite
         }
 
         //Adding all layers and feautes to map
@@ -185,6 +192,10 @@
       L.control.mousePosition().addTo(map);
       L.Control.geocoder().addTo(map);
       L.control.polylineMeasure({position:'topleft', unit:'metres', showBearings:true, clearMeasurementsOnStop: false, showClearControl: true, showUnitControl: true}).addTo(map);
+
+
+
+
     </script>
 </body>
 </html>
