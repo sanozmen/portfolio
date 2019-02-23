@@ -36,6 +36,12 @@
             font-style: italic;
             color: #AAA;
         }
+
+         .leaflet-control-layers-group-name {
+            font-weight: bold;
+            margin-bottom: .2em;
+            display: block;
+    }
     </style>
 </head>
 <body>
@@ -105,7 +111,7 @@
     <script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script>
 
     <script src="assets/js/leaflet-ajax.js" ></script>
-
+    <script src="https://rawgithub.com/ismyrnow/Leaflet.groupedlayercontrol/master/src/leaflet.groupedlayercontrol.js"></script>
     <script>
         //mapbox
 
@@ -170,25 +176,28 @@
         //setting the basic attributes of the map
         map.setMaxBounds(map.getBounds());
         map.setMinZoom(10);
-        map.setMaxZoom(14);
+        map.setMaxZoom(13);
 
         //grouping base layers defined above and assigning them to a var
         var baseLayers = {
-		        "Grayscale": grayscale,
-		        "Standart": osm,
+            "Grayscale": grayscale,
+		    "Standart": osm,
             "Satellite": Esri_WorldImagery
-	           };
+           };
 
          //grouping overlaying features
         var overlayElements = {
+        "Overlay Elements": {
           "Risk Zone 1": riskZone1,
           "Risk Zone 2": riskZone2,
           "Coal-Gas Plant": plant,
           "Dump Site": dumpSite
-        }
+        
+    }
+};
 
         //Adding all layers and feautes to map
-        L.control.layers(baseLayers, overlayElements).addTo(map);
+        L.control.groupedLayers(baseLayers, overlayElements).addTo(map);
 
         //initiating the side bar
         var sidebar = L.control.sidebar({ container: 'sidebar', position: 'right' })
