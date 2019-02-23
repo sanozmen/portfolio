@@ -72,7 +72,11 @@
 
                 <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >This is an experimental and very basic map based on Leaflet.js library whose self capabilities were brought together with various different plugins. While creating this map, I tried to show different functionalities of Leaflet by using plugins like <i>dynamic side bar, geolocator, geocoder, cursor coordinate display, measurement tool, ajax geojson loader </i> to its own capabilities such as <i>creating some overlaying features, adding layer control, setting max. bounds, max.&min. zoom., hover popup, click popup etc. </i> </p>
 
-                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify ><i>This map has first been put together when public raised deep concerns such that alleged inapropriate <a href="http://www.hurriyetdailynews.com/dismantling-of-asbestos-filled-factory-halted-in-ankara--110351" target="_blank">dismantling of old coal-gas plant</a> in city center of Ankara (2017) risked healths of thousands of people living nearby (ca. 4km) by causing an uncontrolloed release of dangerous chemical of <a href="https://www.cancer.gov/about-cancer/causes-prevention/risk/substances/asbestos/asbestos-fact-sheet" target="_blank">asbestos</a>. As of Feb,2019 the map has been revised and recreated.<i></p>
+                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify ><i>This map has first been put together when public raised deep concerns such that alleged inapropriate <a href="http://www.hurriyetdailynews.com/dismantling-of-asbestos-filled-factory-halted-in-ankara--110351" target="_blank">dismantling of old coal-gas plant</a> in city center of Ankara (2017) risked healths of thousands of people living nearby (ca. 4km) by causing an uncontrolloed release of dangerous chemical of <a href="https://www.cancer.gov/about-cancer/causes-prevention/risk/substances/asbestos/asbestos-fact-sheet" target="_blank">asbestos</a>. As of Feb,2019 the map has been revised and recreated.</i></p>
+
+                 <p style="margin-top:30px;  font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify ><i> <div>Truck icon made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"              title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"              title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div></i></p>
+
+
 
                 <!-- just added this button as a reminder for using this bar as button container in future works-->
                 <!-- <button type="button" class="btn btn-primary">Primary</button> -->
@@ -220,12 +224,17 @@ var dumpPlant=[ [  39.92685,32.84826], [39.94712, 32.82372],
 [ 39.94278,32.80294 ], [39.94838, 32.79353 ] ,[  39.95115 ,32.79147],[  39.94769 ,32.78459],[  39.94664 ,32.7736],[  39.96958 ,32.77086],[  40.0074 ,32.77189],[  40.01456 ,32.77601],[  40.01377 ,32.75679]
 ];
 
+var truckIcon = L.icon({
+          iconUrl: 'assets/markers/truck.svg',
+          iconSize:     [32, 37],
+          //iconAnchor:   [39.94702,32.84872],
+          //popupAnchor:  [39.92702,32.84872]
+        });
 
-var marker3 = L.Marker.movingMarker(dumpPlant,
-    [1000, 1000, 1000, 1000,1000,1000,1000,1000,1000,1000], {autostart: true, loop: true}).addTo(map);
+var truck= L.Marker.movingMarker(dumpPlant,
+    [1000, 1000, 1000, 1000,1000,1000,1000,1000,1000,1000], {autostart: true, loop: true, icon:truckIcon}).addTo(map);
 
-marker3.loops = 0;
-marker3.bindPopup('', {closeOnClick: false});
+truck.loops = 0;
 
     </script>
 </body>
