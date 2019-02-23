@@ -162,15 +162,15 @@
 
         //initiating the map variable
         var map = L.map('map', {
-          zoom: 12,
+          zoom: 11,
           center: [39.95702,32.87872],
           layers: [grayscale,route,plant,riskZone2,riskZone1, dumpSite]
 
         });
         //setting the basic attributes of the map
         map.setMaxBounds(map.getBounds());
-        map.setMinZoom(11);
-        map.setMaxZoom(13);
+        map.setMinZoom(10);
+        map.setMaxZoom(14);
 
         //grouping base layers defined above and assigning them to a var
         var baseLayers = {
