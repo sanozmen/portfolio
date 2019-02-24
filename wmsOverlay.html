@@ -123,7 +123,7 @@
     <!-- animated marker-->
     <script src="assets/js/MovingMarker.js" ></script>
     <script src="assets/js/leaflet-ajax.js" ></script>
-    <script src="assets/js/L.UTFGrid-min.js" ></script>
+    <script src="assets/js/L.TileLayer.BetterWMS.js" ></script>
     <script>
         //mapbox
 
@@ -140,7 +140,7 @@
         var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
 	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 });
-        var wmsLayer= L.tileLayer.wms( "https://www.mapelse.me/geoserver/pnewind/wms?", {
+        var wmsLayer= L.tileLayer.betterWms( "https://www.mapelse.me/geoserver/pnewind/wms?", {
             layers:"pnewind:aydinbalikmugcan",
             format: "image/png",
             transparent: true
