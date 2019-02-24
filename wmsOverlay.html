@@ -239,7 +239,7 @@ var truck= L.Marker.movingMarker(dumpPlant,
 
 truck.loops = 0;
 
-    var utfgrid = L.utfGrid("http://www.mapelse.me:8080/geoserver/pnewind/wms?service=WMS&version=1.1.0&request=GetMap&layers=pnewind:osm&styles=&bbox=12.3709278106689,41.7058563232422,12.7101154327393,42.0362548828125&width=768&height=748&srs=EPSG:4326&format=application%2Fjson%3Btype%3Dutfgrid", {
+    var utfgrid = L.utfGrid("https://www.mapelse.me/geoserver/pnewind/wms?service=WMS&version=1.1.0&request=GetMap&layers=pnewind:osm&styles=&bbox=12.3709278106689,41.7058563232422,12.7101154327393,42.0362548828125&width=768&height=748&srs=EPSG:4326&format=application%2Fjson%3Btype%3Dutfgrid", {
     resolution: 4,
     pointerCursor: true,
     mouseInterval: 66  // Delay for mousemove events
