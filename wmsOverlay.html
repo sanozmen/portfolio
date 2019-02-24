@@ -1,251 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>A Map of Potentially Affected Areas from Asbestos Release in Ankara-2017</title>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
-  integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-  crossorigin=""/>
-
-    <link rel="stylesheet" href="assets/css/leaflet-sidebar.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.66.1/dist/L.Control.Locate.min.css" />
-    <link rel="stylesheet" href="assets/css/L.Control.MousePosition.css" />
-    <!-- bootstrap css-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-
-    <link rel="stylesheet" href="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.css" />
-
+    <meta charset='utf-8' />
+    <title>Add a WMS source</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
     <style>
-        body {
-            padding: 0;
-            margin: 0;
-        }
-
-        html, body, #map {
-            height: 100%;
-            font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
-        }
-
-        .lorem {
-            font-style: italic;
-            color: #AAA;
-        }
-
-         .leaflet-control-layers-group-name {
-            font-weight: bold;
-            margin-bottom: .2em;
-            display: block;
-    }
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
     </style>
 </head>
 <body>
-    <div id="sidebar" class="leaflet-sidebar collapsed">
-        <!-- Nav tabs -->
-        <div class="leaflet-sidebar-tabs">
-            <ul role="tablist">
-                <li><a href="#home" role="tab"><i class="fa fa-bars"></i></a></li>
-                <li><a href="index.html" role="tab"><img src="images/logo.svg" alt="" />></i></a></li>
-                <!-- <li class="disabled"><a href="#messages" role="tab"><i class="fa fa-envelope"></i></a></li> -->
-            </ul>
 
-            <!--<ul role="tablist">
-                <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
-            </ul> -->
-        </div>
-
-        <!-- Tab panes -->
-        <div class="leaflet-sidebar-content">
-            <div class="leaflet-sidebar-pane" id="home">
-                <h1 class="leaflet-sidebar-header">
-                   <!-- in case of necessity write a title here such as "Minimize the bar" -->
-                   <p style="font-size: 15px">Minimize the Bar</p>
-                    <span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span>
-                </h1>
-
-                <p class="lorem" style="margin-top:20px">Click logo on the right to back to the home page.</p>
-
-                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >This is an experimental and very basic map based on Leaflet.js library whose self capabilities were brought together with various different plugins. While creating this map, I tried to show different functionalities of Leaflet by using plugins like <i>dynamic side bar, geolocator, geocoder, cursor coordinate display, measurement tool, ajax geojson loader, marker animation </i> to its own capabilities such as <i>creating some overlaying features, adding layer control, setting max. bounds, max.&min. zoom., hover popup, click popup etc. </i> </p>
-
-                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify ><i>This map has first been put together when public raised deep concerns such that alleged inapropriate <a href="http://www.hurriyetdailynews.com/dismantling-of-asbestos-filled-factory-halted-in-ankara--110351" target="_blank">dismantling of old coal-gas plant</a> in city center of Ankara (2017) risked healths of thousands of people living nearby (ca. 4km) by causing an uncontrolloed release of dangerous chemical of <a href="https://www.cancer.gov/about-cancer/causes-prevention/risk/substances/asbestos/asbestos-fact-sheet" target="_blank">asbestos</a>. As of Feb,2019 the map has been revised and recreated.</i></p>
-
-                <!--<p style="margin-top:120px;  font-family:'Ubuntu', sans-serif; line-height: 5px; font-size: 0.75em" align=justify ><i> References</i></p>
-
-                 <p style="margin-top:5px;  font-family:'Ubuntu', sans-serif; line-height: 20px; font-size: 0.75em" align=justify ><i> Truck icon made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"              title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"              title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></i></p> -->
-
-
-
-
-                <!-- just added this button as a reminder for using this bar as button container in future works-->
-                <!-- <button type="button" class="btn btn-primary">Primary</button> -->
-
-            </div>
-
-            <div class="leaflet-sidebar-pane" id="profile">
-                <h1 class="leaflet-sidebar-header">Profile<span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span></h1>
-            </div>
-
-            <div class="leaflet-sidebar-pane" id="messages">
-                <h1 class="leaflet-sidebar-header">Messages<span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span></h1>
-            </div>
-
-            <div class="leaflet-sidebar-pane" id="settings">
-                <h1 class="leaflet-sidebar-header">Settings<span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span></h1>
-            </div>
-        </div>
-    </div>
-
-    <div id="map"></div>
-
-
-    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
-    integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
-    crossorigin=""></script>
-    <script src="assets/js/leaflet-sidebar.js"></script>
-    <script src="assets/js/L.Control.MousePosition.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.66.1/dist/L.Control.Locate.min.js" charset="utf-8"></script>
-    <!-- below is for bootstrap -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-    <script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script>
-    <!--for reading geojson-->
-    <script src="assets/js/leaflet-ajax.js" ></script>
-    <!-- for titling the layer groups-->
-    <script src="https://rawgithub.com/ismyrnow/Leaflet.groupedlayercontrol/master/src/leaflet.groupedlayercontrol.js"></script>
-    <!-- animated marker-->
-    <script src="assets/js/MovingMarker.js" ></script>
-    <script src="assets/js/leaflet-ajax.js" ></script>
-    <script src="assets/js/L.UTFGrid-min.js" ></script>
-    <script>
-        //mapbox
-
-        //basemaps defined below
-
-        var grayscale=L.tileLayer('https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
-          attribution: 'Map data &copy; OpenStreetMap contributors'
-        });
-
-        var osm=L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: 'Map data &copy; OpenStreetMap contributors'
-        });
-
-        var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+<div id='map'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1Ijoic2Fub3ptZW4iLCJhIjoib2xwbVQtQSJ9.1ldcOvJz39J-WFX89QdO_Q';
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/light-v9',
+    zoom: 8,
+    center: [-74.5447, 40.6892]
 });
-        //definition of circle of risk zone
-        var riskZone1=L.circle([39.92702,32.84872], {radius: 4000, color: '#a50f15'}).bindPopup("1st Degree Risk Zone ca. 4km in radius");
-        var riskZone2=L.circle([39.92702,32.84872], {radius: 8000, color: '#de2d26'}).bindPopup("2nd Degree Risk Zone ca. 8km in radius");
-        //dump site
-        var customIcon1 = L.icon({
-          iconUrl: 'assets/markers/skull.png',
-          iconSize:     [32, 37],
-          //iconAnchor:   [39.94702,32.84872],
-          //popupAnchor:  [39.92702,32.84872]
-        });
-        var dumpSite=L.marker([40.0142, 32.75625],{icon:customIcon1}).bindPopup("Dump Site");
 
-        //route
-        var route= new L.GeoJSON.AJAX("assets/js/route.geojson").bindPopup("Route from the dismantling site to the dump site");
-        //first definition of custom icon
-        var customIcon2 = L.icon({
-          iconUrl: 'assets/markers/caution.png',
-          iconSize:     [32, 37],
-          //iconAnchor:   [39.94702,32.84872],
-          //popupAnchor:  [39.92702,32.84872]
-        });
+map.on('load', function() {
 
-        var popupContent= "<img src=images/coalgas.jpg>" + "<br>" +" <br>A photo from the site whilst demolishing is underway "
-        //then creation of marker with custom properties
-        var plant= L.marker([39.92702,32.84872], {icon: customIcon2}).bindPopup(popupContent, {
-            maxWidth: "auto"
-        }
-            );
-        //adding hover functionality
-        plant.on('mouseover', function (e) {
-            this.openPopup();
-        });
-        plant.on('mouseout', function (e) {
-            this.closePopup();
-        });
-
-
-
-        //initiating the map variable
-        var map = L.map('map', {
-          zoom: 11,
-          center: [39.95702,32.87872],
-          layers: [grayscale,route,plant,riskZone2,riskZone1, dumpSite]
-
-        });
-        //setting the basic attributes of the map
-
-
-        //grouping base layers defined above and assigning them to a var
-        var baseLayers = {
-            "Grayscale": grayscale,
-		    "Standart": osm,
-            "Satellite": Esri_WorldImagery
-           };
-
-         //grouping overlaying features
-        var overlayElements = {
-        "Overlay Elements": {
-          "Risk Zone 1": riskZone1,
-          "Risk Zone 2": riskZone2,
-          "Coal-Gas Plant": plant,
-          "Dump Site": dumpSite,
-          "Route": route
-        
-    }
-};
-
-        //Adding all layers and feautes to map
-        L.control.groupedLayers(baseLayers, overlayElements).addTo(map);
-
-        //initiating the side bar
-        var sidebar = L.control.sidebar({ container: 'sidebar', position: 'right' })
-            .addTo(map)
-            .open('home');
-
-      // add geolocator
-      L.control.locate().addTo(map);
-
-      //add mouse position
-      L.control.mousePosition().addTo(map);
-      L.Control.geocoder().addTo(map);
-      L.control.polylineMeasure({position:'topleft', unit:'metres', showBearings:true, clearMeasurementsOnStop: false, showClearControl: true, showUnitControl: true}).addTo(map);
-
-var dumpPlant=[ [  39.92685,32.84826], [39.94712, 32.82372],
-[ 39.94278,32.80294 ], [39.94838, 32.79353 ] ,[  39.95115 ,32.79147],[  39.94769 ,32.78459],[  39.94664 ,32.7736],[  39.96958 ,32.77086],[  40.0074 ,32.77189],[  40.01456 ,32.77601],[  40.01377 ,32.75679]
-];
-
-var truckIcon = L.icon({
-          iconUrl: 'assets/markers/truck.svg',
-          iconSize:     [32, 37],
-          //iconAnchor:   [39.94702,32.84872],
-          //popupAnchor:  [39.92702,32.84872]
-        });
-
-var truck= L.Marker.movingMarker(dumpPlant,
-    [1000, 1000, 1000, 1000,1000,1000,1000,1000,1000,1000], {autostart: true, loop: true, icon:truckIcon}).addTo(map);
-
-truck.loops = 0;
-
-    var utfgrid = L.utfGrid("https://cors.io/?https://www.mapelse.me/geoserver/pnewind/wms?service=WMS&version=1.1.0&request=GetMap&layers=pnewind:osm&styles=&bbox=12.3709278106689,41.7058563232422,12.7101154327393,42.0362548828125&width=768&height=748&srs=EPSG:4326&format=application%2Fjson%3Btype%3Dutfgrid", {
-    resolution: 4,
-    pointerCursor: true,
-    mouseInterval: 66  // Delay for mousemove events
+    map.addLayer({
+        'id': 'wms-test-layer',
+        'type': 'raster',
+        'source': {
+            'type': 'raster',
+            'tiles': [
+                'http://www.mapelse.me/geoserver/pnewind/wms?service=WMS&version=1.1.0&request=GetMap&layers=pnewind:aydinbalikmugcan&styles=&bbox=422548.625,4081251.75,691400.8125,4486365.0&width=509&height=768&srs=EPSG:23035&format=application%2Fjson%3Btype%3Dutfgrid'
+            ],
+            'tileSize': 256
+        },
+        'paint': {}
+    });
 });
-utfgrid.addTo(map);
+</script>
 
-    </script>
 </body>
 </html>
