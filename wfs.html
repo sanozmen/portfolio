@@ -193,15 +193,19 @@ var ajax = $.ajax({
                   fillColor: 'FFFFFF',
                     fillOpacity: 0
                 };
-            }
+            },
+            onEachFeature: function (feature, layer) {
+                popupOptions = {maxWidth: 600};
+                layer.bindPopup('Mosque Name <br>'+feature.properties.name
+                    ,popupOptions);
+        }
+      }).addTo(markers.addTo(map));
+    }
         });
-        markers.addLayer(WFSLayer);
 
 
 
 
-    }});
-        map.addLayer(markers);
 
         //Adding all layers and feautes to map
 
