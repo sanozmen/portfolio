@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>A Map of Potentially Affected Areas from Asbestos Release in Ankara-2017</title>
+    <title>WFS JSONP Clustered Markers</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -10,16 +10,14 @@
   integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
   crossorigin=""/>
 
-    <link rel="stylesheet" href="assets/css/leaflet-sidebar.css" />
+    <link rel="stylesheet" href="assets/css/L.Control.Sidebar.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.66.1/dist/L.Control.Locate.min.css" />
     <link rel="stylesheet" href="assets/css/L.Control.MousePosition.css" />
     <!-- bootstrap css-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-
-    <link rel="stylesheet" href="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.css" />
+   
     <link rel="stylesheet" href="Leaflet.markercluster-master/dist/MarkerCluster.css" />
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.Default.css">
   <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.css">
@@ -49,62 +47,12 @@
     </style>
 </head>
 <body>
-    <div id="sidebar" class="leaflet-sidebar collapsed">
-        <!-- Nav tabs -->
-        <div class="leaflet-sidebar-tabs">
-            <ul role="tablist">
-                <li><a href="#home" role="tab"><i class="fa fa-bars"></i></a></li>
-                <li><a href="index.html" role="tab"><img src="images/logo.svg" alt="" />></i></a></li>
-                <!-- <li class="disabled"><a href="#messages" role="tab"><i class="fa fa-envelope"></i></a></li> -->
-            </ul>
 
-            <!--<ul role="tablist">
-                <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
-            </ul> -->
-        </div>
+    <div id="pane" style=""></div>
 
-        <!-- Tab panes -->
-        <div class="leaflet-sidebar-content">
-            <div class="leaflet-sidebar-pane" id="home">
-                <h1 class="leaflet-sidebar-header">
-                   <!-- in case of necessity write a title here such as "Minimize the bar" -->
-                   <p style="font-size: 15px">Minimize the Bar</p>
-                    <span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span>
-                </h1>
-
-                <p class="lorem" style="margin-top:20px">Click logo on the right to back to the home page.</p>
-
-                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >This is an experimental and very basic map based on Leaflet.js library whose self capabilities were brought together with various different plugins. While creating this map, I tried to show different functionalities of Leaflet by using plugins like <i>dynamic side bar, geolocator, geocoder, cursor coordinate display, measurement tool, ajax geojson loader, marker animation </i> to its own capabilities such as <i>creating some overlaying features, adding layer control, setting max. bounds, max.&min. zoom., hover popup, click popup etc. </i> </p>
-
-                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify ><i>This map has first been put together when public raised deep concerns such that alleged inapropriate <a href="http://www.hurriyetdailynews.com/dismantling-of-asbestos-filled-factory-halted-in-ankara--110351" target="_blank">dismantling of old coal-gas plant</a> in city center of Ankara (2017) risked healths of thousands of people living nearby (ca. 4km) by causing an uncontrolloed release of dangerous chemical of <a href="https://www.cancer.gov/about-cancer/causes-prevention/risk/substances/asbestos/asbestos-fact-sheet" target="_blank">asbestos</a>. As of Feb,2019 the map has been revised and recreated.</i></p>
-
-                <!--<p style="margin-top:120px;  font-family:'Ubuntu', sans-serif; line-height: 5px; font-size: 0.75em" align=justify ><i> References</i></p>
-
-                 <p style="margin-top:5px;  font-family:'Ubuntu', sans-serif; line-height: 20px; font-size: 0.75em" align=justify ><i> Truck icon made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"              title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"              title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></i></p> -->
-
-
-
-
-                <!-- just added this button as a reminder for using this bar as button container in future works-->
-                <!-- <button type="button" class="btn btn-primary">Primary</button> -->
-
-            </div>
-
-            <div class="leaflet-sidebar-pane" id="profile">
-                <h1 class="leaflet-sidebar-header">Profile<span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span></h1>
-            </div>
-
-            <div class="leaflet-sidebar-pane" id="messages">
-                <h1 class="leaflet-sidebar-header">Messages<span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span></h1>
-            </div>
-
-            <div class="leaflet-sidebar-pane" id="settings">
-                <h1 class="leaflet-sidebar-header">Settings<span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span></h1>
-            </div>
-        </div>
-    </div>
 
     <div id="map"></div>
+  
 
 
      <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
@@ -126,8 +74,8 @@
     <script src="assets/js/leaflet-ajax.js" ></script>
     <!-- for titling the layer groups-->
     <script src="https://rawgithub.com/ismyrnow/Leaflet.groupedlayercontrol/master/src/leaflet.groupedlayercontrol.js"></script>
-    <!-- animated marker-->
-    <script src="assets/js/MovingMarker.js" ></script>
+   
+    <script src="assets/js/L.Control.Sidebar.js" ></script>
     <script src="assets/js/leaflet-ajax.js" ></script>
 
     <script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js""></script>
@@ -156,7 +104,7 @@
         var map = L.map('map', {
           zoom: 9,
           center: [41.07521,29.05609],
-          layers: [grayscale]
+          layers: [Esri_WorldImagery]
 
         });
         //setting the basic attributes of the map
@@ -178,8 +126,10 @@ var parameters = L.Util.extend(defaultParameters);
 var URL = owsrootUrl + L.Util.getParamString(parameters);
 
 var markers = L.markerClusterGroup();
+
 //initial definition of WFSLayer to be used in the next step
 var WFSLayer = new L.GeoJSON();
+
 
 var ajax = $.ajax({
     url : URL,
@@ -201,28 +151,19 @@ var ajax = $.ajax({
         }
       }).addTo(markers.addTo(map));
     }
+
+
         });
 
 
-
-
-
-        //Adding all layers and feautes to map
-
-
-
-        //initiating the side bar
-        var sidebar = L.control.sidebar({ container: 'sidebar', position: 'right' })
-            .addTo(map)
-            .open('home');
 
       // add geolocator
       L.control.locate().addTo(map);
 
       //add mouse position
       L.control.mousePosition().addTo(map);
-      L.Control.geocoder().addTo(map);
-      L.control.polylineMeasure({position:'topleft', unit:'metres', showBearings:true, clearMeasurementsOnStop: false, showClearControl: true, showUnitControl: true}).addTo(map);
+ 
+
 
 
     </script>
