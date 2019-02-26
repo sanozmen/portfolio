@@ -10,15 +10,9 @@
   integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
   crossorigin=""/>
 
-    <link rel="stylesheet" href="assets/css/L.Control.Sidebar.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.66.1/dist/L.Control.Locate.min.css" />
-    <link rel="stylesheet" href="assets/css/L.Control.MousePosition.css" />
-    <!-- bootstrap css-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-   
-    <link rel="stylesheet" href="Leaflet.markercluster-master/dist/MarkerCluster.css" />
+
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.Default.css">
   <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.css">
 
@@ -39,11 +33,6 @@
             color: #AAA;
         }
 
-         .leaflet-control-layers-group-name {
-            font-weight: bold;
-            margin-bottom: .2em;
-            display: block;
-    }
     </style>
 </head>
 <body>
@@ -58,27 +47,16 @@
      <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
     integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
     crossorigin=""></script>
-    <script src="assets/js/leaflet-sidebar.js"></script>
     <script src="assets/js/L.Control.MousePosition.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.66.1/dist/L.Control.Locate.min.js" charset="utf-8"></script>
     <!-- below is for bootstrap -->
     <script  src="https://code.jquery.com/jquery-3.3.1.js"
     integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
     crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-    <script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script>
-    <!--for reading geojson-->
-    <script src="assets/js/leaflet-ajax.js" ></script>
-    <!-- for titling the layer groups-->
-    <script src="https://rawgithub.com/ismyrnow/Leaflet.groupedlayercontrol/master/src/leaflet.groupedlayercontrol.js"></script>
-   
-    <script src="assets/js/L.Control.Sidebar.js" ></script>
-    <script src="assets/js/leaflet-ajax.js" ></script>
 
-    <script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js""></script>
+    <!--for reading geojson-->
+
+    <script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js"></script>
 
 
     <script>
@@ -109,7 +87,7 @@
         });
         //setting the basic attributes of the map
 
-
+//defining the url to the service
 var owsrootUrl = 'https://www.mapelse.me/geoserver/pnewind/ows';
 
 var defaultParameters = {
@@ -125,12 +103,18 @@ var defaultParameters = {
 var parameters = L.Util.extend(defaultParameters);
 var URL = owsrootUrl + L.Util.getParamString(parameters);
 
-var markers = L.markerClusterGroup();
+var markers = L.markerClusterGroup({
+  spiderfyOnMaxZoom: true,
+  showCoverageOnHover: false,
+  zoomToBoundsOnClick: true,
+  disableClusteringAtZoom: 16
+});
 
 //initial definition of WFSLayer to be used in the next step
-var WFSLayer = new L.GeoJSON();
+var WFSLayer = null;
+var sil= null;
 
-
+//async get data on the map
 var ajax = $.ajax({
     url : URL,
     dataType : 'jsonp',
@@ -138,27 +122,25 @@ var ajax = $.ajax({
     success : function (response) {
         WFSLayer = L.geoJson(response, {
             style: function (feature) {
-                return {
-                 stroke: false,
-                  fillColor: 'FFFFFF',
-                    fillOpacity: 0
-                };
+                
+
             },
             onEachFeature: function (feature, layer) {
                 popupOptions = {maxWidth: 600};
-                layer.bindPopup('Mosque Name <br>'+feature.properties.name
-                    ,popupOptions);
-        }
+                
+
+                layer.bindPopup(feature.geometry,"a");
+
+                console.log(feature)
+        },  
       }).addTo(markers.addTo(map));
+        
     }
-
-
         });
+    
 
+    
 
-
-      // add geolocator
-      L.control.locate().addTo(map);
 
       //add mouse position
       L.control.mousePosition().addTo(map);
