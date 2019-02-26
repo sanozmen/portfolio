@@ -20,6 +20,10 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 
     <link rel="stylesheet" href="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.css" />
+    <link rel="stylesheet" href="Leaflet.markercluster-master/dist/MarkerCluster.css" />
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.Default.css">
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.css">
+
 
     <style>
         body {
@@ -103,7 +107,7 @@
     <div id="map"></div>
 
 
-    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
     integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
     crossorigin=""></script>
     <script src="assets/js/leaflet-sidebar.js"></script>
@@ -111,10 +115,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.66.1/dist/L.Control.Locate.min.js" charset="utf-8"></script>
     <!-- below is for bootstrap -->
-    <script
-  src="https://code.jquery.com/jquery-3.3.1.js"
-  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-  crossorigin="anonymous"></script>
+    <script  src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
@@ -126,6 +129,9 @@
     <!-- animated marker-->
     <script src="assets/js/MovingMarker.js" ></script>
     <script src="assets/js/leaflet-ajax.js" ></script>
+
+    <script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js""></script>
+
 
     <script>
         //mapbox
@@ -148,8 +154,8 @@
 
         //initiating the map variable
         var map = L.map('map', {
-          zoom: 11,
-          center: [39.95702,32.87872],
+          zoom: 9,
+          center: [41.07521,29.05609],
           layers: [grayscale]
 
         });
@@ -171,7 +177,10 @@ var defaultParameters = {
 var parameters = L.Util.extend(defaultParameters);
 var URL = owsrootUrl + L.Util.getParamString(parameters);
 
-var WFSLayer = null;
+var markers = L.markerClusterGroup();
+//initial definition of WFSLayer to be used in the next step
+var WFSLayer = new L.GeoJSON();
+
 var ajax = $.ajax({
     url : URL,
     dataType : 'jsonp',
@@ -184,16 +193,15 @@ var ajax = $.ajax({
                   fillColor: 'FFFFFF',
                     fillOpacity: 0
                 };
-            },
-            onEachFeature: function (feature, layer) {
-                popupOptions = {maxWidth: 200};
-                layer.bindPopup("Popup text, access attributes with feature.properties.name"
-                    ,popupOptions);
             }
-        }).addTo(map);
+        });
+        markers.addLayer(WFSLayer);
+
+
+
+
     }});
-
-
+        map.addLayer(markers);
 
         //Adding all layers and feautes to map
 
