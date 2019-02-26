@@ -145,51 +145,6 @@
 });
 
 
-        //definition of circle of risk zone
-        var riskZone1=L.circle([39.92702,32.84872], {radius: 4000, color: '#a50f15'}).bindPopup("1st Degree Risk Zone ca. 4km in radius");
-        var riskZone2=L.circle([39.92702,32.84872], {radius: 8000, color: '#de2d26'}).bindPopup("2nd Degree Risk Zone ca. 8km in radius");
-        //dump site
-        var customIcon1 = L.icon({
-          iconUrl: 'assets/markers/skull.png',
-          iconSize:     [32, 37],
-          //iconAnchor:   [39.94702,32.84872],
-          //popupAnchor:  [39.92702,32.84872]
-        });
-        var dumpSite=L.marker([40.0142, 32.75625],{icon:customIcon1}).bindPopup("Dump Site");
-
-        //route
-        var route= new L.GeoJSON.AJAX("assets/js/route.geojson").bindPopup("Route from the dismantling site to the dump site");
-        //first definition of custom icon
-        var customIcon2 = L.icon({
-          iconUrl: 'assets/markers/caution.png',
-          iconSize:     [32, 37],
-          //iconAnchor:   [39.94702,32.84872],
-          //popupAnchor:  [39.92702,32.84872]
-        });
-
-        var popupContent= "<img src=images/coalgas.jpg>" + "<br>" +" <br>A photo from the site whilst demolishing is underway "
-        //then creation of marker with custom properties
-        var plant= L.marker([39.92702,32.84872], {icon: customIcon2}).bindPopup(popupContent, {
-            maxWidth: "auto"
-        }
-            );
-        //adding hover functionality
-        plant.on('mouseover', function (e) {
-            this.openPopup();
-        });
-        plant.on('mouseout', function (e) {
-            this.closePopup();
-        });
-
-        var geojsonLayer = new L.GeoJSON();
-
-        function handleJson(data) {
-          console.log(data)
-          geojsonLayer.addData(data);
-        }
-
-
-
 
         //initiating the map variable
         var map = L.map('map', {
@@ -199,28 +154,6 @@
 
         });
         //setting the basic attributes of the map
-
-
-        //grouping base layers defined above and assigning them to a var
-        var baseLayers = {
-            "Grayscale": grayscale,
-        "Standart": osm,
-            "Satellite": Esri_WorldImagery,
-
-           };
-
-         //grouping overlaying features
-        var overlayElements = {
-        "Overlay Elements": {
-          "Risk Zone 1": riskZone1,
-          "Risk Zone 2": riskZone2,
-          "Coal-Gas Plant": plant,
-          "Dump Site": dumpSite,
-          "Route": route
-
-
-    }
-};
 
 
 var owsrootUrl = 'https://www.mapelse.me/geoserver/pnewind/ows';
@@ -258,12 +191,13 @@ var ajax = $.ajax({
                     ,popupOptions);
             }
         }).addTo(map);
-    }
+    };
 
 
 
         //Adding all layers and feautes to map
-        L.control.groupedLayers(baseLayers, overlayElements).addTo(map);
+
+
 
         //initiating the side bar
         var sidebar = L.control.sidebar({ container: 'sidebar', position: 'right' })
@@ -277,23 +211,6 @@ var ajax = $.ajax({
       L.control.mousePosition().addTo(map);
       L.Control.geocoder().addTo(map);
       L.control.polylineMeasure({position:'topleft', unit:'metres', showBearings:true, clearMeasurementsOnStop: false, showClearControl: true, showUnitControl: true}).addTo(map);
-
-var dumpPlant=[ [  39.92685,32.84826], [39.94712, 32.82372],
-[ 39.94278,32.80294 ], [39.94838, 32.79353 ] ,[  39.95115 ,32.79147],[  39.94769 ,32.78459],[  39.94664 ,32.7736],[  39.96958 ,32.77086],[  40.0074 ,32.77189],[  40.01456 ,32.77601],[  40.01377 ,32.75679]
-];
-
-var truckIcon = L.icon({
-          iconUrl: 'assets/markers/truck.svg',
-          iconSize:     [32, 37],
-          //iconAnchor:   [39.94702,32.84872],
-          //popupAnchor:  [39.92702,32.84872]
-        });
-
-var truck= L.Marker.movingMarker(dumpPlant,
-    [1000, 1000, 1000, 1000,1000,1000,1000,1000,1000,1000], {autostart: true, loop: true, icon:truckIcon}).addTo(map);
-
-truck.loops = 0;
-
 
 
     </script>
