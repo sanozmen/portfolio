@@ -210,12 +210,12 @@ var ajax = $.ajax({
     jsonpCallback : 'getJson',
     success : function (response) {
         WFSLayer = L.geoJson(response, {
-            //style: function (feature) {
-              //  return {
-                //    stroke: false,
-                  //  fillColor: 'FFFFFF',
-                    //fillOpacity: 0
-                //};
+            style: function (feature) {
+                return {
+                 stroke: false,
+                  fillColor: 'FFFFFF',
+                    fillOpacity: 0
+                };
             },
             onEachFeature: function (feature, layer) {
                 popupOptions = {maxWidth: 200};
