@@ -143,13 +143,7 @@
         var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
   attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 });
-        var wmsLayer= L.tileLayer.wms( "https://www.mapelse.me/geoserver/pnewind/wms?", {
-            layers:"pnewind:aydinbalikmugcan",
-            format: "image/png",
-            transparent: true
 
-        }
-            );
 
         //definition of circle of risk zone
         var riskZone1=L.circle([39.92702,32.84872], {radius: 4000, color: '#a50f15'}).bindPopup("1st Degree Risk Zone ca. 4km in radius");
@@ -195,7 +189,7 @@
         }
 
 
-          var url = "https://www.mapelse.me/geoserver/pnewind/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=cite:BoreHoles&outputFormat=text/javascript&format_options=callback:getJSON";
+          var url = "https://www.mapelse.me/geoserver/pnewind/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pnewind:mosqueistanbul&outputFormat=text/javascript&format_options=callback:getJSON";
           $.ajax(url, {
 dataType: "jsonp"}
 ).done(function ( data ) {
@@ -220,7 +214,7 @@ return L.marker(latlng, {
         var map = L.map('map', {
           zoom: 11,
           center: [39.95702,32.87872],
-          layers: [grayscale,route,plant,riskZone2,riskZone1, dumpSite, wmsLayer]
+          layers: [grayscale,route,plant,riskZone2,riskZone1, dumpSite]
 
         });
         //setting the basic attributes of the map
