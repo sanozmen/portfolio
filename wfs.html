@@ -188,26 +188,43 @@
           geojsonLayer.addData(data);
         }
 
+var owsrootUrl = 'https://www.mapelse.me/geoserver/pnewind/ows';
 
-          var url = "https://www.mapelse.me/geoserver/pnewind/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pnewind:mosqueistanbul&outputFormat=text/javascript&format_options=callback:getJSON";
-          $.ajax(url, {
-dataType: "jsonp"}
-).done(function ( data ) {
-});
+var defaultParameters = {
+    service : 'WFS',
+    version : '2.0',
+    request : 'GetFeature',
+    typeName : 'pnewind:mosqueistanbul',
+    outputFormat : 'text/javascript',
+    format_options : 'callback:getJson',
+    SrsName : 'EPSG:4326'
+};
 
+var parameters = L.Util.extend(defaultParameters);
+var URL = owsrootUrl + L.Util.getParamString(parameters);
 
+var WFSLayer = null;
+var ajax = $.ajax({
+    url : URL,
+    dataType : 'jsonp',
+    jsonpCallback : 'getJson',
+    success : function (response) {
+        WFSLayer = L.geoJson(response, {
+            //style: function (feature) {
+              //  return {
+                //    stroke: false,
+                  //  fillColor: 'FFFFFF',
+                    //fillOpacity: 0
+                //};
+            },
+            onEachFeature: function (feature, layer) {
+                popupOptions = {maxWidth: 200};
+                layer.bindPopup("Popup text, access attributes with feature.properties.name"
+                    ,popupOptions);
+            }
+        }).addTo(map);
+    }
 
-        function processJSON(data) {
-mosques = data;
-    mosquePoints = L.geoJson(mosques,{
-onEachFeature: onEachFeature,
-pointToLayer: function (feature, latlng) {
-return L.marker(latlng, {
-
-});
-}
-}).addTo(map);
-}
 
 
         //initiating the map variable
