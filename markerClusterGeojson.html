@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>A Map of Potentially Affected Areas from Asbestos Release in Ankara-2017</title>
+    <title>GeoJSON Based Marker Clustering</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -79,7 +79,7 @@
 
                 <p class="lorem" style="margin-top:20px">Click logo on the right to back to the home page.</p>
 
-                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >This is an experimental and very basic map based on Leaflet.js library whose self capabilities were brought together with various different plugins. While creating this map, I tried to show different functionalities of Leaflet from using plugins like <i>dynamic side bar, geolocator, geocoder, cursor coordinate displayer, measurement tool, ajax geojson loader, marker animation </i> to utilizing its own capabilities such as <i>creating some overlaying features, adding layer control, setting max. bounds, max.&min. zoom., hover popup, click popup etc. </i> </p>
+                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >This is an experimental and very basic map based on Leaflet.js library whose self capabilities were brought together with various different plugins. While creating this map, I tried to show different functionalities of Leaflet from using plugins like <i>dynamic side bar, geolocator, geocoder, cursor coordinate display, measurement tool, ajax geojson loader, marker animation </i> to utilizing its own capabilities such as <i>creating some overlaying features, adding layer control, setting max. bounds, max.&min. zoom., hover popup, click popup etc. </i> </p>
 
                 <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify ><i>This map has first been put together when public raised deep concerns such that alleged inapropriate <a href="http://www.hurriyetdailynews.com/dismantling-of-asbestos-filled-factory-halted-in-ankara--110351" target="_blank">dismantling of old coal-gas plant</a> in city center of Ankara (2017) risked healths of thousands of people living nearby (ca. 4km) by causing an uncontrolloed release of dangerous chemical of <a href="https://www.cancer.gov/about-cancer/causes-prevention/risk/substances/asbestos/asbestos-fact-sheet" target="_blank">asbestos</a>. As of Feb,2019 the map has been revised and recreated.</i></p>
 
@@ -125,13 +125,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script>
-    <!--for reading geojson via ajax-->
+    <!--for reading geojson-->
     <script src="assets/js/leaflet-ajax.js" ></script>
     <!-- for titling the layer groups-->
     <script src="https://rawgithub.com/ismyrnow/Leaflet.groupedlayercontrol/master/src/leaflet.groupedlayercontrol.js"></script>
     <!-- animated marker-->
     <script src="assets/js/MovingMarker.js" ></script>
-
+    <script src="assets/js/leaflet-ajax.js" ></script>
     <script>
         //mapbox
 
