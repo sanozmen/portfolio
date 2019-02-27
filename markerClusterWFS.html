@@ -4,6 +4,15 @@
     <title>WFS JSONP Clustered Markers</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-57534785-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-57534785-2');
+    </script>
 
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
@@ -41,7 +50,7 @@
 
 
     <div id="map"></div>
-  
+
 
 
      <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
@@ -122,29 +131,29 @@ var ajax = $.ajax({
     success : function (response) {
         WFSLayer = L.geoJson(response, {
             style: function (feature) {
-                
+
 
             },
             onEachFeature: function (feature, layer) {
                 popupOptions = {maxWidth: 600};
-                
+
 
                 layer.bindPopup(feature.geometry,"a");
 
                 console.log(feature)
-        },  
+        },
       }).addTo(markers.addTo(map));
-        
+
     }
         });
-    
 
-    
+
+
 
 
       //add mouse position
       L.control.mousePosition().addTo(map);
- 
+
 
 
 
