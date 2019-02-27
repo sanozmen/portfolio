@@ -146,7 +146,7 @@
 
         //initiating the map variable
         var map = L.map('map', {
-          zoom: 9,
+          zoom: 8,
           center: [41.07521,29.05609],
           layers: [Esri_WorldImagery]
 
@@ -169,12 +169,36 @@ var defaultParameters = {
 var parameters = L.Util.extend(defaultParameters);
 var URL = owsrootUrl + L.Util.getParamString(parameters);
 
+//custom icon
+var mosqIcon = L.icon({
+          iconUrl: 'assets/markers/mosquee.png',
+          iconSize:     [32, 37],
+          //iconAnchor:   [39.94702,32.84872],
+          //popupAnchor:  [39.92702,32.84872]
+        });
+
+//https://gis.stackexchange.com/questions/292674/adding-custom-icons-to-l-markerclustergroup
 var markers = L.markerClusterGroup({
   spiderfyOnMaxZoom: true,
   showCoverageOnHover: false,
   zoomToBoundsOnClick: true,
-  disableClusteringAtZoom: 16
+  disableClusteringAtZoom: 16,
+  // iconCreateFunction: function (cluster) {
+  //   var markers = cluster.getAllChildMarkers();
+  //   var n = 0;
+  //   for (var i = 0; i < markers.length; i++) {
+  //     n += markers[i].number;
+  //   }
+  //   return L.divIcon({
+  //     html: n,
+  //     className: 'mycluster',
+  //     iconSize: L.point(40, 40)
+  //   });
+  // },
+  // ...
 });
+
+
 
 //initial definition of WFSLayer to be used in the next step
 var WFSLayer = null;
@@ -187,6 +211,7 @@ var ajax = $.ajax({
     success : function (response) {
         WFSLayer = L.geoJson(response, {
             style: function (feature) {
+
 
 
             },
