@@ -164,7 +164,7 @@
       },
       onEachFeature: function (feature, layer) {
         if (feature.properties) {
-          var content =  title+"<br>"+feature.properties.name ;
+          var content =  "Pharmacy <br>"+feature.properties.name ;
           layer.bindPopup(content);
         }
       }
