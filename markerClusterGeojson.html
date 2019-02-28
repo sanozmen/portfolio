@@ -160,7 +160,7 @@
       iconSize: [24, 28],
 
     });
-    amenities = new L.geoJson(null, {
+    var amenities = new L.geoJson(null, {
       pointToLayer: function (feature, latlng) {
         return L.marker(latlng, {
           //icon: amenitiesIcon,
@@ -212,10 +212,10 @@
       L.control.mousePosition().addTo(map);
 
       // Create event listener for the Add All Data Button
-  document.getElementById("addButton").addEventListener("click", amenitiesClusters);
+  document.getElementById("addButton").addEventListener("click", amenities);
       // add all data function
-    function addCoffeeShops() {
-        amenitiesClusters.addTo(map);
+    function addAllData() {
+        amenities.addTo(map);
     };
 
 
