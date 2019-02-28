@@ -81,7 +81,7 @@
                 <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify ></p>
 
                 <div id="controls" style="margin: 15px;">
-                  <button type="button" class="btn btn-success" id="addButton">Add All Data</button>
+                  <button type="button" class="btn btn-success" id="addButton">Show All Data</button>
                 </div>
 
 
@@ -197,8 +197,8 @@
 
         //setting the basic attributes of the map
         map.setMaxBounds(map.getBounds());
-        map.setMinZoom(4);
-        map.setMaxZoom(13);
+        map.setMinZoom(7);
+        map.setMaxZoom(18);
 
         //initiating the side bar
         var sidebar = L.control.sidebar({ container: 'sidebar', position: 'right' })
@@ -212,10 +212,10 @@
       L.control.mousePosition().addTo(map);
 
       // Create event listener for the Add All Data Button
-  document.getElementById("addButton").addEventListener("click", amenities);
+  document.getElementById("addButton").addEventListener("click", addAllData);
       // add all data function
     function addAllData() {
-        amenities.addTo(map);
+        amenitiesClusters.addTo(map);
     };
 
 
