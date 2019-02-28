@@ -150,15 +150,15 @@
 	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 });
 
-        var bikeRacksIcon = L.icon({
-      iconUrl: 'assets/markers/skull.png',
+        var pharmacyIcon = L.icon({
+      iconUrl: 'assets/markers/medicine.png',
       iconSize: [24, 28],
 
     });
-    bikeRacks = new L.geoJson(null, {
+    pharmacy = new L.geoJson(null, {
       pointToLayer: function (feature, latlng) {
         return L.marker(latlng, {
-          icon: bikeRacksIcon,
+          icon: pharmacyIcon,
           title: feature.properties.amenity
         });
       },
@@ -169,15 +169,15 @@
         }
       }
     });
-        bikeRackClusters = new L.MarkerClusterGroup({
+      pharmacyClusters = new L.MarkerClusterGroup({
       spiderfyOnMaxZoom: true,
       showCoverageOnHover: false,
       zoomToBoundsOnClick: true,
       disableClusteringAtZoom: 16
     });
     $.getJSON("assets/js/pharmacyIstanbul.geojson", function (data) {
-      bikeRacks.addData(data);
-      bikeRackClusters.addLayer(bikeRacks);
+      pharmacy.addData(data);
+      pharmacyClusters.addLayer(pharmacy);
     });
 
 
@@ -185,7 +185,7 @@
         var map = L.map('map', {
           zoom: 8,
           center: [41.07521,29.05609],
-          layers: [grayscale, bikeRackClusters]
+          layers: [grayscale, pharmacyClusters]
 
         });
         //setting the basic attributes of the map
