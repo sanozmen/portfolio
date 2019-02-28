@@ -183,20 +183,7 @@ var markers = L.markerClusterGroup({
   showCoverageOnHover: false,
   zoomToBoundsOnClick: true,
   disableClusteringAtZoom: 16,
-  // iconCreateFunction: function (cluster) {
-  //   var markers = cluster.getAllChildMarkers();
-  //   var n = 0;
-  //   for (var i = 0; i < markers.length; i++) {
-  //     n += markers[i].number;
-  //   }
-  //   return L.divIcon({
-  //     html: n,
-  //     className: 'mycluster',
-  //     iconSize: L.point(40, 40)
-  //   });
-  // },
-  // ...
-}).bindPopup("s");
+ });
 
 
 
@@ -216,10 +203,8 @@ var ajax = $.ajax({
 
             },
             onEachFeature: function (feature, layer) {
-                popupOptions = {maxWidth: 600};
 
-
-                layer.bindPopup(feature.geometry,"a");
+                layer.bindPopup(feature.properties.amenity);
 
                 //console.log(feature)
         },
