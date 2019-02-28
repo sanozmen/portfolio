@@ -25,6 +25,9 @@
     <link rel="stylesheet" href="assets/css/L.Control.MousePosition.css" />
     <!-- bootstrap css-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- marker cluster styles-->
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.Default.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.css">
 
     <style>
         body {
@@ -124,6 +127,9 @@
     <!-- for titling the layer groups-->
     <script src="https://rawgithub.com/ismyrnow/Leaflet.groupedlayercontrol/master/src/leaflet.groupedlayercontrol.js"></script>
 
+     <!--for marker clustering-->
+    <script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js"></script>
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 
     <script>
         //mapbox
@@ -141,64 +147,48 @@
         var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
 	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 });
-        //definition of circle of risk zone
-        var riskZone1=L.circle([39.92702,32.84872], {radius: 4000, color: '#a50f15'}).bindPopup("1st Degree Risk Zone ca. 4km in radius");
-        var riskZone2=L.circle([39.92702,32.84872], {radius: 8000, color: '#de2d26'}).bindPopup("2nd Degree Risk Zone ca. 8km in radius");
-        //dump site
-        var customIcon1 = L.icon({
-          iconUrl: 'assets/markers/skull.png',
-          iconSize:     [32, 37],
-          //iconAnchor:   [39.94702,32.84872],
-          //popupAnchor:  [39.92702,32.84872]
+
+        var bikeRacksIcon = L.icon({
+      iconUrl: 'assets/markers/skull.png',
+      iconSize: [24, 28],
+
+    });
+    bikeRacks = new L.geoJson(null, {
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, {
+          icon: bikeRacksIcon,
+          title: feature.properties.amenity
         });
-
-
-        //route
-        var route= new L.GeoJSON.AJAX("assets/js/pharmacyIstanbul.geojson").bindPopup("Route from the dismantling site to the dump site");
-
-        //adding hover functionality
-        mosques.on('mouseover', function (e) {
-            this.openPopup();
-        });
-        mosques.on('mouseout', function (e) {
-            this.closePopup();
-        });
-
+      },
+      onEachFeature: function (feature, layer) {
+        if (feature.properties) {
+          var content =  feature.properties.amenity ;
+          layer.bindPopup(content);
+        }
+      }
+    });
+        bikeRackClusters = new L.MarkerClusterGroup({
+      spiderfyOnMaxZoom: true,
+      showCoverageOnHover: false,
+      zoomToBoundsOnClick: true,
+      disableClusteringAtZoom: 16
+    });
+    $.getJSON("assets/js/pharmacyIstanbul.geojson", function (data) {
+      bikeRacks.addData(data);
+      bikeRackClusters.addLayer(bikeRacks);
+    });
 
 
         //initiating the map variable
         var map = L.map('map', {
           zoom: 11,
-          center: [39.95702,32.87872],
-          layers: [grayscale,route,plant,riskZone2,riskZone1, dumpSite]
+          center: [41.07521,29.05609],
+          layers: [grayscale, bikeRackClusters]
 
         });
         //setting the basic attributes of the map
-        map.setMaxBounds(map.getBounds());
-        map.setMinZoom(10);
-        map.setMaxZoom(13);
 
-        //grouping base layers defined above and assigning them to a var
-        var baseLayers = {
-            "Grayscale": grayscale,
-		    "Standart": osm,
-            "Satellite": Esri_WorldImagery
-           };
 
-         //grouping overlaying features
-        var overlayElements = {
-        "Overlay Elements": {
-          "Risk Zone 1": riskZone1,
-          "Risk Zone 2": riskZone2,
-          "Coal-Gas Plant": plant,
-          "Dump Site": dumpSite,
-          "Route": route
-
-    }
-};
-
-        //Adding all layers and feautes to map
-        L.control.groupedLayers(baseLayers, overlayElements).addTo(map);
 
         //initiating the side bar
         var sidebar = L.control.sidebar({ container: 'sidebar', position: 'right' })
@@ -210,24 +200,8 @@
 
       //add mouse position
       L.control.mousePosition().addTo(map);
-      L.Control.geocoder().addTo(map);
-      L.control.polylineMeasure({position:'topleft', unit:'metres', showBearings:true, clearMeasurementsOnStop: false, showClearControl: true, showUnitControl: true}).addTo(map);
 
-var dumpPlant=[ [  39.92685,32.84826], [39.94712, 32.82372],
-[ 39.94278,32.80294 ], [39.94838, 32.79353 ] ,[  39.95115 ,32.79147],[  39.94769 ,32.78459],[  39.94664 ,32.7736],[  39.96958 ,32.77086],[  40.0074 ,32.77189],[  40.01456 ,32.77601],[  40.01377 ,32.75679]
-];
 
-var truckIcon = L.icon({
-          iconUrl: 'assets/markers/truck.svg',
-          iconSize:     [32, 37],
-          //iconAnchor:   [39.94702,32.84872],
-          //popupAnchor:  [39.92702,32.84872]
-        });
-
-var truck= L.Marker.movingMarker(dumpPlant,
-    [1000, 1000, 1000, 1000,1000,1000,1000,1000,1000,1000], {autostart: true, loop: true, icon:truckIcon}).addTo(map);
-
-truck.loops = 0;
 
     </script>
 </body>
