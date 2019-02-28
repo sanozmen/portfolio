@@ -190,7 +190,10 @@
         });
         //setting the basic attributes of the map
 
-
+        //setting the basic attributes of the map
+        map.setMaxBounds(map.getBounds());
+        map.setMinZoom(7);
+        map.setMaxZoom(13);
 
         //initiating the side bar
         var sidebar = L.control.sidebar({ container: 'sidebar', position: 'right' })
