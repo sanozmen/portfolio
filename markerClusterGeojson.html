@@ -80,6 +80,11 @@
 
                 <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify ></p>
 
+                <div id="controls" style="margin: 15px;">
+                  <button type="button" class="btn btn-success" id="addButton">Add All Data</button>
+                </div>
+
+
                 
 
                 <!--<p style="margin-top:120px;  font-family:'Ubuntu', sans-serif; line-height: 5px; font-size: 0.75em" align=justify ><i> References</i></p>
@@ -185,14 +190,14 @@
         var map = L.map('map', {
           zoom: 8,
           center: [41.07521,29.05609],
-          layers: [grayscale, amenitiesClusters]
+          layers: [grayscale]
 
         });
         //setting the basic attributes of the map
 
         //setting the basic attributes of the map
         map.setMaxBounds(map.getBounds());
-        map.setMinZoom(7);
+        map.setMinZoom(4);
         map.setMaxZoom(13);
 
         //initiating the side bar
@@ -206,6 +211,12 @@
       //add mouse position
       L.control.mousePosition().addTo(map);
 
+      // Create event listener for the Add All Data Button
+  document.getElementById("addButton").addEventListener("click", amenities);
+      // add all data function
+    function addCoffeeShops() {
+        amenities.addTo(map);
+    };
 
 
     </script>
