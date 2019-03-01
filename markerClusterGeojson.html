@@ -175,13 +175,7 @@
         var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
 	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 });
-        //defining icons
-        var standartMarker= L.AwesomeMarkers.icon({
-        
-          markerColor: "blue"
-        }
-
-          );
+       
         
 
         var pharmIcon = L.icon({
@@ -204,7 +198,7 @@
     var amenities = new L.geoJson(null, {
       pointToLayer: function (feature, latlng) {
         return L.marker(latlng, {
-          icon: standartMarker
+          
           
         });
       },
