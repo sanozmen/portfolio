@@ -144,13 +144,7 @@
 
 
 
-        //initiating the map variable
-        var map = L.map('map', {
-          zoom: 8,
-          center: [41.07521,29.05609],
-          layers: [Esri_WorldImagery]
-
-        });
+        
         //setting the basic attributes of the map
 
 //defining the url to the service
@@ -177,8 +171,25 @@ var mosqIcon = L.icon({
           //popupAnchor:  [39.92702,32.84872]
         });
 
-//https://gis.stackexchange.com/questions/292674/adding-custom-icons-to-l-markerclustergroup
-var markers = L.markerClusterGroup({
+
+
+//initial definition of WFSLayer to be used in the next step
+var WFSLayer = new L.geoJson(null, {
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, {
+          //icon: amenitiesIcon,
+          //title: feature.properties.amenity
+        });
+      },
+      onEachFeature: function (feature, layer) {
+        if (feature.properties) {
+          var content =  feature.properties.amenity +"<br>"+ feature.properties.name;
+          layer.bindPopup(content);
+        }
+      }
+    });
+//initiating the cluster var
+var WFScluster = L.markerClusterGroup({
   spiderfyOnMaxZoom: true,
   showCoverageOnHover: false,
   zoomToBoundsOnClick: true,
@@ -186,31 +197,27 @@ var markers = L.markerClusterGroup({
  });
 
 
-
-//initial definition of WFSLayer to be used in the next step
-var WFSLayer = null;
-
-//async get data on the map
-var ajax = $.ajax({
+//async get data, assign to WFS was and assign to cluster as a layer
+ $.ajax({
     url : URL,
     dataType : 'jsonp',
     jsonpCallback : 'getJson',
     success : function (response) {
-        WFSLayer = L.geoJson(response, {
-            style: function (feature) {
+            
+            WFSLayer.addData(response);
 
+            WFScluster.addLayer(WFSLayer);
+      }
 
+  });
+       
 
-            },
-            onEachFeature: function (feature, layer) {
+  //initiating the map variable
+        var map = L.map('map', {
+          zoom: 8,
+          center: [41.07521,29.05609],
+          layers: [Esri_WorldImagery, WFScluster]
 
-                layer.bindPopup(feature.properties.amenity);
-
-                //console.log(feature)
-        },
-      }).addTo(markers.addTo(map));
-
-    }
         });
 
     var sidebar = L.control.sidebar({ container: 'sidebar', position: 'right' })
