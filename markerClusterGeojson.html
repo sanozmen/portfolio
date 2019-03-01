@@ -192,7 +192,7 @@
       },
       onEachFeature: function (feature, layer) {
         if (feature.properties) {
-          var content =  feature.properties.name+"<br>"+feature.properties.amenity ;
+          var content =  feature.properties.amenity +"<br>"+ feature.properties.name;
           layer.bindPopup(content);
         }
       }
