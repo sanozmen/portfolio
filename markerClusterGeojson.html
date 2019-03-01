@@ -28,6 +28,11 @@
     <!-- marker cluster styles-->
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.Default.css">
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.css">
+    <!--awesome markers -->
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css">
+    <link rel="stylesheet" href="assets/css/leaflet.awesome-markers.css" />
+
+
 
     <style>
         body {
@@ -79,7 +84,7 @@
                 <p class="lorem" style="margin-top:20px">Click logo on the right to back to the home page.</p>
 
                 <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify > This interactive map is a combination of marker clustering and data filtering with the help of Leaflet and javascript.</p>
-                 <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify > Sample demonstration of filtering publicly available amenities data with regards to some randomly chosen attirbutes like schools, gas stations and pharmacies. It is also easily possible to bring entire approx. 14.000 data points onto map with the help of clusterer plugin. </p>
+                 <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify > Sample demonstration of filtering publicly available amenities data (osm) with regards to randomly chosen attirbutes of "schools", "gas stations" and "pharmacies". It is also smoothly possible to bring approx. 14.000 data points onto map with the help of clusterer plugin. </p>
                 <!--
                 <div id="controls" style="margin: 15px;">
                   <button type="button" class="btn btn-secondary" id="addButton">Show All Data</button>
@@ -149,6 +154,8 @@
      <!--for marker clustering-->
     <script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js"></script>
 
+    <script src="assets/js/leaflet.awesome-markers.js" ></script>
+
 
     <script>
         //mapbox
@@ -167,6 +174,15 @@
 	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 });
         //defining icons
+        var standartMarker= L.AwesomeMarkers.icon({
+          icon: "coffee",
+          markerColor: "red"
+
+        }
+
+          );
+        
+
         var pharmIcon = L.icon({
       iconUrl: 'assets/markers/medicine.png',
       iconSize: [24, 28],
@@ -187,8 +203,8 @@
     var amenities = new L.geoJson(null, {
       pointToLayer: function (feature, latlng) {
         return L.marker(latlng, {
-          //icon: amenitiesIcon,
-          title: feature.properties.amenity
+          icon: standartMarker
+          
         });
       },
       onEachFeature: function (feature, layer) {
