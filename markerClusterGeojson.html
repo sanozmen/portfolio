@@ -79,16 +79,18 @@
                 <p class="lorem" style="margin-top:20px">Click logo on the right to back to the home page.</p>
 
                 <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify ></p>
-
+                <!--
                 <div id="controls" style="margin: 15px;">
-                  <button type="button" class="btn btn-success" id="addButton">Show All Data</button>
-                  <button type="button" class="btn btn-danger" id="removeButton">Remove All Data</button>
-                  <button type="button" class="btn btn-info" id="toggleButton">Toggle Data</button>
+                  <button type="button" class="btn btn-secondary" id="addButton">Show All Data</button>
+                  <button type="button" class="btn btn-secondary" id="removeButton">Remove All Data</button> -->
+
                 </div>
-
-
-
-
+                <div class="btn-group-vertical" style="margin-left: 50px;">
+                <button type="button" class="btn btn-secondary" id="toggleButton">Toggle All Data</button>
+                <button type="button" class="btn btn-secondary" id="schoolsButton">Schools</button>
+                <button type="button" class="btn btn-secondary" id="gasStationButton">Gas Stations</button>
+                <button type="button" class="btn btn-secondary" id="atmButton">Atms</button>
+                </div>
 
 
                 <!--<p style="margin-top:120px;  font-family:'Ubuntu', sans-serif; line-height: 5px; font-size: 0.75em" align=justify ><i> References</i></p>
@@ -162,8 +164,8 @@
         var amenitiesIcon = L.icon({
       iconUrl: 'assets/markers/medicine.png',
       iconSize: [24, 28],
-
     });
+    //all data
     var amenities = new L.geoJson(null, {
       pointToLayer: function (feature, latlng) {
         return L.marker(latlng, {
@@ -188,6 +190,8 @@
       amenities.addData(data);
       amenitiesClusters.addLayer(amenities);
     });
+
+
 
 
         //initiating the map variable
@@ -216,13 +220,13 @@
       L.control.mousePosition().addTo(map);
 
       // Create event listener for the Add All Data Button
-  document.getElementById("addButton").addEventListener("click", addAllData);
+  //document.getElementById("addButton").addEventListener("click", addAllData);
       // add all data function
     function addAllData() {
         amenitiesClusters.addTo(map);
     };
 
-    document.getElementById("removeButton").addEventListener("click", removeAllData);
+   // document.getElementById("removeButton").addEventListener("click", removeAllData);
       // add all data function
     function removeAllData() {
         map.removeLayer(amenitiesClusters);
