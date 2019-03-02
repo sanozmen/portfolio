@@ -104,7 +104,6 @@
               </div>
 
 
-                  <table id="GeojsonContent"></table>
 
 
                 <!--<p style="margin-top:120px;  font-family:'Ubuntu', sans-serif; line-height: 5px; font-size: 0.75em" align=justify ><i> References</i></p>
@@ -395,12 +394,6 @@
       disableClusteringAtZoom: 16
     });
 
-      window.onload = function() {
- 
-  pharmacies.features.forEach(function(entry) {
-    document.getElementById("GeojsonContent").innerHTML += "<tr><td>" + entry.ename + "</td></tr>";
-  });
-}
 
     $.getJSON("assets/js/amenitiesIstanbul.geojson", function (data) {
       pharmacies.addData(data);
