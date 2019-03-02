@@ -130,7 +130,7 @@
 
                 <h4>Geojson Data Filtering based on View</h4>
 
-                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify > A little data modification in the sample code published on docs page of Mapbox GL JS made this experimental map possible. Dynamically filter GeoJson data on display by pannig the view and click any item in the list to proceed to the concerning google search result.</p>
+                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify > A little data modification in the sample code published on docs page of Mapbox GL JS made this experimental map possible. Dynamically filter GeoJson data on display by pannig the view and click any item in the list to proceed to the concerning google search result. (The basemap has been customly designed in Mapbox studio.) </p>
                  <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify > The very same data (ca.14000 points) used in <a href="markerClusterGeojson.html" target="_blank">Marker Cluster Geojson</a> example has been the basis once again. </p>
                 <!--
                 <div id="controls" style="margin: 15px;">
@@ -203,11 +203,14 @@
 
     <script>
     
- 
+var grayscale=L.tileLayer('https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+          attribution: 'Map data &copy; OpenStreetMap contributors'
+        });
+
 mapboxgl.accessToken = 'pk.eyJ1Ijoic2Fub3ptZW4iLCJhIjoib2xwbVQtQSJ9.1ldcOvJz39J-WFX89QdO_Q';
 var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v9',
+    style: 'mapbox://styles/sanozmen/cjsrwzdts2tfp1fnvue2uz1b3',
     //X,Y order is different than leaflet.js
     center: [29.05609,41.0521],
     maxZoom:15,
