@@ -130,7 +130,7 @@
 
                 <h4>Geojson Data Filtering based on View</h4>
 
-                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify > A little data modification in the sample code published on docs page of Mapbox GL JS made this experimental dynamic map possible</p>
+                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify > A little data modification in the sample code published on docs page of Mapbox GL JS made this experimental map possible. Dynamically filter GeoJson data on display by pannig the view and click any item in the list to proceed to the concerning google search result.</p>
                  <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify > The very same data (ca.14000 points) used in <a href="markerClusterGeojson.html" target="_blank">Marker Cluster Geojson</a> example has been the basis once again. </p>
                 <!--
                 <div id="controls" style="margin: 15px;">
@@ -233,7 +233,8 @@ function renderListings(features) {
         features.forEach(function(feature) {
             var prop = feature.properties;
             var item = document.createElement('a');
-            item.href = "www.google.com";
+            //changing href to automatically search on the web
+            item.href = 'https://www.google.com/search?q='+prop.name;
             item.target = '_blank';
             item.textContent =  prop.name+" (Tag:"+prop.amenity+")";
             item.addEventListener('mouseover', function() {
