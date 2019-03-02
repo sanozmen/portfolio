@@ -101,14 +101,15 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoic2Fub3ptZW4iLCJhIjoib2xwbVQtQSJ9.1ldcOvJz39J-
 var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v9',
+    //X,Y order is different than leaflet.js
     center: [29.05609,41.0521],
     maxZoom:15,
     zoom: 13,
     minZoom: 12
 });
 
-// Holds visible airports features for filtering
-var airports = [];
+// Holds visible istanbulAmenitys features for filtering
+var istanbulAmenitys = [];
 
 // Create a popup, but don't add it to the map yet.
 var popup = new mapboxgl.Popup({
@@ -148,7 +149,7 @@ function renderListings(features) {
         filterEl.parentNode.style.display = 'none';
 
         // remove features filter
-        map.setFilter('airport', ['has', 'name']);
+        map.setFilter('istanbulAmenity', ['has', 'name']);
     }
 }
 
@@ -177,24 +178,20 @@ map.on('load', function() {
 
 
   
-// Add a new source from our GeoJSON data and set the
-// 'cluster' option to true. GL-JS will add the point_count property to your source data.
-map.addSource("airportSource", {
+// Add a new sr GeoJSON data 
+map.addSource("istanbulAmenitySource", {
 type: "geojson",
-// Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
-// from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
+// Point to GeoJSON data
 data: "assets/js/amenitiesIstanbul.geojson",
 
-clusterMaxZoom: 14, // Max zoom to cluster points on
-clusterRadius: 100// Radius of each cluster when clustering points (defaults to 50)
 });
 
 
  
 map.addLayer({
-id: "airport",
+id: "istanbulAmenity",
 type: "circle",
-source: "airportSource",
+source: "istanbulAmenitySource",
 filter: ["!", ["has", "point_count"]],
 paint: {
 "circle-color": "#11b4da",
@@ -207,25 +204,10 @@ paint: {
 
 
 
-    /*
-    map.addLayer({
-"id": "airport",
-"source": {
-"type": "geojson",
-"data": "assets/js/amenitiesIstanbul.geojson"
-},
-
-"type": "symbol",
-"layout": {
-"icon-image": "airport-15",
-"icon-padding": 0,
-"icon-allow-overlap":true
-}
-});*/
     
 
     map.on('moveend', function() {
-        var features = map.queryRenderedFeatures({layers:['airport']});
+        var features = map.queryRenderedFeatures({layers:['istanbulAmenity']});
 
         if (features) {
             var uniqueFeatures = getUniqueFeatures(features, "name");
@@ -235,13 +217,13 @@ paint: {
             // Clear the input container
             filterEl.value = '';
 
-            // Store the current features in sn `airports` variable to
+            // Store the current features in sn `istanbulAmenitys` variable to
             // later use for filtering on `keyup`.
-            airports = uniqueFeatures;
+            istanbulAmenitys = uniqueFeatures;
         }
     });
 
-    map.on('mousemove', 'airport', function(e) {
+    map.on('mousemove', 'istanbulAmenity', function(e) {
         // Change the cursor style as a UI indicator.
         map.getCanvas().style.cursor = 'pointer';
 
@@ -252,7 +234,7 @@ paint: {
             .addTo(map);
     });
 
-    map.on('mouseleave', 'airport', function() {
+    map.on('mouseleave', 'istanbulAmenity', function() {
         map.getCanvas().style.cursor = '';
         popup.remove();
     });
@@ -261,7 +243,7 @@ paint: {
         var value = normalize(e.target.value);
 
         // Filter visible features that don't match the input value.
-        var filtered = airports.filter(function(feature) {
+        var filtered = istanbulAmenitys.filter(function(feature) {
             var name = normalize(feature.properties.name);
             //var code = normalize(feature.properties.abbrev);
             return name.indexOf(value) > -1;
@@ -271,7 +253,7 @@ paint: {
         renderListings(filtered);
 
         // Set the filter to populate features into the layer.
-        map.setFilter('airport', ['match', ['get', 'name'], filtered.map(function(feature) {
+        map.setFilter('istanbulAmenity', ['match', ['get', 'name'], filtered.map(function(feature) {
             return feature.properties.name;
         }), true, false]);
     });
