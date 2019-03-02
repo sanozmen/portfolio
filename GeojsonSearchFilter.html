@@ -233,9 +233,9 @@ function renderListings(features) {
         features.forEach(function(feature) {
             var prop = feature.properties;
             var item = document.createElement('a');
-            item.href = prop.wikipedia;
+            item.href = "www.google.com";
             item.target = '_blank';
-            item.textContent =  feature.properties.amenity+" / "+prop.name;
+            item.textContent =  prop.amenity+" / "+prop.name;
             item.addEventListener('mouseover', function() {
                 // Highlight corresponding feature on the map
                 popup.setLngLat(feature.geometry.coordinates)
