@@ -90,12 +90,13 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoic2Fub3ptZW4iLCJhIjoib2xwbVQtQSJ9.1ldcOvJz39J-
 var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v9',
-    center: [41.0521,29.05609],
-    
-    zoom: 8
+    center: [29.05609,41.0521],
+    maxZoom:15,
+    zoom: 13,
+    minZoom: 12
 });
 
-// Holds visible airport features for filtering
+// Holds visible airports features for filtering
 var airports = [];
 
 // Create a popup, but don't add it to the map yet.
@@ -115,11 +116,11 @@ function renderListings(features) {
             var item = document.createElement('a');
             item.href = prop.wikipedia;
             item.target = '_blank';
-            item.textContent =  ' (' + prop.name + ')';
+            item.textContent =  feature.properties.amenity+' (' + prop.name + ')';
             item.addEventListener('mouseover', function() {
                 // Highlight corresponding feature on the map
                 popup.setLngLat(feature.geometry.coordinates)
-                    .setText( ' (' + feature.properties.name+ ')')
+                    .setText( feature.properties.amenity+ ' (' + feature.properties.name+ ')')
                     .addTo(map);
             });
             listingEl.appendChild(item);
@@ -136,7 +137,7 @@ function renderListings(features) {
         filterEl.parentNode.style.display = 'none';
 
         // remove features filter
-        map.setFilter('clusters', ['has', 'name']);
+        map.setFilter('airport', ['has', 'name']);
     }
 }
 
@@ -167,64 +168,22 @@ map.on('load', function() {
   
 // Add a new source from our GeoJSON data and set the
 // 'cluster' option to true. GL-JS will add the point_count property to your source data.
-map.addSource("airport", {
+map.addSource("airportSource", {
 type: "geojson",
 // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
 // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
 data: "assets/js/amenitiesIstanbul.geojson",
-cluster: true,
+
 clusterMaxZoom: 14, // Max zoom to cluster points on
-clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
+clusterRadius: 100// Radius of each cluster when clustering points (defaults to 50)
 });
 
-map.addLayer({
-id: "clusters",
-type: "circle",
-source: "airport",
-filter: ["has", "point_count"],
-paint: {
-// Use step expressions (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
-// with three steps to implement three types of circles:
-//   * Blue, 20px circles when point count is less than 100
-//   * Yellow, 30px circles when point count is between 100 and 750
-//   * Pink, 40px circles when point count is greater than or equal to 750
-"circle-color": [
-"step",
-["get", "point_count"],
-"#51bbd6",
-100,
-"#f1f075",
-750,
-"#f28cb1"
-],
-"circle-radius": [
-"step",
-["get", "point_count"],
-20,
-100,
-30,
-750,
-40
-]
-}
-});
+
  
 map.addLayer({
-id: "cluster-count",
-type: "symbol",
-source: "airport",
-filter: ["has", "point_count"],
-layout: {
-"text-field": "{point_count_abbreviated}",
-"text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
-"text-size": 12
-}
-});
- 
-map.addLayer({
-id: "unclustered-point",
+id: "airport",
 type: "circle",
-source: "airport",
+source: "airportSource",
 filter: ["!", ["has", "point_count"]],
 paint: {
 "circle-color": "#11b4da",
@@ -234,27 +193,7 @@ paint: {
 }
 });
  
- // inspect a cluster on click
-map.on('click', 'clusters', function (e) {
-var features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] });
-var clusterId = features[0].properties.cluster_id;
-map.getSource('airport').getClusterExpansionZoom(clusterId, function (err, zoom) {
-if (err)
-return;
- 
-map.easeTo({
-center: features[0].geometry.coordinates,
-zoom: zoom
-});
-});
-});
- 
-map.on('mouseenter', 'clusters', function () {
-map.getCanvas().style.cursor = 'pointer';
-});
-map.on('mouseleave', 'clusters', function () {
-map.getCanvas().style.cursor = '';
-});
+
 
 
     /*
@@ -275,7 +214,7 @@ map.getCanvas().style.cursor = '';
     
 
     map.on('moveend', function() {
-        var features = map.queryRenderedFeatures({layers:['clusters', "unclustered-point"]});
+        var features = map.queryRenderedFeatures({layers:['airport']});
 
         if (features) {
             var uniqueFeatures = getUniqueFeatures(features, "name");
@@ -291,7 +230,7 @@ map.getCanvas().style.cursor = '';
         }
     });
 
-    map.on('mousemove', 'clusters', function(e) {
+    map.on('mousemove', 'airport', function(e) {
         // Change the cursor style as a UI indicator.
         map.getCanvas().style.cursor = 'pointer';
 
@@ -302,7 +241,7 @@ map.getCanvas().style.cursor = '';
             .addTo(map);
     });
 
-    map.on('mouseleave', 'clusters', function() {
+    map.on('mouseleave', 'airport', function() {
         map.getCanvas().style.cursor = '';
         popup.remove();
     });
@@ -321,7 +260,7 @@ map.getCanvas().style.cursor = '';
         renderListings(filtered);
 
         // Set the filter to populate features into the layer.
-        map.setFilter('clusters', ['match', ['get', 'name'], filtered.map(function(feature) {
+        map.setFilter('airport', ['match', ['get', 'name'], filtered.map(function(feature) {
             return feature.properties.name;
         }), true, false]);
     });
