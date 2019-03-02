@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <meta charset='utf-8' />
+    <title>Filter features within map view</title>
+
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+     <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-57534785-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-57534785-2');
+    </script>
+    
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+  integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+  crossorigin=""/>
+
+    <link rel="stylesheet" href="assets/css/leaflet-sidebar.css" />
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.66.1/dist/L.Control.Locate.min.css" />
+    <link rel="stylesheet" href="assets/css/L.Control.MousePosition.css" />
+    <!-- bootstrap css-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+
+
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        html, body, #map {
+            height: 100%;
+            font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
+        }
+
+        .lorem {
+            font-style: italic;
+            color: #AAA;
+        }
+
+         .leaflet-control-layers-group-name {
+            font-weight: bold;
+            margin-bottom: .2em;
+            display: block;
+    }
+
+.map-overlay {
+    margin-left: 5px
+}
+
+.map-overlay fieldset {
+    display: none;
+    background: #ddd;
+    border: none;
+    padding: 10px;
+    margin: 0;
+}
+
+.map-overlay input {
+    display: block;
+    border: none;
+    width: 100%;
+    border-radius: 3px;
+    padding: 10px;
+    margin: 0;
+}
+
+.map-overlay .listing {
+    overflow: auto;
+    max-height: 100%;
+}
+
+.map-overlay .listing > * {
+    display: block;
+    padding: 5px 10px;
+    margin: 0;
+}
+
+.map-overlay .listing a {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    color: #404;
+    text-decoration: none;
+}
+
+.map-overlay .listing a:last-child {
+    border: none;
+}
+
+.map-overlay .listing a:hover {
+    background: #f0f0f0;
+}
+    </style>
+</head>
+<body>
+    <div id="sidebar" class="leaflet-sidebar collapsed">
+        <!-- Nav tabs -->
+        <div class="leaflet-sidebar-tabs">
+            <ul role="tablist">
+                <li><a href="#home" role="tab"><i class="fa fa-bars"></i></a></li>
+                <li><a href="index.html" role="tab"><img src="images/logo.svg" alt="" />></i></a></li>
+                <!-- <li class="disabled"><a href="#messages" role="tab"><i class="fa fa-envelope"></i></a></li> -->
+            </ul>
+
+            <!--<ul role="tablist">
+                <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
+            </ul> -->
+        </div>
+
+        <!-- Tab panes -->
+        <div class="leaflet-sidebar-content">
+            <div class="leaflet-sidebar-pane" id="home">
+                <h1 class="leaflet-sidebar-header">
+                   <!-- in case of necessity write a title here such as "Minimize the bar" -->
+                   <p style="font-size: 15px">Minimize the Bar</p>
+                    <span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span>
+                </h1>
+
+                <p class="lorem" style="margin-top:20px">Click logo on the right to get back to the home page.</p>
+
+                <h4>Geojson Data Filtering & Marker Clustering</h4>
+
+                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify > This interactive map is a combination of marker clustering and data filtering with the help of Leaflet and javascript.</p>
+                 <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify > Sample demonstration of filtering publicly available amenities data (osm) with regards to randomly chosen attirbutes of "schools", "gas stations" and "pharmacies". It is also smoothly possible to bring more than 14.000 data points onto map with the help of clusterer plugin. </p>
+                <!--
+                <div id="controls" style="margin: 15px;">
+                  <button type="button" class="btn btn-secondary" id="addButton">Show All Data</button>
+                  <button type="button" class="btn btn-secondary" id="removeButton">Remove All Data</button> -->
+
+                </div>
+
+                <div class='map-overlay'>
+                <fieldset>
+                    <input id='feature-filter' type='text' placeholder='Filter results by name' />
+                </fieldset>
+                <div id='feature-listing' class='listing'></div>
+            </div>
+
+
+
+                <!--<p style="margin-top:120px;  font-family:'Ubuntu', sans-serif; line-height: 5px; font-size: 0.75em" align=justify ><i> References</i></p>
+
+                 <p style="margin-top:5px;  font-family:'Ubuntu', sans-serif; line-height: 20px; font-size: 0.75em" align=justify ><i> Truck icon made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"              title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"              title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></i></p> -->
+
+
+
+
+                <!-- just added this button as a reminder for using this bar as button container in future works-->
+                <!-- <button type="button" class="btn btn-primary">Primary</button> -->
+
+            </div>
+
+            <div class="leaflet-sidebar-pane" id="profile">
+                <h1 class="leaflet-sidebar-header">Profile<span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span></h1>
+            </div>
+
+            <div class="leaflet-sidebar-pane" id="messages">
+                <h1 class="leaflet-sidebar-header">Messages<span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span></h1>
+            </div>
+
+            <div class="leaflet-sidebar-pane" id="settings">
+                <h1 class="leaflet-sidebar-header">Settings<span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span></h1>
+            </div>
+        </div>
+    </div>
+
+    <div id="map"></div>
+
+
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+    integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+    crossorigin=""></script>
+    <script src="assets/js/leaflet-sidebar.js"></script>
+    <script src="assets/js/L.Control.MousePosition.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.66.1/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+    <!-- below is for bootstrap -->
+    <script  src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!--for reading geojson via ajax-->
+    <script src="assets/js/leaflet-ajax.js" ></script>
+    <!-- for titling the layer groups-->
+    <script src="https://rawgithub.com/ismyrnow/Leaflet.groupedlayercontrol/master/src/leaflet.groupedlayercontrol.js"></script>
+
+     <!--for marker clustering-->
+    <script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js"></script>
+
+    <script src="assets/js/leaflet.awesome-markers.js" ></script>
+
+
+    <script>
+    
+ 
+mapboxgl.accessToken = 'pk.eyJ1Ijoic2Fub3ptZW4iLCJhIjoib2xwbVQtQSJ9.1ldcOvJz39J-WFX89QdO_Q';
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v9',
+    //X,Y order is different than leaflet.js
+    center: [29.05609,41.0521],
+    maxZoom:15,
+    zoom: 13,
+    minZoom: 12
+});
+
+// Holds visible istanbulAmenitys features for filtering
+var istanbulAmenitys = [];
+
+// Create a popup, but don't add it to the map yet.
+var popup = new mapboxgl.Popup({
+    closeButton: false
+});
+
+var filterEl = document.getElementById('feature-filter');
+var listingEl = document.getElementById('feature-listing');
+
+function renderListings(features) {
+    // Clear any existing listings
+    listingEl.innerHTML = '';
+    if (features.length) {
+        features.forEach(function(feature) {
+            var prop = feature.properties;
+            var item = document.createElement('a');
+            item.href = prop.wikipedia;
+            item.target = '_blank';
+            item.textContent =  feature.properties.amenity+" / "+prop.name;
+            item.addEventListener('mouseover', function() {
+                // Highlight corresponding feature on the map
+                popup.setLngLat(feature.geometry.coordinates)
+                    .setText( feature.properties.amenity+feature.properties.name)
+                    .addTo(map);
+            });
+            listingEl.appendChild(item);
+        });
+
+        // Show the filter input
+        filterEl.parentNode.style.display = 'block';
+    } else {
+        var empty = document.createElement('p');
+        empty.textContent = 'Drag the map to populate results';
+        listingEl.appendChild(empty);
+
+        // Hide the filter input
+        filterEl.parentNode.style.display = 'none';
+
+        // remove features filter
+        map.setFilter('istanbulAmenity', ['has', 'name']);
+    }
+}
+
+function normalize(string) {
+    return string.trim().toLowerCase();
+}
+
+function getUniqueFeatures(array, comparatorProperty) {
+    var existingFeatureKeys = {};
+    // Because features come from tiled vector data, feature geometries may be split
+    // or duplicated across tile boundaries and, as a result, features may appear
+    // multiple times in query results.
+    var uniqueFeatures = array.filter(function(el) {
+        if (existingFeatureKeys[el.properties[comparatorProperty]]) {
+            return false;
+        } else {
+            existingFeatureKeys[el.properties[comparatorProperty]] = true;
+            return true;
+        }
+    });
+
+    return uniqueFeatures;
+}
+
+map.on('load', function() {
+
+
+  
+// Add a new sr GeoJSON data 
+map.addSource("istanbulAmenitySource", {
+type: "geojson",
+// Point to GeoJSON data
+data: "assets/js/amenitiesIstanbul.geojson",
+
+});
+
+
+ 
+map.addLayer({
+id: "istanbulAmenity",
+type: "circle",
+source: "istanbulAmenitySource",
+filter: ["!", ["has", "point_count"]],
+paint: {
+"circle-color": "#f03b20",
+"circle-radius": 7,
+"circle-stroke-width": 1,
+"circle-stroke-color": "#000"
+}
+});
+ 
+
+
+
+    
+
+    map.on('moveend', function() {
+        var features = map.queryRenderedFeatures({layers:['istanbulAmenity']});
+
+        if (features) {
+            var uniqueFeatures = getUniqueFeatures(features, "name");
+            // Populate features for the listing overlay.
+            renderListings(uniqueFeatures);
+
+            // Clear the input container
+            filterEl.value = '';
+
+            // Store the current features in sn `istanbulAmenitys` variable to
+            // later use for filtering on `keyup`.
+            istanbulAmenitys = uniqueFeatures;
+        }
+    });
+
+    map.on('mousemove', 'istanbulAmenity', function(e) {
+        // Change the cursor style as a UI indicator.
+        map.getCanvas().style.cursor = 'pointer';
+
+        // Populate the popup and set its coordinates based on the feature.
+        var feature = e.features[0];
+        popup.setLngLat(feature.geometry.coordinates)
+            .setText( feature.properties.name )
+            .addTo(map);
+    });
+
+    map.on('mouseleave', 'istanbulAmenity', function() {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+    });
+
+    filterEl.addEventListener('keyup', function(e) {
+        var value = normalize(e.target.value);
+
+        // Filter visible features that don't match the input value.
+        var filtered = istanbulAmenitys.filter(function(feature) {
+            var name = normalize(feature.properties.name);
+            //var code = normalize(feature.properties.name);
+            return name.indexOf(value) > -1;
+        });
+
+        // Populate the sidebar with filtered results
+        renderListings(filtered);
+
+        // Set the filter to populate features into the layer.
+        map.setFilter('istanbulAmenity', ['match', ['get', 'name'], filtered.map(function(feature) {
+            return feature.properties.name;
+        }), true, false]);
+    });
+
+    // Call this function on initialization
+    // passing an empty array to render an empty state
+    renderListings([]);
+});
+
+
+        //initiating the side bar
+        var sidebar = L.control.sidebar({ container: 'sidebar', position: 'right' })
+            .addTo(map)
+            .open('home');
+
+
+
+
+
+
+    </script>
+</body>
+</html>
