@@ -409,7 +409,9 @@ map.on('load', function() {
             }
         })
 
-
+// Add zoom and rotation controls to the map.
+var nav = new mapboxgl.NavigationControl();
+map.addControl(nav, 'top-left');
 
     </script>
 </body>
