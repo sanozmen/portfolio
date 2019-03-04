@@ -21,7 +21,7 @@
   crossorigin=""/>
 
     <link rel="stylesheet" href="assets/css/leaflet-sidebar.css" />
-    
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.66.1/dist/L.Control.Locate.min.css" />
     <link rel="stylesheet" href="assets/css/L.Control.MousePosition.css" />
     <!-- bootstrap css-->
@@ -99,7 +99,7 @@
                 <h4>Geojson Data Filtering & Marker Clustering</h4>
 
                 <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify > This interactive map is a combination of marker clustering and data filtering with the help of Leaflet and javascript.</p>
-                 <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify > Sample demonstration of filtering publicly available amenities data (osm) with regards to randomly chosen attirbutes of "schools", "gas stations" and "pharmacies". It is also smoothly possible to bring more than 14.000 data points onto map with the help of clusterer plugin. </p>
+                 <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify > Sample demonstration of filtering publicly available amenities data (osm) with regards to randomly chosen attirbutes of "schools", "gas stations" and "pharmacies". It is also possible to bring more than 14.000 data points smoothly onto map with the help of clusterer plugin. </p>
                 <!--
                 <div id="controls" style="margin: 15px;">
                   <button type="button" class="btn btn-secondary" id="addButton">Show All Data</button>
@@ -200,8 +200,8 @@
         var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
 	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 });
-       
-        
+
+
 
         var pharmIcon = L.icon({
       iconUrl: 'assets/markers/medicine.png',
@@ -223,8 +223,8 @@
     var amenities = new L.geoJson(null, {
       pointToLayer: function (feature, latlng) {
         return L.marker(latlng, {
-          
-          
+
+
         });
       },
       onEachFeature: function (feature, layer) {
@@ -245,7 +245,7 @@
 
 
     $.getJSON("assets/js/amenitiesIstanbul.geojson", function (data) {
-      
+
       ready(data);
       amenities.addData(data);
       amenitiesCluster.addLayer(amenities);
@@ -442,11 +442,11 @@
   //loader
 
   function ready(data){
-            
+
             // remove the loader div from the DOM
             $('#loader').remove();
-         
-    
+
+
         }
 
 
