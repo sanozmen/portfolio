@@ -32,9 +32,9 @@
     <!--awesome markers -->
     <link rel="stylesheet" href="assets/js/leaflet.awesome-markers.css" />
 
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
+   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <style>
+
         body {
             padding: 0;
             margin: 0;
@@ -109,11 +109,12 @@
 
                 <div style="margin-left: 20px">
 
-                <button type="button" class="btn btn-outline-secondary " id="toggleButton" style="margin-bottom: 5px" >Toggle All Data </button>
-                <button type="button" class="btn btn-outline-secondary" id="schoolsButton" style="margin-bottom: 5px">Schools</button>
-                <button type="button" class="btn btn-outline-secondary" id="gasStationButton" style="margin-bottom: 5px">Gas Stations</button>
+                <button type="button" class="btn btn-outline-secondary " id="toggleButton" style="margin-bottom: 5px"  >Toggle All Data </button></div>
+                 <div style="margin-left: 20px">
+                <button type="button" class="btn btn-outline-secondary" id="schoolsButton" style="margin-bottom: 5px"><i class="fas fa-graduation-cap"></i> Schools</button>
+                <button type="button" class="btn btn-outline-secondary" id="gasStationButton" style="margin-bottom: 5px"><i class="fas fa-gas-pump"></i> Gas Stations</button>
 
-                <button type="button" class="btn btn-outline-secondary" id="pharmacyButton" style="margin-bottom: 5px">Pharmacies</button>
+                <button type="button" class="btn btn-outline-secondary" id="pharmacyButton" style="margin-bottom: 5px"><i class="fas fa-capsules"></i>Pharmacies</button>
               </div>
 
 
@@ -182,7 +183,7 @@
     <script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js"></script>
 
     <script src="assets/js/leaflet.awesome-markers.js" ></script>
-
+<script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
 
     <script>
         //mapbox
@@ -200,7 +201,6 @@
         var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
 	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 });
-
 
 
         var pharmIcon = L.icon({
@@ -224,13 +224,17 @@
       pointToLayer: function (feature, latlng) {
         return L.marker(latlng, {
 
+          //icon: amenitycon
+
 
         });
       },
       onEachFeature: function (feature, layer) {
         if (feature.properties) {
-          var content =  feature.properties.amenity +"<br>"+ feature.properties.name;
-          layer.bindPopup(content);
+          var content =  "Tag:"+feature.properties.amenity +"<br>"+ "Name:"+feature.properties.name;
+          layer.bindPopup(content,{closeButton: false, offset:L.point(0,-1)});
+          layer.on("mouseover", function(){layer.openPopup();});
+          layer.on("mouseout", function(){layer.openPopup();});
         }
       }
     });
@@ -321,7 +325,10 @@
         });
       },
         onEachFeature: function (feature, layer) {
-            layer.bindPopup(feature.properties.amenity+"<br>"+feature.properties.name);
+            var content =  "Tag:"+feature.properties.amenity +"<br>"+ "Name:"+feature.properties.name;
+          layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+          layer.on("mouseover", function(){layer.openPopup();});
+          layer.on("mouseout", function(){layer.openPopup();});
         }
       })
 
@@ -365,7 +372,10 @@
         });
       },
         onEachFeature: function (feature, layer) {
-            layer.bindPopup(feature.properties.amenity+"<br>"+feature.properties.name);
+          var content =  "Tag:"+feature.properties.amenity +"<br>"+ "Name:"+feature.properties.name;
+          layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5)});
+          layer.on("mouseover", function(){layer.openPopup();});
+          layer.on("mouseout", function(){layer.openPopup();});
         }
       })
 
@@ -411,7 +421,10 @@
         });
       },
         onEachFeature: function (feature, layer) {
-            layer.bindPopup(feature.properties.amenity+"<br>"+feature.properties.name);
+            var content =  "Tag:"+feature.properties.amenity +"<br>"+ "Name:"+feature.properties.name;
+          layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5)});
+          layer.on("mouseover", function(){layer.openPopup();});
+          layer.on("mouseout", function(){layer.openPopup();});
         }
       })
 
