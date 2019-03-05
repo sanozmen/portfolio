@@ -327,13 +327,30 @@ map.on('load', function() {
         map.addLayer({
         id: "istanbulAmenity",
         type: "circle",
+        property:"amenity",
         source: "istanbulAmenitySource",
-        paint: {
-        "circle-color": "#f03b20",
-        "circle-radius": 7,
-        "circle-stroke-width": 1,
-        "circle-stroke-color": "#000"
-        }
+
+        'paint': {
+            // make circles larger as the user zooms from z12 to z22
+            'circle-radius': {
+            'base': 7.75,
+            'stops': [[13, 5], [15, 60]]
+            },
+            "circle-stroke-width": 1,
+           "circle-stroke-color": "#000",
+            // color circles by amenity, using a match expression
+            'circle-color': [
+            'match',
+            ['get', 'amenity'],
+            'pharmacy', '#d73027',
+            'school', '#4393c3',
+            'restaurant', '#8073ac',
+            'fast_food', '#8073ac',
+            'cafe', '#8073ac',
+            /* other */ '#fee090'
+            ]
+            }
+
         });
 
 
