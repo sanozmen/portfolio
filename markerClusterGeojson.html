@@ -285,16 +285,16 @@
       L.control.mousePosition().addTo(map);
 
       // Create event listener for the Add All Data Button
-  //document.getElementById("addButton").addEventListener("click", addAllData);
+      //document.getElementById("addButton").addEventListener("click", addAllData);
       // add all data function
-    function addAllData() {
+        function addAllData() {
         amenitiesCluster.addTo(map);
         map.removeLayer(schoolCluster);
         map.removeLayer(gasStationCluster);
         map.removeLayer(pharmacyCluster);
-    };
+      };
 
-   // document.getElementById("removeButton").addEventListener("click", removeAllData);
+       // document.getElementById("removeButton").addEventListener("click", removeAllData);
       // add all data function
     function removeAllData() {
         map.removeLayer(amenitiesCluster);
@@ -452,8 +452,7 @@
 
   };
 
-  //loader
-
+  //loader animation
   function ready(data){
 
             // remove the loader div from the DOM
