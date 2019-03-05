@@ -77,7 +77,7 @@
 
                 <p class="lorem" style="margin-top:20px">Click logo on the right to get back to the home page.</p>
 
-                <h4>GeoServer WFS Marker CLustering</h4>
+                <h4>GeoServer WFS Marker Clustering</h4>
 
                 <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify > This map uses a basic self-configured PostGIS, Geoserver setup running on the cloud as its backend to render point data and Leaflet.js to visualize them. Additionally, I also utilized <i>dynamic side bar, cursor coordinate displayer, marker clustering </i> plugins for this project. </p>
 
@@ -149,7 +149,7 @@
 
 
 
-        
+
         //setting the basic attributes of the map
 
 //defining the url to the service
@@ -199,6 +199,7 @@ var WFScluster = L.markerClusterGroup({
   showCoverageOnHover: false,
   zoomToBoundsOnClick: true,
   disableClusteringAtZoom: 16,
+
  });
 
 
@@ -208,14 +209,14 @@ var WFScluster = L.markerClusterGroup({
     dataType : 'jsonp',
     jsonpCallback : 'getJson',
     success : function (response) {
-            
+
             WFSLayer.addData(response);
 
             WFScluster.addLayer(WFSLayer);
       }
 
   });
-       
+
 
   //initiating the map variable
         var map = L.map('map', {

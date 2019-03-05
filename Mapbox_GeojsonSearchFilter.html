@@ -15,7 +15,7 @@
 
       gtag('config', 'UA-57534785-2');
     </script>
-    
+
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
 
@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="assets/css/L.Control.MousePosition.css" />
     <!-- bootstrap css-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    
+
 
 
     <style>
@@ -227,7 +227,7 @@
 
 
     <script>
-    
+
 var grayscale=L.tileLayer('https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
           attribution: 'Map data &copy; OpenStreetMap contributors'
         });
@@ -313,8 +313,8 @@ function getUniqueFeatures(array, comparatorProperty) {
 map.on('load', function() {
 
 
-  
-        // Add a new sr GeoJSON data 
+
+        // Add a new sr GeoJSON data
         map.addSource("istanbulAmenitySource", {
         type: "geojson",
         // Point to GeoJSON data
@@ -323,7 +323,7 @@ map.on('load', function() {
         });
 
         //add layer
-         
+
         map.addLayer({
         id: "istanbulAmenity",
         type: "circle",
@@ -335,9 +335,9 @@ map.on('load', function() {
         "circle-stroke-color": "#000"
         }
         });
- 
 
-        //filter 
+
+        //filter
     map.on('moveend', function() {
         var features = map.queryRenderedFeatures({layers:['istanbulAmenity']});
 
@@ -401,7 +401,7 @@ map.on('load', function() {
             .addTo(map)
             .open('home');
 
-   
+
         //Hide loading bar once tiles from geojson are loaded
         map.on('data', function(e) {
             if (e.dataType === 'source' && e.sourceId === 'istanbulAmenitySource') {
