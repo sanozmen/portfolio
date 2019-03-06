@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Amenities in Istanbul</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-57534785-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-57534785-2');
+    </script>
+
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+  integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+  crossorigin=""/>
+
+    <link rel="stylesheet" href="assets/css/leaflet-sidebar.css" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.66.1/dist/L.Control.Locate.min.css" />
+    <link rel="stylesheet" href="assets/css/L.Control.MousePosition.css" />
+    <!-- bootstrap css-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- marker cluster styles-->
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.Default.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.css">
+    <!--awesome markers -->
+    <link rel="stylesheet" href="assets/js/leaflet.awesome-markers.css" />
+
+   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <style>
+
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        html, body, #map {
+            height: 100%;
+            font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
+        }
+
+        .lorem {
+            font-style: italic;
+            color: #AAA;
+        }
+
+         .leaflet-control-layers-group-name {
+            font-weight: bold;
+            margin-bottom: .2em;
+            display: block;
+    }
+
+      .loader {
+        margin: -10px 0 0 -250px;
+        height: 100px;
+        width: 20%;
+        position: fixed;
+        text-align: center;
+        padding: 1em;
+        top: 50%;
+        left: 50%;
+        margin: 0 auto 1em;
+        z-index: 9999;
+    }
+    </style>
+</head>
+<body>
+    <div id="sidebar" class="leaflet-sidebar collapsed">
+        <!-- Nav tabs -->
+        <div class="leaflet-sidebar-tabs">
+            <ul role="tablist">
+                <li><a href="#home" role="tab"><i class="fa fa-bars"></i></a></li>
+                <li><a href="index.html" role="tab"><img src="images/logo.svg" alt="" />></i></a></li>
+                <!-- <li class="disabled"><a href="#messages" role="tab"><i class="fa fa-envelope"></i></a></li> -->
+            </ul>
+
+           <ul role="tablist">
+                <li><a href="https://github.com/sanozmen/" role="tab" target="_blank"><i class="fa fa-github fa-lg"></i></a></li>
+            </ul>
+        </div>
+
+        <!-- Tab panes -->
+        <div class="leaflet-sidebar-content">
+            <div class="leaflet-sidebar-pane" id="home">
+                <h1 class="leaflet-sidebar-header">
+                   <!-- in case of necessity write a title here such as "Minimize the bar" -->
+                   <p style="font-size: 15px">Minimize the Bar</p>
+                    <span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span>
+                </h1>
+
+                <p class="lorem" style="margin-top:20px">Click logo on the right to get back to the home page.</p>
+
+                <h4>Geojson Data Filtering & Marker Clustering</h4>
+
+                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify > This interactive map is a combination of marker clustering and data filtering with the help of Leaflet and javascript.</p>
+                 <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify > Sample demonstration of filtering publicly available amenities data (osm) with regards to randomly chosen attirbutes of "schools", "gas stations" and "pharmacies". It is also possible to bring more than 14.000 data points smoothly onto map with the help of clusterer plugin. </p>
+                <!--
+                <div id="controls" style="margin: 15px;">
+                  <button type="button" class="btn btn-secondary" id="addButton">Show All Data</button>
+                  <button type="button" class="btn btn-secondary" id="removeButton">Remove All Data</button> -->
+
+                </div>
+
+                <div style="margin-left: 20px">
+
+                <button type="button" class="btn btn-outline-secondary " id="toggleButton" style="margin-bottom: 5px"  >Toggle All Data </button></div>
+                 <div style="margin-left: 20px">
+                <button type="button" class="btn btn-outline-secondary" id="schoolsButton" style="margin-bottom: 5px"><i class="fas fa-graduation-cap"></i> Schools</button>
+                <button type="button" class="btn btn-outline-secondary" id="gasStationButton" style="margin-bottom: 5px"><i class="fas fa-gas-pump"></i> Gas Stations</button>
+
+                <button type="button" class="btn btn-outline-secondary" id="pharmacyButton" style="margin-bottom: 5px"><i class="fas fa-capsules"></i>Pharmacies</button>
+              </div>
+
+
+
+
+                <!--<p style="margin-top:120px;  font-family:'Ubuntu', sans-serif; line-height: 5px; font-size: 0.75em" align=justify ><i> References</i></p>
+
+                 <p style="margin-top:5px;  font-family:'Ubuntu', sans-serif; line-height: 20px; font-size: 0.75em" align=justify ><i> Truck icon made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"              title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"              title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></i></p> -->
+
+
+
+
+                <!-- just added this button as a reminder for using this bar as button container in future works-->
+                <!-- <button type="button" class="btn btn-primary">Primary</button> -->
+
+            </div>
+
+            <div class="leaflet-sidebar-pane" id="profile">
+                <h1 class="leaflet-sidebar-header">Profile<span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span></h1>
+            </div>
+
+            <div class="leaflet-sidebar-pane" id="messages">
+                <h1 class="leaflet-sidebar-header">Messages<span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span></h1>
+            </div>
+
+            <div class="leaflet-sidebar-pane" id="settings">
+                <h1 class="leaflet-sidebar-header">Settings<span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span></h1>
+            </div>
+        </div>
+    </div>
+
+    <div id="map"></div>
+
+    <!--loader-->
+    <div class="loader loader--style1" title="0" id="loader">
+        <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+            <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+    s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+    c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z" />
+            <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+    C22.32,8.481,24.301,9.057,26.013,10.047z">
+                <animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="0.5s" repeatCount="indefinite" />
+            </path>
+        </svg>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+    integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+    crossorigin=""></script>
+    <script src="assets/js/leaflet-sidebar.js"></script>
+    <script src="assets/js/L.Control.MousePosition.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.66.1/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+    <!-- below is for bootstrap -->
+    <script  src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!--for reading geojson via ajax-->
+    <script src="assets/js/leaflet-ajax.js" ></script>
+    <!-- for titling the layer groups-->
+    <script src="https://rawgithub.com/ismyrnow/Leaflet.groupedlayercontrol/master/src/leaflet.groupedlayercontrol.js"></script>
+
+     <!--for marker clustering-->
+    <script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js"></script>
+
+    <script src="assets/js/leaflet.awesome-markers.js" ></script>
+<script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
+
+    <script>
+        //mapbox
+
+        //basemaps defined below
+
+        var grayscale=L.tileLayer('https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+          attribution: 'Map data &copy; OpenStreetMap contributors'
+        });
+
+        var osm=L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: 'Map data &copy; OpenStreetMap contributors'
+        });
+
+        var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+});
+
+
+        var nexrad = L.tileLayer.wms("https://www.mapelse.me/geoserver/prt/wms", {
+    layers: 'swiss',
+    format: 'image/png',
+    transparent: true,
+});
+
+
+        //initiating the map variable
+        var map = L.map('map', {
+          zoom: 8,
+          center: [41.07521,29.05609],
+          layers: [grayscale, nexrad]
+
+        });
+        //setting the basic attributes of the map
+
+
+
+        //initiating the side bar
+        var sidebar = L.control.sidebar({ container: 'sidebar', position: 'right' })
+            .addTo(map)
+            .open('home');
+
+      // add geolocator
+      //L.control.locate().addTo(map);
+
+      //add mouse position
+      L.control.mousePosition().addTo(map);
+
+
+
+    </script>
+</body>
+</html>
