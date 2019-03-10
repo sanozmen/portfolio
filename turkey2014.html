@@ -53,6 +53,18 @@
             margin-bottom: .2em;
             display: block;
     }
+    .info {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
     </style>
 </head>
 <body>
@@ -85,11 +97,14 @@
 
                 <p class="lorem" style="margin-top:20px">Click logo on the right to get back to the home page.</p>
 
-                <h4>A Basic Map with Various Functionalities</h4>
+                <h4>A Choropleth Map Example</h4>
 
-                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >This is an experimental and very basic map based on Leaflet.js library whose self capabilities were brought together with various different plugins. While creating this map, I tried to show different functionalities of Leaflet from using plugins like <i>dynamic side bar, geolocator, geocoder, cursor coordinate displayer, measurement tool, ajax geojson loader, marker animation </i> to utilizing its own capabilities such as <i>creating some overlaying features, adding layer control, setting max. bounds, max.&min. zoom., hover popup, click popup etc. </i> </p>
+                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >This thematic map has been put together with help of leaflet.js library, by using input data extracted from the web site of Turkey's regulatory authority for elections. The script written in python to scrape the data quickly, can be found in my <a href="https://github.com/sanozmen/webAutomation/blob/master/ElectionResult.py" target="_blank">github repository</a> Following the dowload data has been joined with spatial data and prepared for map display by using desktop QGIS software. </p>
 
-                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify ><i>This map has first been put together when public raised deep concerns such that alleged inapropriate <a href="http://www.hurriyetdailynews.com/dismantling-of-asbestos-filled-factory-halted-in-ankara--110351" target="_blank">dismantling of old coal-gas plant</a> in city center of Ankara (2017) risked healths of thousands of people living nearby (ca. 4km) by causing an uncontrolloed release of dangerous chemical of <a href="https://www.cancer.gov/about-cancer/causes-prevention/risk/substances/asbestos/asbestos-fact-sheet" target="_blank">asbestos</a>. As of Feb,2019 the map has been revised and recreated.</i></p>
+
+                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify ><i>Only the results for greater municipalities (30 cities in total) has been visualized on this map.</i></p>
+
+              
 
                 <!--<p style="margin-top:120px;  font-family:'Ubuntu', sans-serif; line-height: 5px; font-size: 0.75em" align=justify ><i> References</i></p>
 
@@ -142,6 +157,7 @@
     <script src="https://rawgithub.com/ismyrnow/Leaflet.groupedlayercontrol/master/src/leaflet.groupedlayercontrol.js"></script>
     <!-- animated marker-->
     <script src="assets/js/MovingMarker.js" ></script>
+    <script src="assets/js/election2014turkey.geojson" ></script>
 
     <script>
   
@@ -162,38 +178,71 @@
 
           //initiating the map variable
         var map = L.map('map', {
-          zoom: 11,
-          center: [39.95702,32.87872],
+          zoom: 6,
+          center: [39.95702,36.98872],
           layers: [grayscale]
 
         });
 
+        map.setMaxBounds(map.getBounds());
+        map.setMinZoom(5);
+        map.setMaxZoom(7);
+
+  // control that shows state info on hover
+  var info = L.control();
+
+  info.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info');
+    this.update();
+    return this._div;
+  };
+
+  info.update = function (props) {
+    this._div.innerHTML = "<h4>2014 Municipal Election Results</h4>" +(props ? "<b>City: </b>"+
+      '<b>' + props.NAME + '</b><br />' + "<b>Winner Party: "+props.greaterMunicipalities2014data_Winner
+      : 'Hover over a city<br />'+"<i>Click the menu button on the right</i> <br /><i>to see explanations about this project</i>"
+      );
+  };
+
+  info.addTo(map);
+
+function highlightFeature(e) {
+    var layer = e.target;
+
+    layer.setStyle({
+      weight: 5,
+      color: '#666',
+      dashArray: '',
+      fillOpacity: 0.7
+    });
+
+    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+      layer.bringToFront();
+    }
+    info.update(layer.feature.properties);
+  }
+
+var election2014;
+
+  function resetHighlight(e) {
+    election2014.resetStyle(e.target);
+    info.update();
+  }
+
+    function onEachFeature(feature, layer) {
+    layer.on({
+      mouseover: highlightFeature, 
+      mouseout: resetHighlight,
+        
+    });
+  }
+
         //elections data
-      $.getJSON("assets/js/election2014turkey.geojson", function (data) {
+ election2014= L.geoJson(turkey2014election, {
+    style: CustomStyle,
+    onEachFeature: onEachFeature
 
-
-    
-    
-        var election2014 = new L.geoJson(data, {
-          style:CustomStyle,
-        
-      onEachFeature: function (feature, layer) {
-        
-
-        if (feature.properties) {
-          var content =  "City: "+feature.properties.NAME +"<br>"+ "Party: "+feature.properties.greaterMunicipalities2014data_Winner;
-          layer.bindPopup(content,{closeButton: false, offset:L.point(0,-1)});
-          layer.on("mouseover", function(){layer.openPopup();});
-          layer.on("mouseout", function(){layer.openPopup();});
-        }
-       
-      }
-
-     
-
-    }).addTo(map);
-        });
-
+  }).addTo(map);
 
    
 // Set up a custom style for different political parties
@@ -201,31 +250,33 @@ function CustomStyle(feature) {
   var colorToUse;
   var parti = feature.properties.greaterMunicipalities2014data_Winner;
             
-  if (parti === "AKP") colorToUse = "#46C7FA";
-  else if (parti === "CHP") colorToUse = "#E81D1A";
-  else if (parti === "MHP") colorToUse = "#4161BA";
-  else if (parti === "DBP") colorToUse = "#599C65";
-  else if (parti=== "Independent Candidate") colorToUse = "#65018A";
+  if (parti === "AKP") colorToUse = "#fc8d62";
+  else if (parti === "CHP") colorToUse = "#8da0cb";
+  else if (parti === "MHP") colorToUse = "#ffd92f";
+  else if (parti === "DBP") colorToUse = "#e78ac3";
+  else if (parti=== "Independent Candidate") colorToUse = "#a6d854";
   else colorToUse = "#fff";
             
   return {
     fillColor: colorToUse,
-    weight: 1, opacity: 1,
-    color: '#000',
+    weight: 1, 
+    opacity: 1,
+    color: 'white',
+    dashArray: '3',
     fillOpacity: 0.7
   };
 }
+
+
 
       
 
         //initiating the side bar
         var sidebar = L.control.sidebar({ container: 'sidebar', position: 'right' })
-            .addTo(map)
-            .open('home');
+            .addTo(map);
 
       //add mouse position
       L.control.mousePosition().addTo(map);
-      L.Control.geocoder().addTo(map);
      
 
     </script>
