@@ -74,6 +74,17 @@
     margin: 0 0 5px;
     color: #777;
 }
+.legend {
+    line-height: 18px;
+    color: #555;
+}
+.legend i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7;
+}
     </style>
 </head>
 <body>
@@ -209,7 +220,7 @@
   info.update = function (props) {
     this._div.innerHTML = "<h4>2014 Municipal Election Results</h4>" +(props ? "<b>City: </b>"+
       '<b>' + props.NAME + '</b><br />' + "<b>Winner Party: "+props.greaterMunicipalities2014data_Winner
-      : 'Hover over a city<br />'+"<i>Click the menu button on the right</i> <br /><i>to see explanations about this project</i>"
+      : 'Hover over a city'
       );
   };
 
@@ -259,12 +270,12 @@ function CustomStyle(feature) {
   var colorToUse;
   var parti = feature.properties.greaterMunicipalities2014data_Winner;
             
-  if (parti === "AKP") colorToUse = "#fc8d62";
-  else if (parti === "CHP") colorToUse = "#8da0cb";
-  else if (parti === "MHP") colorToUse = "#ffd92f";
-  else if (parti === "DBP") colorToUse = "#e78ac3";
-  else if (parti=== "Independent Candidate") colorToUse = "#a6d854";
-  else colorToUse = "#fff";
+  parti === "AKP" ? colorToUse = "#fc8d62":
+ parti === "CHP" ? colorToUse = "#8da0cb":
+  parti === "MHP" ? colorToUse = "#ffd92f":
+  parti === "DBP" ? colorToUse = "#e78ac3":
+  parti=== "Independent Candidate" ? colorToUse = "#a6d854":
+      colorToUse = "#fff";
             
   return {
     fillColor: colorToUse,
@@ -276,16 +287,35 @@ function CustomStyle(feature) {
   };
 }
 
+//legend
+  var legend = L.control({position: 'bottomleft'});
 
+legend.onAdd = function (map) {
 
+    var div = L.DomUtil.create('div', 'info legend');
+        
+  div.innerHTML += "<h4>Winners</h4>";
+  div.innerHTML += '<i style="background: #fc8d62"></i><span>AKP</span><br>';
+  div.innerHTML += '<i style="background: #8da0cb"></i><span>CHP</span><br>';
+  div.innerHTML += '<i style="background: #ffd92f"></i><span>MHP</span><br>';
+  div.innerHTML += '<i style="background: #e78ac3"></i><span>DBP</span><br>';
+  div.innerHTML += '<i style="background: #a6d854"></i><span>Independent Candidate</span><br>';
+  div.innerHTML += '<i style="background: #fff"></i><span>N/A</span><br>';
+
+   
+
+    return div;
+};
+
+legend.addTo(map);
       
 
         //initiating the side bar
         var sidebar = L.control.sidebar({ container: 'sidebar', position: 'right' })
-            .addTo(map);
+            .addTo(map)
+            .open("home");
 
-      //add mouse position
-      L.control.mousePosition().addTo(map);
+  
      
 
     </script>
