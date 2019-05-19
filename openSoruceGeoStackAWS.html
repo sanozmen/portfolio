@@ -60,16 +60,28 @@
 							<header>
 								<span class="image main"><img src="images/bannerStack.png" alt="" /></span>
 								<h1>Open Source Free/Low Cost Geo-stack on AWS with SSL</h1>
-								<p align="justify">It is not always as easy as we think to figure out how to create a production ready SSL enabled backend environment for web mapping & GIS purposes (i.e. geo-stack). Providing SSL requires special attention since web mapping libraries like Leaflet.js require this protocol to display data on the map with no issue. After spending some time to get things together and build a backend with Geoserver + PostGIS, streamed through SSL, I’ve got some experience which I think will be beneficial for those who are in need of building something similar at minimum cost. </p>
-								<p align="justify">Shorty, this step-by-step guide would aim to explain:</p>
-								<p>Following completion of first year of theoretical studies in Lund I moved to Southampton,UK for writing my dissertation and passed it with distinction. For more details, you can click on <a href="https://drive.google.com/file/d/0B7rMLoyWgUXVODVwcEpmTHFPYVU/view?pli=1" target="_blank">this link</a> to view the final work. </p>
-
-								<p>Below are a selection of projects completed throughout the first year of the Masters degree</p>
-								 <p><a href="https://drive.google.com/file/d/0B7rMLoyWgUXVNkFoZDBwSDUzWWM/view" target="_blank">Kenya's Roads: Analysis of Maintenance Costs and Potential Future Expansion Areas</a></p>
-								  <p><a href="https://drive.google.com/file/d/0B7rMLoyWgUXVUW1oRmNNMThMbXc/view" target="_blank">Hydrological modelling using data in different spatial resolutions</a></p>
-								  <p><a href="https://drive.google.com/file/d/0B7rMLoyWgUXVX0FEcXdtSFo5N3c/view" target="_blank">Climate Change Impact on Soil Water and Net Photosynthesis in the Agricultural Area in Coldstream Creek, Canada</a></p>
+								
+								
 							</header>
-							<p></p>
+							<p align="justify" style="margin-bottom: 20px">It is not always as easy as we think to figure out how to create a production ready SSL enabled backend environment for web mapping & GIS purposes (i.e. geo-stack). Providing SSL requires special attention since web mapping libraries like Leaflet.js require this protocol to display data on the map with no issue. After spending some time to get things together and build a backend with Geoserver + PostGIS, streamed through SSL, I’ve got some experience which I think will be beneficial for those who are in need of building something similar at minimum cost. </p>
+								<p align="justify" style="margin-bottom: 5px">Shorty, this step-by-step guide would aim to explain:</p>
+								<ol style="margin-bottom: 20px">
+									<li>Creating a web geo-stack consisting PostGIS and Geoserver</li>
+									<li>How to utilize Amazon Web Services (AWS) with minimum cost in production environment</li>
+									<li>Also as a prerequisite for the previous item, securing the connection of deployments with a free SSL, again with the help of AWS</li>
+									
+								</ol>
+							<p align="justify" style="margin-bottom: 5px">To start with, first head to AWS’s website and create a new user account for yourself. Secondly, get a domain name(no matter which provider) to utilize while enabling SSL.</p>
+							<p align="justify" style="font-size: 0.9em; margin-bottom: 5px"><i>For those of you who have a student e-mail, I would recommend to apply for a Github student pack and activate free credits given to use AWS. Otherwise, features that are open to Free-tier usage are also enough to get the main idea behind this process. Additionally, you can get a domain name for free for 1 year from namechape.com if you get this student pack. I would strongly recommend it.</i></p>
+							<p align="justify">Once everything above is done, let's start with AWS. From service dropdown on top-left select EC2 through which we will launch our instance.  Click launch instance and then continue with Ubuntu Server 18.04.</p>
+
+							<div class="images"><center><img src="images/tutorialGeoStackAWS/1.jpg" alt="" width="600" height="500"/></center></div>
+							<p align="justify">In the following page, t2.micro which is selected as default will be our choice to proceed. And then we can "configure the instance details" by clicking next.</p>
+							<div class="images"><center><img src="images/tutorialGeoStackAWS/2.png" alt="" width="700" height="600"/></center></div>
+							<p align="justify">We can leave the following page as is with its default values and proceed to “add storage”. For this part, I would suggest to increase the size of the instance to 30gb which is limit for free tier users.</p>
+							<div class="images"><center><img  src="images/tutorialGeoStackAWS/3.png" alt="" width="700" height="700"/></center></div>
+							<p align="justify">In following page just add some tags you think that will be beneficial to identify this instance in the future and then proceed to “configure security group” page. This is where we will allow type of connections from/to this instance. I would recommend to limit SSH connection to the computers you are using by selecting  “My IP” (as highlighted in the image below) from source dropdown. You can still change those rules after launching the instance. If you need to let another computer to access via SSH, just go find security group properties and add it.</p>
+
 						</div>
 					</div>
 
