@@ -76,16 +76,66 @@
 							<p align="justify">Once everything above is done, let's start with AWS. From service dropdown on top-left select EC2 through which we will launch our instance.  Click launch instance and then continue with Ubuntu Server 18.04.</p>
 
 							<div class="images"><center><img src="images/tutorialGeoStackAWS/1.jpg" alt="" width="600" height="500"/></center></div>
-							<p align="justify">In the following page, t2.micro which is selected as default will be our choice to proceed. And then we can "configure the instance details" by clicking next.</p>
+							<p align="justify" style="margin-bottom: 20px">In the following page, t2.micro which is selected as default will be our choice to proceed. And then we can "configure the instance details" by clicking next.</p>
 							<div class="images"><center><img src="images/tutorialGeoStackAWS/2.png" alt="" width="700" height="600"/></center></div>
-							<p align="justify">We can leave the following page as is with its default values and proceed to “add storage”. For this part, I would suggest to increase the size of the instance to 30gb which is limit for free tier users.</p>
+							<p align="justify" style="margin-bottom: 20px">We can leave the following page as is with its default values and proceed to “add storage”. For this part, I would suggest to increase the size of the instance to 30gb which is limit for free tier users.</p>
 							<div class="images"><center><img  src="images/tutorialGeoStackAWS/3.png" alt="" width="700" height="700"/></center></div>
-							<p align="justify">In following page just add some tags you think that will be beneficial to identify this instance in the future and then proceed to “configure security group” page. This is where we will allow type of connections from/to this instance. I would recommend to limit SSH connection to the computers you are using by selecting  “My IP” (as highlighted in the image below) from source dropdown. You can still change those rules after launching the instance. If you need to let another computer to access via SSH, just go find security group properties and add it.</p>
+							<p align="justify" style="margin-bottom: 20px">In following page just add some tags you think that will be beneficial to identify this instance in the future and then proceed to “configure security group” page. This is where we will allow type of connections from/to this instance. I would recommend to limit SSH connection to the computers you are using by selecting  “My IP” (as highlighted in the image below) from source dropdown. You can still change those rules after launching the instance. If you need to let another computer to access via SSH, just go find security group properties and add it.</p>
 							<div class="images"><center><img  src="images/tutorialGeoStackAWS/4.png" alt="" width="700" height="700"/></center></div>
 							<p align="justify" style="margin-bottom: 5px">After clicking review and launch, we are ready to have look at the overview right before finalizing the process. Once you've made sure that everything is fine, click launch to initiate the process. You will be prompted to select or create a “key pair” which is required to access the instance via SSH. Select “create a new pair”, name it and download it to your computer. Just for the note, in case you might want you access your instance from another computer, keep in mind to store it on a secure cloud storage to download again. AWS S3 might be helpful. Create a bucket and upload it there.</p>
 							<p align="justify" style="margin-bottom: 5px">Launching will take a few minutes. In order to check its status, find EC2 from Services dropdown on top left and click running instances from this page. If instance state appears to be “running” then you are set to go on.</p>
-							<p align="justify" style="margin-bottom: 10px">Now, there is one more step before connecting to our instance via shell/bash/terminal/command line interface. We need to allocate and associate an "elastic ip" to our instance. That is a compulsary requirement for being able to point our domain to our instance. In order access the page below, click Elastic IPs under “Network and Security” group on your EC2 Dashboard. </p>
+							<p align="justify" style="margin-bottom: 20px">Now, there is one more step before connecting to our instance via shell/bash/terminal/command line interface. We need to allocate and associate an "elastic ip" to our instance. That is a compulsary requirement for being able to point our domain to our instance. In order access the page below, click Elastic IPs under “Network and Security” group on your EC2 Dashboard. </p>
 							<div class="images"><center><img  src="images/tutorialGeoStackAWS/5.png" alt="" width="600" height="600"/></center></div>
+							<p align="justify" style="margin-bottom: 5px; margin-top: 10px ">Click allocate new address, leave selection as is and click allocate. It is not over yet. Now, on the appearing screen, right click the ip we have just allocated and select “associate address”. Select your instance from dropdown and submit. </p>
+							<p align="justify" style="margin-bottom: 5px "> When you turned back to elastic ip overview page, now you will see all the columns are filled with new values showing association. Now, we are ready to connect our instance via SSH and install PostGIS and Geoserver.</p>
+							<p align="justify" style="margin-bottom: 5px "> Open the existing terminal installed on your computer and keep in mind that you will update the key pair path and EC2 instance name before amazonaws.com with your own values.</p>
+
+							<pre><code>ssh -i /c/pathToYourKeyPair/xyz.pem ubuntu@ec2-YourPublicDNS(IPv4).amazonaws.com</code></pre>
+							<p align="justify" style="margin-bottom: 5px "> The first one to change is the path on your pc to the key pair you have just downloaded. For the second one, head back to the overview page of your instance.  </p>
+							<div class="images"><center><img  src="images/tutorialGeoStackAWS/6.png" alt="" width="900" height="450"/></center></div>
+							<p align="justify" style="margin-bottom: 5px "> You can find your public dns right bottom of the page as shown above image. Copy/paste it instead of second highlighted part in given command. Once ready, press enter and write “yes” when you are asked if you are sure to continue. Shortly after that, if the last line of command line window starts with something like  “ubuntu@...”, that means that everything worked well, you connected to your instance. We can now start installing Geoserver and PostGIS. 
+							 </p>
+
+							 <p align="justify" style="margin-bottom: 5px">Prior to start, you should run the following command in order to update the package list:</p>
+							 <pre><code>sudo apt-get update</code></pre>
+
+							<p align="justify" style="margin-bottom: 5px">Now, we can install openjdk java 8. Enter the following commad in your terminal:</p>
+							<pre><code>sudo apt-get install openjdk-8-jre</code></pre>
+							<p align="justify" style="margin-bottom: 5px">We are ready to install tomcat 8, which is a prerequisite for Geoserver:</p>
+							<pre><code>sudo apt-get install tomcat8</code></pre>
+							<p align="justify" style="margin-bottom: 5px">Create a folder called “Downloads” and change current directory:</p>
+							<pre><code>sudo mkdir Downloads
+cd /Downloads</code></pre>
+							<p align="justify" style="margin-bottom: 5px">Download Geoserver into that directory:</p>
+							<pre><code>sudo wget http://sourceforge.net/projects/geoserver/files/GeoServer/2.12.3/geoserver-2.12.3-war.zip</code></pre>
+							<p align="justify" style="margin-bottom: 5px">Install unzip command and unzip downloaded file:</p>
+							<pre><code>sudo apt-get install unzip
+sudo unzip geoserver-2.12.3-war.zip</code></pre>
+							<p align="justify" style="margin-bottom: 5px">Now when you write<code>ls -a</code> command you must be seeing a “geoserver.war” file. Next, we’ll move this .war file into <code>tomcat8/webapps</code> :</p>
+							<pre><code>sudo mv geoserver.war /var/lib/tomcat8/webapps/</code></pre>
+							<p align="justify" style="margin-bottom: 5px">Change your directory to <code>/var/lib/tomcat8/webapps/</code> and check if the file has been moved correctly.</p>
+							<p align="justify" style="margin-bottom: 5px">Once you've made sure that the file exist in that directory, restart tomcat8 with:</p>
+							<pre><code>sudo service tomcat8 restart</code></pre>
+							<p align="justify" style="margin-bottom: 5px">Now you can access Geoserver with <code>http://Public Dns of Your EC2 Instance:8080/geoserver</code> and see if it's working.</p>
+							<div class="images"><center><img  src="images/tutorialGeoStackAWS/7.png" alt="" width="700" height="300"/></center></div>
+							<p align="justify" style="margin-bottom: 5px">Mostly, default administrator credentials are as follows. Login and change the password with something more secure.</p>
+							<p align="justify" style="margin-bottom: 0px"><i>Username:admin
+							</i></p>
+							<p align="justify" style="margin-top: 0px"><i>Password: geoserver
+							</i></p>
+							<p align="justify" style="margin-bottom: 5px"></p>
+							<p align="justify" style="margin-bottom: 5px"></p>
+							<p align="justify" style="margin-bottom: 5px"></p>
+							<p align="justify" style="margin-bottom: 5px"></p>
+							<p align="justify" style="margin-bottom: 5px"></p>
+							<p align="justify" style="margin-bottom: 5px"></p>
+							<p align="justify" style="margin-bottom: 5px"></p>
+							<p align="justify" style="margin-bottom: 5px"></p>
+							<p align="justify" style="margin-bottom: 5px"></p>
+							<p align="justify" style="margin-bottom: 5px"></p>
+							<p align="justify" style="margin-bottom: 5px"></p>
+							<p align="justify" style="margin-bottom: 5px"></p>
+							<p align="justify" style="margin-bottom: 5px"></p>
 							<p align="justify" style="margin-bottom: 5px"></p>
 
 						</div>
