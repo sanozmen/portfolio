@@ -63,6 +63,7 @@
 								
 								
 							</header>
+							<p>First published on 19.9.2019</p>
 							<p align="justify" style="margin-bottom: 20px">It is not always as easy as we think to figure out how to create a production ready SSL enabled backend environment for web mapping & GIS purposes (i.e. geo-stack). Providing SSL requires special attention since web mapping libraries like Leaflet.js require this protocol to display data on the map with no issue. After spending some time to get things together and build a backend with Geoserver + PostGIS, streamed through SSL, I’ve got some experience which I think will be beneficial for those who are in need of building something similar at minimum cost. </p>
 								<p align="justify" style="margin-bottom: 5px">Shorty, this step-by-step guide would aim to explain:</p>
 								<ol style="margin-bottom: 20px">
@@ -111,22 +112,53 @@ cd /Downloads</code></pre>
 							<p align="justify" style="margin-bottom: 5px">Install unzip command and unzip downloaded file:</p>
 							<pre><code>sudo apt-get install unzip
 sudo unzip geoserver-2.12.3-war.zip</code></pre>
-							<p align="justify" style="margin-bottom: 5px">Now when you write<code>ls -a</code> command you must be seeing a “geoserver.war” file. Next, we’ll move this .war file into <code>tomcat8/webapps</code> :</p>
+							<p align="justify" style="margin-bottom: 5px">Now when you write<code style="font-size: 13px">ls -a</code> command you must be seeing a “geoserver.war” file. Next, we’ll move this .war file into <code style="font-size: 13px">tomcat8/webapps</code> :</p>
 							<pre><code>sudo mv geoserver.war /var/lib/tomcat8/webapps/</code></pre>
-							<p align="justify" style="margin-bottom: 5px">Change your directory to <code>/var/lib/tomcat8/webapps/</code> and check if the file has been moved correctly.</p>
+							<p align="justify" style="margin-bottom: 5px">Change your directory to <code style="font-size: 13px">/var/lib/tomcat8/webapps/</code> and check if the file has been moved correctly.</p>
 							<p align="justify" style="margin-bottom: 5px">Once you've made sure that the file exist in that directory, restart tomcat8 with:</p>
 							<pre><code>sudo service tomcat8 restart</code></pre>
-							<p align="justify" style="margin-bottom: 5px">Now you can access Geoserver with <code>http://Public Dns of Your EC2 Instance:8080/geoserver</code> and see if it's working.</p>
+							<p align="justify" style="margin-bottom: 5px">Now you can access Geoserver with <code style="font-size: 13px">http://Public Dns of Your EC2 Instance:8080/geoserver</code> and see if it's working.</p>
 							<div class="images"><center><img  src="images/tutorialGeoStackAWS/7.png" alt="" width="700" height="300"/></center></div>
 							<p align="justify" style="margin-bottom: 5px">Mostly, default administrator credentials are as follows. Login and change the password with something more secure.</p>
 							<p align="justify" style="margin-bottom: 0px"><i>Username:admin
 							</i></p>
 							<p align="justify" style="margin-top: 0px"><i>Password: geoserver
 							</i></p>
+							<p align="justify" style="margin-bottom: 5px">The thing is that we are trying to build something useful, but at the same time for free. So, the memory & CPU capacities of our machine is quite limited. So it is pretty prone to crash from time to time, if we try to work with large datasets. Therefore, we will need a little twist for performance improvement, even though this will not guarantee to solve issues completely. We can still experience connection problems, there is only 1gb of memory alongside 1 CPU, most of which is busy with operating the software we installed. </p>
+							<p align="justify" style="margin-bottom: 10px">For that reason, even though performance improvement is whole another subject, my advice would be to create a new file called “setenv.sh” at the same location with “catalina.sh” file and fill it as follows, then save it and restart tomcat. This will increase the heap size and help to avoid frequent crashes:</p>
+							<pre><code>export CATALINA_OPTS="-Xms256m -Xmx1024m"</code></pre>
+							<p align="justify" style="margin-bottom: 5px">Once again, I would like to notice that, if you are not planning to build something only for self-testing purposes, you should consider to choose a more powerful instance with higher CPU and memory features. Beyond that, there are also other methods that can be applied, yet those are completely out of scope of this walkthrough.</p>
+							<p align="justify" style="margin-bottom: 5px">Next, we can move to the step of installing Postgresql/PostGIS database into our instance. <i>Prior to going ahead, I assume that you already installed a Postgresql DBMS on your PC/Mac. This is a must for ease of spatial data handling as it enables us to interact with the DBMS through a well designed interface. If it is not installed yet, it is just a matter of seconds to google and find how to do it.</i>
+Back to our terminal window, first I would recommend you to change your current directory to home. Then, run another package update and install postgresql:
+</p>						<pre><code>sudo apt update
+sudo apt install postgresql postgresql-contrib</code></pre>
+							<p align="justify" style="margin-bottom: 5px">After that we need to install PostGIS with following command:</p>
+							<pre><code>apt-get install postgis*</code></pre>
+
+							<p align="justify" style="margin-bottom: 5px">In order to enable PostGIS, we need to apply few commands in the following order: </p>
+							<p align="justify" style="margin-bottom: 5px">Switch to postgres user:</p>
+							<pre><code>sudo -i -u postgres</code></pre>
+							<p align="justify" style="margin-bottom: 5px">Activate psql command line interface:</p>
+							<pre><code>psql</code></pre>
+							<p align="justify" style="margin-bottom: 5px">Create extension:</p>
+							<pre><code>CREATE EXTENSION postgis;</code></pre>
+							<p align="justify" style="margin-bottom: 5px">Now we have a spatially enabled DBMS. Keep in mind that  <code style="font-size: 13px">\q</code> will help you to quit.</p>
+							<p align="justify" style="margin-bottom: 5px">We have installed everything we need so far. The second part will be about linking our instance to our domain and securing it with a SSL certificate.
+From AWS services search and find AWS certificate manager. Click "get started" on the certificate home page.
+</p>
+							<div class="images"><center><img  src="images/tutorialGeoStackAWS/8.png" alt="" width="500" height="400"/></center></div>
+							<p align="justify" style="margin-bottom: 5px">Then request a public certificate.</p>
+							<div class="images"><center><img  src="images/tutorialGeoStackAWS/9.png" alt="" width="700" height="400"/></center></div>
+
 							<p align="justify" style="margin-bottom: 5px"></p>
 							<p align="justify" style="margin-bottom: 5px"></p>
 							<p align="justify" style="margin-bottom: 5px"></p>
 							<p align="justify" style="margin-bottom: 5px"></p>
+							<p align="justify" style="margin-bottom: 5px"></p>
+							<p align="justify" style="margin-bottom: 5px"></p>
+							<p align="justify" style="margin-bottom: 5px"></p>
+							<p align="justify" style="margin-bottom: 5px"></p>
+
 							<p align="justify" style="margin-bottom: 5px"></p>
 							<p align="justify" style="margin-bottom: 5px"></p>
 							<p align="justify" style="margin-bottom: 5px"></p>
