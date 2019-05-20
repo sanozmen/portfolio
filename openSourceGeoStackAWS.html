@@ -89,7 +89,7 @@
 							<div class="images"><center><img  src="images/tutorialGeoStackAWS/5.png" alt="" width="600" height="600"/></center></div>
 							<p align="justify" style="margin-bottom: 5px; margin-top: 10px ">Click allocate new address, leave selection as is and click allocate. It is not over yet. Now, on the appearing screen, right click the ip we have just allocated and select “associate address”. Select your instance from dropdown and submit. </p>
 							<p align="justify" style="margin-bottom: 5px "> When you turned back to elastic ip overview page, now you will see all the columns are filled with new values showing association. Now, we are ready to access our instance via SSH and install PostGIS and Geoserver on it.</p>
-							<p align="justify" style="margin-bottom: 5px "> Open the existing terminal installed on your computer and keep in mind that you will update the key pair path and EC2 instance name before amazonaws.com with your own values.</p>
+							<p align="justify" style="margin-bottom: 5px "> Open the existing terminal installed on your computer and keep in mind that you will adjust the key pair path and EC2 instance name before amazonaws.com with your own values.</p>
 
 							<pre><code>ssh -i /c/pathToYourKeyPair/xyz.pem ubuntu@ec2-YourPublicDNS(IPv4).amazonaws.com</code></pre>
 							<p align="justify" style="margin-bottom: 5px "> The first one to change is the path on your pc to the key pair you have just downloaded. For the second one, head back to the overview page of your instance.  </p>
