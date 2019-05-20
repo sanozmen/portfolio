@@ -92,7 +92,7 @@
 							<p align="justify" style="margin-bottom: 5px "> Open the existing terminal installed on your computer and keep in mind that you will adjust the key pair path and EC2 instance name before amazonaws.com with your own values.</p>
 
 							<pre><code>ssh -i /c/pathToYourKeyPair/xyz.pem ubuntu@ec2-YourPublicDNS(IPv4).amazonaws.com</code></pre>
-							<p align="justify" style="margin-bottom: 5px "> The first one to change is the path on your pc to the key pair you have just downloaded. For the second one, head back to the overview page of your instance.  </p>
+							<p align="justify" style="margin-bottom: 5px "> The first one to change is the path on your pc to the key pair you have just downloaded. For the second one, head back to the overview dashboard of your EC2 instance.  </p>
 							<div class="images"><center><img  src="images/tutorialGeoStackAWS/6.png" alt="" width="900" height="450"/></center></div>
 							<p align="justify" style="margin-bottom: 5px "> You can find your public dns right bottom of the page as shown above image. Copy/paste it instead of second highlighted part in given command. Once ready, press enter and write “yes” when you are asked if you are sure to continue. Shortly after that, if the last line of command line window starts with something like  “ubuntu@...”, that means that everything worked well, you connected to your instance. We can now start installing Geoserver and PostGIS.
 							 </p>
