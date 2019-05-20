@@ -64,10 +64,10 @@
 
 							</header>
 							<p style="font-size: 0.8em"><i>First published on 19.5.2019</i></p>
-							<p align="justify" style="margin-bottom: 20px">It is not always as easy as we think to figure out how to create a production ready SSL enabled backend environment for web mapping & GIS purposes (i.e. geo-stack). Providing SSL requires special attention since web mapping libraries like Leaflet.js require this protocol to display data on the map with no issue. After spending some time to get things together and build a backend with Geoserver + PostGIS, streamed through SSL, I’ve got some experience which I think will be beneficial for those who are in need of building something similar at minimum cost. </p>
+							<p align="justify" style="margin-bottom: 20px">It is not always as easy as we think to figure out how to create a production ready SSL enabled backend environment for web mapping & GIS purposes (i.e. geospatial stack). Providing SSL requires special attention since web mapping libraries like Leaflet.js require this protocol to display data on the map with no issue. After spending some time to get things together and build a backend with Geoserver + PostGIS, streamed through SSL, I’ve got some experience which I think will be beneficial for those who are in need of building something similar at minimum cost. </p>
 								<p align="justify" style="margin-bottom: 5px">Shorty, this step-by-step guide would aim to explain:</p>
 								<ol style="margin-bottom: 20px">
-									<li>Creating a web geo-stack consisting PostGIS and Geoserver</li>
+									<li>Creating a web geospatial stack consisting PostGIS and Geoserver</li>
 									<li>How to utilize Amazon Web Services (AWS) with minimum cost in production environment</li>
 									<li>Also as a prerequisite for the previous item, securing the connection of deployments with a free SSL, again with the help of AWS</li>
 
@@ -190,7 +190,7 @@ From AWS services search and find AWS certificate manager. Click "get started" o
 							<div class="images"><center><img  src="images/tutorialGeoStackAWS/24.png" alt="" width="600" height="700"/></center></div>
 							<p align="justify" style="margin-bottom: 5px">THAT’S IT. Now you have your own free geo-stack running on AWS through free SSL enabled connection.</p>
 							<div class="images"><center><img  src="images/tutorialGeoStackAWS/25.png" alt="" width="800" height="400"/></center></div>
-							<p align="justify" style="margin-bottom: 5px">Please keep in mind that this geo-stack experimental and you should be checking your usage limits on AWS. Another thing to pay attention is that, the SSL certificate requires renewal after a certain period of time.</p>
+							<p align="justify" style="margin-bottom: 5px">Please keep in mind that this geospatial stack experimental and you should be checking your usage limits on AWS. Another thing to pay attention is that, the SSL certificate requires renewal after a certain period of time.</p>
 							<p align="justify" style="margin-bottom: 5px">On of the suggestions for taking this walkthrough one step further might be building PostGIS and Geoserver through Docker. This might help to configure/maintain things even faster. </p>
 							<p align="justify" style="margin-bottom: 5px">In case of a question or suggestion or any other request you can contact me via my e-mail/linkedin. </p>
 							<p align="justify" style="margin-bottom: 5px"></p>
