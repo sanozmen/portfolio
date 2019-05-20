@@ -16,7 +16,7 @@
 
 		  gtag('config', 'UA-57534785-2');
 		</script>
-		
+
 	</head>
 	<body class="is-preload">
 		<!-- Wrapper -->
@@ -60,8 +60,8 @@
 							<header>
 								<span class="image main"><img src="images/bannerStack.png" alt="" /></span>
 								<h1>Open Source Free/Low Cost Geo-stack on AWS with SSL</h1>
-								
-								
+
+
 							</header>
 							<p>First published on 19.9.2019</p>
 							<p align="justify" style="margin-bottom: 20px">It is not always as easy as we think to figure out how to create a production ready SSL enabled backend environment for web mapping & GIS purposes (i.e. geo-stack). Providing SSL requires special attention since web mapping libraries like Leaflet.js require this protocol to display data on the map with no issue. After spending some time to get things together and build a backend with Geoserver + PostGIS, streamed through SSL, I’ve got some experience which I think will be beneficial for those who are in need of building something similar at minimum cost. </p>
@@ -70,19 +70,19 @@
 									<li>Creating a web geo-stack consisting PostGIS and Geoserver</li>
 									<li>How to utilize Amazon Web Services (AWS) with minimum cost in production environment</li>
 									<li>Also as a prerequisite for the previous item, securing the connection of deployments with a free SSL, again with the help of AWS</li>
-									
+
 								</ol>
 							<p align="justify" style="margin-bottom: 5px">To start with, first head to AWS’s website and create a new user account for yourself. Secondly, get a domain name(no matter which provider) to utilize while enabling SSL.</p>
 							<p align="justify" style="font-size: 0.9em; margin-bottom: 5px"><i>For those of you who have a student e-mail, I would recommend to apply for a Github student pack and activate free credits given to use AWS. Otherwise, features that are open to Free-tier usage are also enough to get the main idea behind this process. Additionally, you can get a domain name for free for 1 year from namechape.com if you get this student pack. I would strongly recommend it.</i></p>
 							<p align="justify">Once everything above is done, let's start with AWS. From service dropdown on top-left select EC2 through which we will launch our instance.  Click launch instance and then continue with Ubuntu Server 18.04.</p>
 
-							<div class="images"><center><img src="images/tutorialGeoStackAWS/1.jpg" alt="" width="600" height="500"/></center></div>
+							<div class="images"><center><img src="images/tutorialGeoStackAWS/1.jpg" alt="" width="600" height="400"/></center></div>
 							<p align="justify" style="margin-bottom: 20px">In the following page, t2.micro which is selected as default will be our choice to proceed. And then we can "configure the instance details" by clicking next.</p>
-							<div class="images"><center><img src="images/tutorialGeoStackAWS/2.png" alt="" width="700" height="600"/></center></div>
+							<div class="images"><center><img src="images/tutorialGeoStackAWS/2.png" alt="" width="600" height="500"/></center></div>
 							<p align="justify" style="margin-bottom: 20px">We can leave the following page as is with its default values and proceed to “add storage”. For this part, I would suggest to increase the size of the instance to 30gb which is limit for free tier users.</p>
-							<div class="images"><center><img  src="images/tutorialGeoStackAWS/3.png" alt="" width="700" height="700"/></center></div>
+							<div class="images"><center><img  src="images/tutorialGeoStackAWS/3.png" alt="" width="600" height="600"/></center></div>
 							<p align="justify" style="margin-bottom: 20px">In following page just add some tags you think that will be beneficial to identify this instance in the future and then proceed to “configure security group” page. This is where we will allow type of connections from/to this instance. I would recommend to limit SSH connection to the computers you are using by selecting  “My IP” (as highlighted in the image below) from source dropdown. You can still change those rules after launching the instance. If you need to let another computer to access via SSH, just go find security group properties and add it.</p>
-							<div class="images"><center><img  src="images/tutorialGeoStackAWS/4.png" alt="" width="700" height="700"/></center></div>
+							<div class="images"><center><img  src="images/tutorialGeoStackAWS/4.png" alt="" width="600" height="600"/></center></div>
 							<p align="justify" style="margin-bottom: 5px">After clicking review and launch, we are ready to have look at the overview right before finalizing the process. Once you've made sure that everything is fine, click launch to initiate the process. You will be prompted to select or create a “key pair” which is required to access the instance via SSH. Select “create a new pair”, name it and download it to your computer. Just for the note, in case you might want you access your instance from another computer, keep in mind to store it on a secure cloud storage to download again. AWS S3 might be helpful. Create a bucket and upload it there.</p>
 							<p align="justify" style="margin-bottom: 5px">Launching will take a few minutes. In order to check its status, find EC2 from Services dropdown on top left and click running instances from this page. If instance state appears to be “running” then you are set to go on.</p>
 							<p align="justify" style="margin-bottom: 20px">Now, there is one more step before connecting to our instance via shell/bash/terminal/command line interface. We need to allocate and associate an "elastic ip" to our instance. That is a compulsary requirement for being able to point our domain to our instance. In order access the page below, click Elastic IPs under “Network and Security” group on your EC2 Dashboard. </p>
@@ -94,7 +94,7 @@
 							<pre><code>ssh -i /c/pathToYourKeyPair/xyz.pem ubuntu@ec2-YourPublicDNS(IPv4).amazonaws.com</code></pre>
 							<p align="justify" style="margin-bottom: 5px "> The first one to change is the path on your pc to the key pair you have just downloaded. For the second one, head back to the overview page of your instance.  </p>
 							<div class="images"><center><img  src="images/tutorialGeoStackAWS/6.png" alt="" width="900" height="450"/></center></div>
-							<p align="justify" style="margin-bottom: 5px "> You can find your public dns right bottom of the page as shown above image. Copy/paste it instead of second highlighted part in given command. Once ready, press enter and write “yes” when you are asked if you are sure to continue. Shortly after that, if the last line of command line window starts with something like  “ubuntu@...”, that means that everything worked well, you connected to your instance. We can now start installing Geoserver and PostGIS. 
+							<p align="justify" style="margin-bottom: 5px "> You can find your public dns right bottom of the page as shown above image. Copy/paste it instead of second highlighted part in given command. Once ready, press enter and write “yes” when you are asked if you are sure to continue. Shortly after that, if the last line of command line window starts with something like  “ubuntu@...”, that means that everything worked well, you connected to your instance. We can now start installing Geoserver and PostGIS.
 							 </p>
 
 							 <p align="justify" style="margin-bottom: 5px">Prior to start, you should run the following command in order to update the package list:</p>
@@ -118,7 +118,7 @@ sudo unzip geoserver-2.12.3-war.zip</code></pre>
 							<p align="justify" style="margin-bottom: 5px">Once you've made sure that the file exist in that directory, restart tomcat8 with:</p>
 							<pre><code>sudo service tomcat8 restart</code></pre>
 							<p align="justify" style="margin-bottom: 5px">Now you can access Geoserver with <code style="font-size: 13px">http://Public Dns of Your EC2 Instance:8080/geoserver</code> and see if it's working.</p>
-							<div class="images"><center><img  src="images/tutorialGeoStackAWS/7.png" alt="" width="700" height="300"/></center></div>
+							<div class="images"><center><img  src="images/tutorialGeoStackAWS/7.png" alt="" width="600" height="250"/></center></div>
 							<p align="justify" style="margin-bottom: 5px">Mostly, default administrator credentials are as follows. Login and change the password with something more secure.</p>
 							<p align="justify" style="margin-bottom: 0px"><i>Username:admin
 							</i></p>
@@ -146,16 +146,19 @@ sudo apt install postgresql postgresql-contrib</code></pre>
 							<p align="justify" style="margin-bottom: 5px">We have installed everything we need so far. The second part will be about linking our instance to our domain and securing it with a SSL certificate.
 From AWS services search and find AWS certificate manager. Click "get started" on the certificate home page.
 </p>
-							<div class="images"><center><img  src="images/tutorialGeoStackAWS/8.png" alt="" width="500" height="400"/></center></div>
+							<div class="images"><center><img  src="images/tutorialGeoStackAWS/8.png" alt="" width="600" height="500"/></center></div>
 							<p align="justify" style="margin-bottom: 5px">Then request a public certificate.</p>
-							<div class="images"><center><img  src="images/tutorialGeoStackAWS/9.png" alt="" width="700" height="400"/></center></div>
+							<div class="images"><center><img  src="images/tutorialGeoStackAWS/9.png" alt="" width="600" height="350"/></center></div>
 
 							<p align="justify" style="margin-bottom: 5px">Fill in your domain name in the explained way on that screen. Put an asterisk * to the beginning. In other words, if your domain has a name like <code style="font-size: 13px">klmn.com</code> , you should write it like <code style="font-size: 13px">*.klmn.com</code>
 </p>
-							<p align="justify" style="margin-bottom: 5px"></p>
-							<p align="justify" style="margin-bottom: 5px"></p>
-							<p align="justify" style="margin-bottom: 5px"></p>
-							<p align="justify" style="margin-bottom: 5px"></p>
+							<div class="images"><center><img  src="images/tutorialGeoStackAWS/10.png" alt="" width="600" height="400"/></center></div>
+							<p align="justify" style="margin-bottom: 5px">For the validation, I would prefer DNS validation. We will just download a text file including dns settings. Copy&paste them to settings of our domain. For the following pages continue clicking next until you reach certificates overview.</p>
+							<div class="images"><center><img  src="images/tutorialGeoStackAWS/11.png" alt="" width="600" height="300"/></center></div>
+							<p align="justify" style="margin-bottom: 5px">Click "export dns configuration to a file" on this page. Open downloaded csv file with a text editor installed on your computer.</p>
+							<p align="justify" style="margin-bottom: 5px">Keep it open for a moment and login to your domain management board. As I mentioned before, mine is registered via namecheap and it is possible to view all domains by clicking on domain list.</p>
+							<p align="justify" style="margin-bottom: 5px">From there, click advanced DNS. You should be seeing something like below.</p>
+							<div class="images"><center><img  src="images/tutorialGeoStackAWS/12.png" alt="" width="600" height="400"/></center></div>
 							<p align="justify" style="margin-bottom: 5px"></p>
 							<p align="justify" style="margin-bottom: 5px"></p>
 							<p align="justify" style="margin-bottom: 5px"></p>
@@ -229,7 +232,7 @@ From AWS services search and find AWS certificate manager. Click "get started" o
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-one-page-nav/3.0.0/jquery.nav.min.js"></script>
 			<script>
 				$(document).ready (function () {
-                   
+
 				$("#menu").onePageNav();
 				});
 			</script>
