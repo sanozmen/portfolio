@@ -63,7 +63,7 @@
 
 
 							</header>
-							<p>First published on 19.9.2019</p>
+							<p style="font-size: 0.8em"><i>First published on 19.9.2019</i></p>
 							<p align="justify" style="margin-bottom: 20px">It is not always as easy as we think to figure out how to create a production ready SSL enabled backend environment for web mapping & GIS purposes (i.e. geo-stack). Providing SSL requires special attention since web mapping libraries like Leaflet.js require this protocol to display data on the map with no issue. After spending some time to get things together and build a backend with Geoserver + PostGIS, streamed through SSL, I’ve got some experience which I think will be beneficial for those who are in need of building something similar at minimum cost. </p>
 								<p align="justify" style="margin-bottom: 5px">Shorty, this step-by-step guide would aim to explain:</p>
 								<ol style="margin-bottom: 20px">
@@ -74,7 +74,7 @@
 								</ol>
 							<p align="justify" style="margin-bottom: 5px">To start with, first head to AWS’s website and create a new user account for yourself. Secondly, get a domain name(no matter which provider) to utilize while enabling SSL.</p>
 							<p align="justify" style="font-size: 0.9em; margin-bottom: 5px"><i>For those of you who have a student e-mail, I would recommend to apply for a Github student pack and activate free credits given to use AWS. Otherwise, features that are open to Free-tier usage are also enough to get the main idea behind this process. Additionally, you can get a domain name for free for 1 year from namechape.com if you get this student pack. I would strongly recommend it.</i></p>
-							<p align="justify">Once everything above is done, let's start with AWS. From service dropdown on top-left select EC2 through which we will launch our instance.  Click launch instance and then continue with Ubuntu Server 18.04.</p>
+							<p align="justify">Once everything above is done, let's start with AWS. First make sure that your region is set to N.Virgina (you can set it from upper left part of AWS Management Console). From service dropdown on top-left select EC2 through which we will launch our instance.  Click launch instance and then continue with Ubuntu Server 18.04.</p>
 
 							<div class="images"><center><img src="images/tutorialGeoStackAWS/1.jpg" alt="" width="600" height="400"/></center></div>
 							<p align="justify" style="margin-bottom: 20px">In the following page, t2.micro which is selected as default will be our choice to proceed. And then we can "configure the instance details" by clicking next.</p>
@@ -159,11 +159,27 @@ From AWS services search and find AWS certificate manager. Click "get started" o
 							<p align="justify" style="margin-bottom: 5px">Keep it open for a moment and login to your domain management board. As I mentioned before, mine is registered via namecheap and it is possible to view all domains by clicking on domain list.</p>
 							<p align="justify" style="margin-bottom: 5px">From there, click advanced DNS. You should be seeing something like below.</p>
 							<div class="images"><center><img  src="images/tutorialGeoStackAWS/12.png" alt="" width="600" height="400"/></center></div>
-							<p align="justify" style="margin-bottom: 5px"></p>
-							<p align="justify" style="margin-bottom: 5px"></p>
-							<p align="justify" style="margin-bottom: 5px"></p>
-
-							<p align="justify" style="margin-bottom: 5px"></p>
+							<p align="justify" style="margin-bottom: 5px">Delete the existing records by clicking trash bin symbol at the right. Then add your dns settings coming with csv file we have just downloaded as I shown in the image below. Pay attention to copy everything including underscore _ . Another important thing to mind is removing the domain name from “Name”. Only the value before dot has to remain. Based on an imaginary values, just remove <code style="font-size: 13px">.klmn.com</code> from <code style="font-size: 13px">_3473873hfh5dhngf82374f.klmn.com</code> and paste only the value <code style="font-size: 13px">_3473873hfh5dhngf82374f</code> under Host. Next, copy Value and paste it as is under Value section on your advanced dns settings screen in namecheap.</p>
+							<p align="justify" style="margin-bottom: 5px">After all, you should be looking at something like below on your domain settings dashboard.</p>
+							<div class="images"><center><img  src="images/tutorialGeoStackAWS/13.png" alt="" width="600" height="300"/></center></div>
+							<p align="justify" style="margin-bottom: 5px">Wait for a few seconds and refresh your AWS certificate management board. You will see that it is validated, which means that now we are done with SSL certification for our domain.</p>
+							<div class="images"><center><img  src="images/tutorialGeoStackAWS/14.png" alt="" width="600" height="250"/></center></div>
+							<p align="justify" style="margin-bottom: 5px">Now we will be creating a load balancer. Proceed to your instance dashboard. Down on left pane, you will see load balancing section. Click load balancers and create load balancer. Select  “Application Load Balancer”.</p>
+							<div class="images"><center><img  src="images/tutorialGeoStackAWS/15.png" alt="" width="600" height="300"/></center></div>
+							<p align="justify" style="margin-bottom: 5px">Name it as you wish. Add a HTTPS listener just below HTTP and check availability zones. After that your are set to click next.</p>
+							<div class="images"><center><img  src="images/tutorialGeoStackAWS/16.png" alt="" width="600" height="600"/></center></div>
+							<p align="justify" style="margin-bottom: 5px">On the following page just select (if not selected as default) the 1st choice which is “Choose certificate from ACM”.</p>
+							<div class="images"><center><img  src="images/tutorialGeoStackAWS/17.png" alt="" width="600" height="300"/></center></div>
+							<p align="justify" style="margin-bottom: 5px">At step 3, figure out your security groups in a way that will allow public access to web site. Proceed to step 4. The important thing at this step is to correctly fill in the port box. It should be <b>8080</b>.</p>
+							<div class="images"><center><img  src="images/tutorialGeoStackAWS/18.png" alt="" width="600" height="600"/></center></div>
+							<p align="justify" style="margin-bottom: 5px">Again click next and select instance to add it to registered. Just click add registered, we are set. Review all and create. That is it, we configured load balancer and target groups.</p>
+							<div class="images"><center><img  src="images/tutorialGeoStackAWS/19.png" alt="" width="600" height="600"/></center></div>
+							<p align="justify" style="margin-bottom: 5px">The last step, is to link our domain to our AWS instance. We will be doing this with help of Route 53 service of AWS. Head to Route 53 then create a hosted zone for your domain. Let’s say again for example <code style="font-size: 13px">klmn.com</code>. I would suggest you to type it with no <code style="font-size: 13px">www</code> at the beginning. </p>
+							<div class="images"><center><img  src="images/tutorialGeoStackAWS/20.png" alt="" width="700" height="400"/></center></div>
+							<p align="justify" style="margin-bottom: 5px">Now you should be seeing a screen like above. With NS and SOA for your domain. But we still need two other record sets. Click create record set. For the first one, leave the name box empty as is, select yes for Alias. We will see a new option called Alias Target offering several options. Look for your instance’s load balancer, select it and click create.</p>
+							<div class="images"><center><img  src="images/tutorialGeoStackAWS/21.png" alt="" width="700" height="400"/></center></div>
+							<p align="justify" style="margin-bottom: 5px">Create another record set, follow the very same steps only difference is that this time with a “www” addition in name box (shown below).</p>
+							<div class="images"><center><img  src="images/tutorialGeoStackAWS/22.png" alt="" width="700" height="400"/></center></div>
 							<p align="justify" style="margin-bottom: 5px"></p>
 							<p align="justify" style="margin-bottom: 5px"></p>
 							<p align="justify" style="margin-bottom: 5px"></p>
