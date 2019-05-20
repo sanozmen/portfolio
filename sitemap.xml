@@ -9,52 +9,57 @@
 
 <url>
   <loc>https://sanozmen.github.io/portfolio/</loc>
-  <lastmod>2019-03-26T08:39:39+00:00</lastmod>
+  <lastmod>2019-05-20T09:27:15+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://sanozmen.github.io/portfolio/index.html</loc>
-  <lastmod>2019-03-26T08:39:39+00:00</lastmod>
+  <lastmod>2019-05-20T09:27:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://sanozmen.github.io/portfolio/aboutme.html</loc>
-  <lastmod>2019-03-26T08:39:39+00:00</lastmod>
+  <lastmod>2019-05-20T09:27:15+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://sanozmen.github.io/portfolio/openSourceGeoStackAWS.html</loc>
+  <lastmod>2019-05-20T09:27:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://sanozmen.github.io/portfolio/turkey2014.html</loc>
-  <lastmod>2019-03-26T08:39:39+00:00</lastmod>
+  <lastmod>2019-05-20T09:27:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://sanozmen.github.io/portfolio/Mapbox_GeojsonSearchFilter.html</loc>
-  <lastmod>2019-03-26T08:39:39+00:00</lastmod>
+  <lastmod>2019-05-20T09:27:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://sanozmen.github.io/portfolio/position-right.html</loc>
-  <lastmod>2019-03-26T08:39:39+00:00</lastmod>
+  <lastmod>2019-05-20T09:27:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://sanozmen.github.io/portfolio/markerClusterGeojson.html</loc>
-  <lastmod>2019-03-26T08:39:39+00:00</lastmod>
+  <lastmod>2019-05-20T09:27:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://sanozmen.github.io/portfolio/markerClusterWFS.html</loc>
-  <lastmod>2019-03-26T08:39:39+00:00</lastmod>
+  <lastmod>2019-05-20T09:27:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://sanozmen.github.io/portfolio/heatmap.html</loc>
-  <lastmod>2019-03-26T08:39:39+00:00</lastmod>
+  <lastmod>2019-05-20T09:27:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://sanozmen.github.io/portfolio/mapboxHeatmap.html</loc>
-  <lastmod>2019-03-26T08:39:39+00:00</lastmod>
+  <lastmod>2019-05-20T09:27:15+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 
