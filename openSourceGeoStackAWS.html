@@ -140,7 +140,9 @@ sudo apt install postgresql postgresql-contrib</code></pre>
 							<pre><code>sudo -i -u postgres</code></pre>
 							<p align="justify" style="margin-bottom: 5px">Activate psql command line interface:</p>
 							<pre><code>psql</code></pre>
-							<p align="justify" style="margin-bottom: 5px">Create extension:</p>
+							<p align="justify" style="margin-bottom: 5px">Set your password that you will be using while connecting to database</p>
+							<pre><code>sudo -u postgres psql postgres</code></pre>
+							<p align="justify" style="margin-bottom: 5px">Create PostGIS extension:</p>
 							<pre><code>CREATE EXTENSION postgis;</code></pre>
 							<p align="justify" style="margin-bottom: 5px">Now we have a spatially enabled DBMS. Keep in mind that  <code style="font-size: 13px">\q</code> will help you to quit.</p>
 							<p align="justify" style="margin-bottom: 5px">Important step here is to adjust the configuration documents of Postgresql in order to be able to access it through the local pgAdmin we installed on our computer. With that aim, we need to uncomment and change <code style="font-size: 13px">#listen_addresses=‘localhost’</code> to <code style="font-size: 13px">listen_addresses=‘*’</code> in file <code style="font-size: 13px">/etc/postgresql/10/main/postgresql.conf</code>. Keep in mind that your .conf file might be at a different location. So if copy&paste the one I wrote here didn't work, try <code style="font-size: 13px">sudo locate postgresql.conf</code> to find yours. Also, we need to add this line <code style="font-size: 13px">host    all             all             all               md5</code> into the file <code style="font-size: 13px">/etc/postgresql/10/main/pg_hba.conf</code>  which will allow all the incoming connection requests to the database. In order to edit those files, you can use the nano comand: </p>
