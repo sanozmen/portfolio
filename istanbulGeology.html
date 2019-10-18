@@ -91,7 +91,7 @@
                 <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >This map is inspired by <a href="https://twitter.com/Paleosismolog/status/1183796422300311552" target="_blank">this post</a>  on Twitter. The original data has been created by the Greater Municipality of Istanbul. The main aim is to inform the Istanbul residents about the geological structure at the location where their homes/workplaces are located, prior to expected Istanbul earthquake. A basic geolocator helps users to locate themselves in the city. Those who are not within city borders can search for an adress of interest by clicking geocoder shown on uppder left part of the map with a magnifier symbol or select satellite imagery from layer control.</p>
 
                 <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >
-                 In order to create this app, first the dataset has been downloaded and georeferenced. Then, tilesets have been created and served with the help of Mapbox. Leaflet.js has been used as the main framework to display final output. </p>
+                 In order to create this app, first the dataset has been downloaded and georeferenced. Then, tilesets have been created with Tilemill. Leaflet.js has been used as the main framework to display final output. </p>
 
 
 
@@ -168,12 +168,7 @@
   subdomains: 'abcd',
   maxZoom: 19
 });
-        var mapbox=  L.tileLayer(
-        'https://api.mapbox.com/styles/v1/sanozmen/ck1t1spma2m0e1cqnz2zwekk8/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic2Fub3ptZW4iLCJhIjoib2xwbVQtQSJ9.1ldcOvJz39J-WFX89QdO_Q', {
-             attribution: '© <a href="https://www.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-
-});
-
+        var geology=  L.tileLayer('tiles/{z}/{x}/{y}.png');
 
 
 
@@ -182,25 +177,25 @@
         var map = L.map('map', {
           zoom: 10,
           center: [41.205,29.092],
-          layers: [mapbox]
+          layers: [geology]
 
         });
         //setting the basic attributes of the map
         //map.setMaxBounds(map.getBounds());
-        map.setMinZoom(7);
-        map.setMaxZoom(16);
+        map.setMinZoom(9);
+        map.setMaxZoom(13);
 
         //grouping base layers defined above and assigning them to a var
         var baseLayers = {
 
-            "Istanbul Geology": mapbox,
-            
+            "Istanbul Geology": geology,
+
            };
 
          var tileLayers={
             "Satellite": Esri_WorldImagery
-         }  
-      
+         }
+
         //initiating the side bar
         var sidebar = L.control.sidebar({ container: 'sidebar', position: 'right' })
             .addTo(map)
