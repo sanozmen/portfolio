@@ -238,7 +238,7 @@ var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}
       },
       onEachFeature: function (feature, layer) {
         if (feature.properties) {
-          var content =  "Tag:"+feature.properties.amenity +"<br>"+ "Name:"+feature.properties.name;
+          var content =   "Name:"+feature.properties.name;
           layer.bindPopup(content,{closeButton: false, offset:L.point(0,-1)});
         }
       }
