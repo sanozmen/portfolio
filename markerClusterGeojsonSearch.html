@@ -348,7 +348,7 @@ var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}
   }).on('search:collapsed', function(e) {
 
     featuresLayer.eachLayer(function(layer) { //restore feature color
-      featuresLayer.resetStyle(layer);
+      featuresLayer.resetIcon(layer);
     }); 
   });
   
