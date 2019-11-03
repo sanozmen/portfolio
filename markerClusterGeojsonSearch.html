@@ -334,11 +334,19 @@ var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}
       //map.fitBounds( latlng.layer.getBounds() );
       map.setView(latlng, 17);
 
-      var content =  "Tag:"+feature.properties.amenity +"<br>"+ "Name:"+feature.properties.name;
-          layer.openPopup(content,{closeButton: false, offset:L.point(0,-1)});
     }
   });
 
+searchControl.on('search:locationfound', function(e) {
+    
+    //console.log('search:locationfound', );
+
+    //map.removeLayer(this._markerSearch)
+
+    if(e.layer._popup)
+      e.layer.openPopup();
+
+  })
 
   map.addControl( searchControl );  //inizialize search control
 
