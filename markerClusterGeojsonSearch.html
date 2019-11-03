@@ -240,8 +240,6 @@ var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}
         if (feature.properties) {
           var content =  "Tag:"+feature.properties.amenity +"<br>"+ "Name:"+feature.properties.name;
           layer.bindPopup(content,{closeButton: false, offset:L.point(0,-1)});
-          layer.on("mouseover", function(){layer.openPopup();});
-          layer.on("mouseout", function(){layer.openPopup();});
         }
       }
     });
@@ -333,11 +331,26 @@ var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}
     marker: false,
     moveToLocation: function(latlng) {
       //map.fitBounds( latlng.layer.getBounds() );
-      map.setView(latlng, 15); 
+      map.setView(latlng, 17); 
     }
   });
 
-  
+  searchControl.on('search:locationfound', function(e) {
+    
+    //console.log('search:locationfound', );
+
+    //map.removeLayer(this._markerSearch)
+
+    e.layer.setIcon(schoolIcon);
+    if(e.layer._popup)
+      e.layer.openPopup();
+
+  }).on('search:collapsed', function(e) {
+
+    featuresLayer.eachLayer(function(layer) { //restore feature color
+      featuresLayer.resetStyle(layer);
+    }); 
+  });
   
   map.addControl( searchControl );  //inizialize search control
 
