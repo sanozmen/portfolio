@@ -347,7 +347,7 @@ var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}
 
   }).on('search:collapsed', function(e) {
 
-    stop:schoolIcon
+    e.layer.setIcon(stop);
   });
   
   map.addControl( searchControl );  //inizialize search control
