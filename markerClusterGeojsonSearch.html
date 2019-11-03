@@ -339,11 +339,7 @@ var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}
 
 searchControl.on('search:locationfound', function(e) {
     
-    //console.log('search:locationfound', );
-
-    //map.removeLayer(this._markerSearch)
-
-    if(e.layer._popup)
+  
       e.layer.openPopup();
 
   })
