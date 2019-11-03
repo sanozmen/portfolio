@@ -331,26 +331,11 @@ var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}
     marker: false,
     moveToLocation: function(latlng) {
       //map.fitBounds( latlng.layer.getBounds() );
-      map.setView(latlng, 17); 
+      map.setView(latlng, 18); 
     }
   });
 
-  searchControl.on('search:locationfound', function(e) {
-    
-    //console.log('search:locationfound', );
 
-    //map.removeLayer(this._markerSearch)
-
-    e.layer.setIcon(schoolIcon);
-    if(e.layer._popup)
-      e.layer.openPopup();
-
-  }).on('search:collapsed', function(e) {
-
-    var layer = e.target;
-    e.target.setIcon(stop);
-  });
-  
   map.addControl( searchControl );  //inizialize search control
 
 
