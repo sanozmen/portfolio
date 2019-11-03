@@ -329,6 +329,7 @@ var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}
     layer: amenitiesCluster,
     propertyName: 'name',
     marker: false,
+    collapsed:false
     moveToLocation: function(latlng) {
       //map.fitBounds( latlng.layer.getBounds() );
       map.setView(latlng, 17); 
@@ -336,9 +337,7 @@ var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}
   });
 
 
-  map.addControl( searchControl( {
-    collapsed:false
-  }) );  //inizialize search control
+  map.addControl( searchControl );  //inizialize search control
 
 
 
