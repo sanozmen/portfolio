@@ -328,9 +328,9 @@ var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}
 
 
   var searchControl = new L.Control.Search({
-    layer: amenities,
-    propertyName: 'amenity',
-    marker: false,
+    layer: amenitiesCluster,
+    propertyName: 'name',
+    marker: true,
     moveToLocation: function(latlng, title, map) {
       //map.fitBounds( latlng.layer.getBounds() );
       var zoom = map.getBoundsZoom(latlng.layer.getBounds());
