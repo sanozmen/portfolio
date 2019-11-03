@@ -329,7 +329,7 @@ var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}
     layer: amenitiesCluster,
     propertyName: 'name',
     marker: false,
-    collapsed:false
+    collapsed:false;
     moveToLocation: function(latlng) {
       //map.fitBounds( latlng.layer.getBounds() );
       map.setView(latlng, 17); 
