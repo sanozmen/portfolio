@@ -317,6 +317,16 @@ var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}
 
 
 
+  //loader animation
+  function ready(data){
+
+            // remove the loader div from the DOM
+            $('#loader').remove();
+
+
+        }
+
+
   var searchControl = new L.Control.Search({
     layer: amenities,
     propertyName: 'amenity',
