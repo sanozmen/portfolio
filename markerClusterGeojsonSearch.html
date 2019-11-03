@@ -249,7 +249,7 @@ var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}
       spiderfyOnMaxZoom: true,
       showCoverageOnHover: true,
       zoomToBoundsOnClick: true,
-      disableClusteringAtZoom: 19
+      disableClusteringAtZoom: 22
     });
 
 
@@ -275,7 +275,7 @@ var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}
         //setting the basic attributes of the map
         map.setMaxBounds(map.getBounds());
         map.setMinZoom(7);
-        map.setMaxZoom(18);
+        map.setMaxZoom(21);
 
         //initiating the side bar
         var sidebar = L.control.sidebar({ container: 'sidebar', position: 'right' })
@@ -332,7 +332,7 @@ var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}
     collapsed:false,
     moveToLocation: function(latlng) {
       //map.fitBounds( latlng.layer.getBounds() );
-      map.setView(latlng, 18);
+      map.setView(latlng, 21);
 
     }
   });
