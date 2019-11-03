@@ -263,15 +263,13 @@ var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}
 
     });
 
-     var searchLayer= amenities;
 
 
         //initiating the map variable
         var map = L.map('map', {
           zoom: 8,
           center: [41.07521,29.05609],
-          layers: [grayscale, amenitiesCluster],
-          searchControl: {layer:searchLayer}
+          layers: [grayscale, amenitiesCluster]
 
         });
         //setting the basic attributes of the map
@@ -470,6 +468,20 @@ var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}
         }
 
 
+  var searchControl = new L.Control.Search({
+    layer: amenities,
+    propertyName: 'amenity',
+    marker: false,
+    moveToLocation: function(latlng, title, map) {
+      //map.fitBounds( latlng.layer.getBounds() );
+      var zoom = map.getBoundsZoom(latlng.layer.getBounds());
+        map.setView(latlng, zoom); // access the zoom
+    }
+  });
+
+  
+  
+  map.addControl( searchControl );  //inizialize search control
 
 
 
