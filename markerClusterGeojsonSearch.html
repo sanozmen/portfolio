@@ -336,7 +336,9 @@ var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}
   });
 
 
-  map.addControl( searchControl );  //inizialize search control
+  map.addControl( searchControl {
+    collapsed:false;
+  } );  //inizialize search control
 
 
 
