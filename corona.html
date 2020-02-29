@@ -29,7 +29,7 @@ var map = L.mapbox.map('map')
 // - The file must either be on the same domain as the page that requests it,
 //   or both the server it is requested from and the user's browser must
 //   support CORS.
-omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv').on('ready',function(layer){
+omnivore.csv('https://github.com/CSSEGISandData/COVID-19/blob/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv').on('ready',function(layer){
 
 
 this.eachLayer(function(marker){
@@ -39,7 +39,7 @@ this.eachLayer(function(marker){
   }
   ))
 
-  marker.bindPopup(marker.toGeoJSON().properties.Province)
+  marker.bindPopup(marker.toGeo().properties.Province)
   })
 })
 </script>
