@@ -29,7 +29,22 @@ var map = L.mapbox.map('map')
 // - The file must either be on the same domain as the page that requests it,
 //   or both the server it is requested from and the user's browser must
 //   support CORS.
-omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv').addTo(map);
+
+var customLayer = L.geoJson(null, {
+    filter: function() {
+        // my custom filter function
+        return true;
+    },
+    onEachFeature: function (feature, layer) {
+            var content =  "Tag:"+feature.properties.Lat+"<br>"+ "Name:"+feature.properties.Long;
+          layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+          layer.on("mouseover", function(){layer.openPopup();});
+          layer.on("mouseout", function(){layer.openPopup();});
+        }
+});
+var myLayer= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv',null,customLayer)
+
+myLayer.addTo(map)
 </script>
 </body>
 </html>
