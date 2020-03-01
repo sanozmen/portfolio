@@ -6,6 +6,10 @@
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 <script src='https://api.mapbox.com/mapbox.js/v3.2.1/mapbox.js'></script>
 <link href='https://api.mapbox.com/mapbox.js/v3.2.1/mapbox.css' rel='stylesheet' />
+ <!-- marker cluster styles-->
+ <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.Default.css">
+ <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.css">
+<script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js"></script>
 <style>
   body { margin:0; padding:0; }
   #map { position:absolute; top:0; bottom:0; width:100%; }
@@ -15,12 +19,25 @@
 <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
 
 <div id='map'></div>
-
+<script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script>
-L.mapbox.accessToken = 'pk.eyJ1Ijoic2Fub3ptZW4iLCJhIjoib2xwbVQtQSJ9.1ldcOvJz39J-WFX89QdO_Q';
+    
+var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  subdomains: 'abcd',
+  maxZoom: 19
+});
+var map = L.map('map', {
+          zoom: 11,
+          center: [39.92,32.85],
+          layers: [grayscale]
+
+        });
+/*L.mapbox.accessToken = 'pk.eyJ1Ijoic2Fub3ptZW4iLCJhIjoib2xwbVQtQSJ9.1ldcOvJz39J-WFX89QdO_Q';
 var map = L.mapbox.map('map')
   .setView([38, -95], 4)
-  .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11'));
+  .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11'));*/
 
 // Omnivore will AJAX-request this file behind the scenes and parse it:
 // note that there are considerations:
@@ -30,21 +47,144 @@ var map = L.mapbox.map('map')
 //   or both the server it is requested from and the user's browser must
 //   support CORS.
 
+var small_icon = {
+    radius: 6,
+    fillColor: "#fecc5c",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+};
+
+
+var medium_icon = {
+    radius: 10,
+    fillColor: "#fd8d3c",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+};
+
+var large_icon = {
+    radius: 13,
+    fillColor: "#e31a1c",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+};
+
+var d = new Date();
+year=d.getFullYear();
+year=year-2000
+month=d.getMonth();
+month=month+1
+day=d.getDate()
+if (day==1 && month==1){
+    yesterday=31
+    pastMonth=12
+}
+else if (day==1 && month==2){
+    yesterday=31
+    pastMonth=1
+}
+else if (day==1 && month==3){
+    yesterday=29
+    pastMonth=2
+}
+else if (day==1 && month==4){
+    yesterday=31
+    pastMonth=3
+}
+else if (day==1 && month==5){
+    yesterday=30
+    pastMonth=4
+}
+else if (day==1 && month==6){
+    yesterday=31
+    pastMonth=5
+}
+else if (day==1 && month==7){
+    yesterday=30
+    pastMonth=6
+}
+else if (day==1 && month==8){
+    yesterday=31
+    pastMonth=7
+}
+else if (day==1 && month==9){
+    yesterday=31
+    pastMonth=8
+}
+else if (day==1 && month==10){
+    yesterday=30
+    pastMonth=9
+}
+else if (day==1 && month==11){
+    yesterday=31
+    pastMonth=10
+}
+else if (day==1 && month==12){
+    yesterday=30
+    pastMonth=11
+}
+
+var todayString=month+"/"+day+"/"+year
+var yesterdayString=pastMonth+"/"+yesterday+"/"+year
+console.log(todayString)
+
+
+var country="Country/Region"
+
+
 var customLayer = L.geoJson(null, {
     filter: function() {
         // my custom filter function
         return true;
     },
-    onEachFeature: function (feature, layer) {
-            var content =  "Tag:"+feature.properties.Lat+"<br>"+ "Name:"+feature.properties.Long;
-          layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
-          layer.on("mouseover", function(){layer.openPopup();});
-          layer.on("mouseout", function(){layer.openPopup();});
+    
+    pointToLayer (feature, layer) {
+       if (feature.properties[todayString]){
+        if (feature.properties[todayString]<100){
+        return L.circleMarker(layer, small_icon)
+        }
+        else if (feature.properties[todayString]>=100 && feature.properties[todayString]<300){
+            return L.circleMarker(layer,medium_icon)
+        }
+        else if (feature.properties[todayString]>300){
+            return L.circleMarker(layer,large_icon)
+        }
+    } else {
+        if (feature.properties[yesterdayString]<100){
+        return L.circleMarker(layer, small_icon)
+        }
+        else if (feature.properties[yesterdayString]>=100 && feature.properties[yesterdayString]<300){
+            return L.circleMarker(layer,medium_icon)
+        }
+        else if (feature.properties[yesterdayString]>=800){
+            return L.circleMarker(layer,large_icon)
+        }
+    }
+    },
+    onEachFeature (feature, layer) {      
+            if (feature.properties[todayString]){
+            var content =  "Country/Region:"+feature.properties[country]+"<br>"+"Province/State:"+feature.properties["Province/State"]+"<br>"+ "Number of Incidents:"+feature.properties[todayString]+"<br>"+ "Date:"+[todayString];
+            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            }
+            else {
+                var content =  "Country/Region:"+feature.properties[country]+"<br>"+"Province/State:"+feature.properties["Province/State"]+"<br>"+ "Number of Incidents:"+feature.properties[yesterdayString]+"<br>"+ "Date:"+[yesterdayString];
+            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            }
+
         }
 });
+
 var myLayer= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv',null,customLayer)
 
 myLayer.addTo(map)
-</script>
+
+
+</script> 
 </body>
 </html>
