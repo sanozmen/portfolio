@@ -115,7 +115,7 @@ var large_icon = {
 
 var small_icon_r = {
     radius: 6,
-    fillColor: "#a1d99b",
+    fillColor: "#7fcdbb",
     color: "000",
     weight: 0.2,
     opacity: 1,
@@ -125,7 +125,7 @@ var small_icon_r = {
 
 var medium_icon_r = {
     radius: 10,
-    fillColor: "#7bccc4",
+    fillColor: "#41b6c4",
     color: "#000",
     weight: 0.2,
     opacity: 1,
@@ -134,7 +134,7 @@ var medium_icon_r = {
 
 var large_icon_r = {
     radius: 13,
-    fillColor: "#2b8cbe",
+    fillColor: "#225ea8",
     color: "#000",
     weight: 0.2,
     opacity: 1,
@@ -397,7 +397,6 @@ var customLayer3 = L.geoJson(null, {
 var confirmed= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv',null,customLayer)
 var deaths= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv',null,customLayer2)
 var recovered= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv',null,customLayer3)
-
 confirmed.addTo(map)
 
 var baseLayers = {
