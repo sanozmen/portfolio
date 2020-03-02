@@ -31,6 +31,11 @@
   box-shadow: none;
   font-size: 1em;
 }
+div.leaflet-popup-content-wrapper {
+    background-color: rgb(47, 60, 66);
+    color: white;
+    
+}
 </style>
 </head>
 <body>
@@ -86,7 +91,7 @@ var map = L.mapbox.map('map')
 //   support CORS.
 
 var small_icon = {
-    radius: 6,
+    radius: 10,
     fillColor: "#fecc5c",
     color: "#000",
     weight: 0.2,
@@ -96,7 +101,7 @@ var small_icon = {
 
 
 var medium_icon = {
-    radius: 10,
+    radius: 14,
     fillColor: "#fd8d3c",
     color: "#000",
     weight: 0.2,
@@ -105,7 +110,7 @@ var medium_icon = {
 };
 
 var large_icon = {
-    radius: 13,
+    radius: 19,
     fillColor: "#e31a1c",
     color: "#000",
     weight: 0.2,
@@ -114,7 +119,7 @@ var large_icon = {
 };
 
 var small_icon_r = {
-    radius: 6,
+    radius: 10,
     fillColor: "#7fcdbb",
     color: "000",
     weight: 0.2,
@@ -124,8 +129,8 @@ var small_icon_r = {
 
 
 var medium_icon_r = {
-    radius: 10,
-    fillColor: "#41b6c4",
+    radius: 14,
+    fillColor: "#1d91c0",
     color: "#000",
     weight: 0.2,
     opacity: 1,
@@ -133,7 +138,7 @@ var medium_icon_r = {
 };
 
 var large_icon_r = {
-    radius: 13,
+    radius: 19,
     fillColor: "#225ea8",
     color: "#000",
     weight: 0.2,
@@ -238,7 +243,7 @@ var customLayer = L.geoJson(null, {
     onEachFeature (feature, layer) {      
         
             if (feature.properties[todayString]){
-            var content =  "<b>Country/Region:</b>"+feature.properties[country]+"<br>"+"<b>Province/State:</b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases:</b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date:</b>"+[todayString];
+            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
             var text = L.tooltip({
             permanent: true,
@@ -251,7 +256,7 @@ var customLayer = L.geoJson(null, {
           
             }
             else {
-                var content =  "<b>Country/Region:</b>"+feature.properties[country]+"<br>"+"<b>Province/State:</b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases:</b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date:</b>"+[yesterdayString];
+                var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
             var text = L.tooltip({
             permanent: true,
@@ -300,7 +305,7 @@ var customLayer2 = L.geoJson(null, {
     },
     onEachFeature (feature, layer) {      
             if (feature.properties[todayString]){
-            var content =  "<b>Country/Region:</b>"+feature.properties[country]+"<br>"+"<b>Province/State</b>:"+feature.properties["Province/State"]+"<br>"+ "<b>Deaths:</b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date:</b>"+[todayString];
+            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Deaths: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
             var text = L.tooltip({
             permanent: true,
@@ -313,7 +318,7 @@ var customLayer2 = L.geoJson(null, {
             
             }
             else {
-                var content =  "<b>Country/Region:</b>"+feature.properties[country]+"<br>"+"<b>Province/State</b>:"+feature.properties["Province/State"]+"<br>"+ "<b>Deaths:</b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date:</b>"+[yesterdayString];
+                var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State</b>: "+feature.properties["Province/State"]+"<br>"+ "<b>Deaths: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
             var text = L.tooltip({
             permanent: true,
@@ -362,7 +367,7 @@ var customLayer3 = L.geoJson(null, {
     },
     onEachFeature (feature, layer) {      
             if (feature.properties[todayString]){
-            var content =  "<b>Country/Region:</b>"+feature.properties[country]+"<br>"+"<b>Province/State</b>:"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered:</b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date:</b>"+[todayString];
+            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State</b>: "+feature.properties["Province/State"]+"<br>"+ "<b>Recovered: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
             var text = L.tooltip({
             permanent: true,
@@ -374,7 +379,7 @@ var customLayer3 = L.geoJson(null, {
             layer.bindTooltip(text)
             }
             else {
-            var content =  "<b>Country/Region:</b>"+feature.properties[country]+"<br>"+"<b>Province/State</b>:"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered:</b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date:</b>"+[yesterdayString];
+            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State:</b> "+feature.properties["Province/State"]+"<br>"+ "<b>Recovered: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date :</b>"+[yesterdayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
             var text = L.tooltip({
             permanent: true,
