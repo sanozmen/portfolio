@@ -22,6 +22,15 @@
 <style>
   body { margin:0; padding:0; }
   #map { position:absolute; top:0; bottom:0; width:100%; }
+  .leaflet-tooltip-pane .text {
+  color:antiquewhite; 
+  text-shadow: #000 0px 0px 1px;
+  font-weight: bold;
+  background: transparent;
+  border:0;
+  box-shadow: none;
+  font-size:0.85em;
+}
 </style>
 </head>
 <body>
@@ -214,18 +223,40 @@ var customLayer = L.geoJson(null, {
             return L.circleMarker(layer,large_icon)
         }
     }
+
     },
     onEachFeature (feature, layer) {      
+        
             if (feature.properties[todayString]){
             var content =  "<b>Country/Region:</b>"+feature.properties[country]+"<br>"+"<b>Province/State:</b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases:</b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date:</b>"+[todayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            var text = L.tooltip({
+            permanent: true,
+            direction: 'center',
+            className: 'text'
+            })
+            .setContent(feature.properties[todayString])
+            .setLatLng(layer.getLatLng());
+            layer.bindTooltip(text)
+          
             }
             else {
                 var content =  "<b>Country/Region:</b>"+feature.properties[country]+"<br>"+"<b>Province/State:</b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases:</b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date:</b>"+[yesterdayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            var text = L.tooltip({
+            permanent: true,
+            direction: 'center',
+            className: 'text'
+            })
+            .setContent(feature.properties[yesterdayString])
+            .setLatLng(layer.getLatLng());
+            layer.bindTooltip(text)
+           
             }
 
-        }
+    
+        },
+        
 });
 
 var customLayer2 = L.geoJson(null, {
@@ -261,13 +292,33 @@ var customLayer2 = L.geoJson(null, {
             if (feature.properties[todayString]){
             var content =  "<b>Country/Region:</b>"+feature.properties[country]+"<br>"+"<b>Province/State</b>:"+feature.properties["Province/State"]+"<br>"+ "<b>Deaths:</b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date:</b>"+[todayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            var text = L.tooltip({
+            permanent: true,
+            direction: 'center',
+            className: 'text'
+            })
+            .setContent(feature.properties[todayString])
+            .setLatLng(layer.getLatLng());
+            layer.bindTooltip(text)
+            
             }
             else {
                 var content =  "<b>Country/Region:</b>"+feature.properties[country]+"<br>"+"<b>Province/State</b>:"+feature.properties["Province/State"]+"<br>"+ "<b>Deaths:</b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date:</b>"+[yesterdayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            var text = L.tooltip({
+            permanent: true,
+            direction: 'center',
+            className: 'text'
+            })
+            .setContent(feature.properties[yesterdayString])
+            .setLatLng(layer.getLatLng());
+            layer.bindTooltip(text)
+            
             }
+         
+        },
 
-        }
+        
 });
 
 var customLayer3 = L.geoJson(null, {
@@ -303,13 +354,33 @@ var customLayer3 = L.geoJson(null, {
             if (feature.properties[todayString]){
             var content =  "<b>Country/Region:</b>"+feature.properties[country]+"<br>"+"<b>Province/State</b>:"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered:</b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date:</b>"+[todayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            var text = L.tooltip({
+            permanent: true,
+            direction: 'center',
+            className: 'text'
+            })
+            .setContent(feature.properties[todayString])
+            .setLatLng(layer.getLatLng());
+            layer.bindTooltip(text)
             }
             else {
-                var content =  "<b>Country/Region:</b>"+feature.properties[country]+"<br>"+"<b>Province/State</b>:"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered:</b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date:</b>"+[yesterdayString];
+            var content =  "<b>Country/Region:</b>"+feature.properties[country]+"<br>"+"<b>Province/State</b>:"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered:</b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date:</b>"+[yesterdayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
-            }
+            var text = L.tooltip({
+            permanent: true,
+            direction: 'center',
+            className: 'text'
+            })
+            .setContent(feature.properties[yesterdayString])
+            .setLatLng(layer.getLatLng());
+            layer.bindTooltip(text)
+           
+        
 
-        }
+            }
+    }
+            
+        
 });
 
 
