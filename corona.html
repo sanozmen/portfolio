@@ -86,57 +86,58 @@ year=year-2000
 month=d.getMonth();
 month=month+1
 day=d.getDate()
+yesterday=day-1
 if (day==1 && month==1){
     yesterday=31
-    pastMonth=12
+    month=12
 }
 else if (day==1 && month==2){
     yesterday=31
-    pastMonth=1
+    month=1
 }
 else if (day==1 && month==3){
     yesterday=29
-    pastMonth=2
+    month=2
 }
 else if (day==1 && month==4){
     yesterday=31
-    pastMonth=3
+    month=3
 }
 else if (day==1 && month==5){
     yesterday=30
-    pastMonth=4
+    month=4
 }
 else if (day==1 && month==6){
     yesterday=31
-    pastMonth=5
+    month=5
 }
 else if (day==1 && month==7){
     yesterday=30
-    pastMonth=6
+    month=6
 }
 else if (day==1 && month==8){
     yesterday=31
-    pastMonth=7
+    month=7
 }
 else if (day==1 && month==9){
     yesterday=31
-    pastMonth=8
+    month=8
 }
 else if (day==1 && month==10){
     yesterday=30
-    pastMonth=9
+    month=9
 }
 else if (day==1 && month==11){
     yesterday=31
-    pastMonth=10
+    month=10
 }
 else if (day==1 && month==12){
     yesterday=30
-    pastMonth=11
+    month=11
 }
 
 var todayString=month+"/"+day+"/"+year
-var yesterdayString=pastMonth+"/"+yesterday+"/"+year
+var yesterdayString=month+"/"+yesterday+"/"+year
 console.log(todayString)
 
 
