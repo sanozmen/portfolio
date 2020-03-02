@@ -13,11 +13,24 @@
 
     gtag('config', 'UA-57534785-2');
   </script>
-<script src='https://api.mapbox.com/mapbox.js/v3.2.1/mapbox.js'></script>
-<link href='https://api.mapbox.com/mapbox.js/v3.2.1/mapbox.css' rel='stylesheet' />
- <!-- marker cluster styles-->
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Spartan&display=swap" rel="stylesheet">
+   <!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+ integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+ crossorigin=""></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+  crossorigin=""/>
+  <link rel="stylesheet" href="assets/css/leaflet-sidebar.css" />
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- marker cluster styles-->
  <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.Default.css">
  <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.css">
+ <!-- bootstrap css-->
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 <script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js"></script>
 <style>
   body { margin:0; padding:0; }
@@ -31,22 +44,105 @@
   box-shadow: none;
   font-size: 1em;
 }
+
+.leaflet-popup-content {
+    padding: 10px 10px 15px;
+    margin: 0;
+    line-height: inherit;
+}
+
 div.leaflet-popup-content-wrapper {
     background-color: rgb(47, 60, 66);
     color: white;
+    font-size: 12px;
+    font-family:'Ubuntu';
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.1);
+    padding: 1px;
+    text-align: left;
+    pointer-events: all;
     
+}
+
+.leaflet-right .leaflet-control {
+    margin-right: 40px;
 }
 </style>
 </head>
 <body>
 <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
+<div id="sidebar" class="leaflet-sidebar collapsed">
+    <!-- Nav tabs -->
+    <div class="leaflet-sidebar-tabs">
+        <ul role="tablist">
+            <li><a href="#home" role="tab"><i class="fa fa-bars"></i></a></li>
+            <li><a href="index.html" role="tab"><img src="images/logo.svg" style="width: 20px; height: 20px;" alt="" /></i></a></li>
+            <!-- <li class="disabled"><a href="#messages" role="tab"><i class="fa fa-envelope"></i></a></li> -->
+        </ul>
+         <ul role="tablist">
+            <li><a href="https://github.com/sanozmen/" role="tab" target="_blank"><i class="fa fa-github fa-lg"></i></a></li>
+        </ul>
+        <!--<ul role="tablist">
+            <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
+        </ul> -->
+    </div>
 
+    <!-- Tab panes -->
+    <div class="leaflet-sidebar-content">
+        <div class="leaflet-sidebar-pane" id="home">
+            <h1 class="leaflet-sidebar-header">
+               <!-- in case of necessity write a title here such as "Minimize the bar" -->
+               <p style="font-size: 15px">Minimize the Bar</p>
+                <span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span>
+            </h1>
+
+
+
+            <p class="lorem" style="margin-top:20px">Click logo on the right to get back to the home page.</p>
+
+            <h4>A Basic Map with Various Functionalities</h4>
+
+            <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >This is an experimental and very basic map based on Leaflet.js library whose self capabilities were brought together with various different plugins. While creating this map, I tried to show different functionalities of Leaflet from using plugins like <i>dynamic side bar, geolocator, geocoder, cursor coordinate displayer, measurement tool, ajax geojson loader, marker animation </i> to utilizing its own capabilities such as <i>creating some overlaying features, adding layer control, setting max. bounds, max.&min. zoom., hover popup, click popup etc. </i> </p>
+
+            <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify ><i>This map has first been put together when public raised deep concerns such that alleged inapropriate <a href="http://www.hurriyetdailynews.com/dismantling-of-asbestos-filled-factory-halted-in-ankara--110351" target="_blank">dismantling of old coal-gas plant</a> in city center of Ankara (2017) risked healths of thousands of people living nearby (ca. 4km) by causing an uncontrolloed release of dangerous chemical of <a href="https://www.cancer.gov/about-cancer/causes-prevention/risk/substances/asbestos/asbestos-fact-sheet" target="_blank">asbestos</a>. As of Feb,2019 the map has been revised and recreated.</i></p>
+
+            <!--<p style="margin-top:120px;  font-family:'Ubuntu', sans-serif; line-height: 5px; font-size: 0.75em" align=justify ><i> References</i></p>
+
+             <p style="margin-top:5px;  font-family:'Ubuntu', sans-serif; line-height: 20px; font-size: 0.75em" align=justify ><i> Truck icon made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"              title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"              title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></i></p> -->
+
+
+
+
+            <!-- just added this button as a reminder for using this bar as button container in future works-->
+            <!-- <button type="button" class="btn btn-primary">Primary</button> -->
+
+        </div>
+
+        <div class="leaflet-sidebar-pane" id="profile">
+            <h1 class="leaflet-sidebar-header">Profile<span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span></h1>
+        </div>
+
+        <div class="leaflet-sidebar-pane" id="messages">
+            <h1 class="leaflet-sidebar-header">Messages<span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span></h1>
+        </div>
+
+        <div class="leaflet-sidebar-pane" id="settings">
+            <h1 class="leaflet-sidebar-header">Settings<span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span></h1>
+        </div>
+    </div>
+</div>
 <div id='map'></div>
+<script src="assets/js/leaflet-sidebar.js"></script>
 <script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js"></script>
 <script
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
+  <!-- below is for bootstrap -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  
  <!-- for titling the layer groups-->
  <script src="https://rawgithub.com/ismyrnow/Leaflet.groupedlayercontrol/master/src/leaflet.groupedlayercontrol.js"></script>
 <script>
@@ -73,7 +169,7 @@ var CartoDB_Voyager = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles
 });
 var map = L.map('map', {
           zoom: 3,
-          center: [39.92,32.85],
+          center: [39.92,95.85],
           layers: [grayscale]
 
         });
@@ -153,57 +249,71 @@ month=d.getMonth();
 month=month+1
 day=d.getDate()
 yesterday=day-1
+tDb_Yesterday=day-2
 if (day==1 && month==1){
+    tDb_Yesterday=30
     yesterday=31
     month=12
 }
 else if (day==1 && month==2){
+    tDb_Yesterday=30
     yesterday=31
     month=1
 }
 else if (day==1 && month==3){
+    tDb_Yesterday=28
     yesterday=29
     month=2
 }
 else if (day==1 && month==4){
+    tDb_Yesterday=30
     yesterday=31
     month=3
 }
 else if (day==1 && month==5){
+    tDb_Yesterday=29
     yesterday=30
     month=4
 }
 else if (day==1 && month==6){
+    tDb_Yesterday=30
     yesterday=31
     month=5
 }
 else if (day==1 && month==7){
+    tDb_Yesterday=29
     yesterday=30
     month=6
 }
 else if (day==1 && month==8){
+    tDb_Yesterday=30
     yesterday=31
     month=7
 }
 else if (day==1 && month==9){
+    tDb_Yesterday=30
     yesterday=31
     month=8
 }
 else if (day==1 && month==10){
+    tDb_Yesterday=29
     yesterday=30
     month=9
 }
 else if (day==1 && month==11){
+    tDb_Yesterday=30
     yesterday=31
     month=10
 }
 else if (day==1 && month==12){
+    tDb_Yesterday=29
     yesterday=30
     month=11
 }
 
 var todayString=month+"/"+day+"/"+year
 var yesterdayString=month+"/"+yesterday+"/"+year
+var tDb_yesterdayString=month+"/"+tDb_Yesterday+"/"+year
 console.log(todayString)
 
 
@@ -227,7 +337,7 @@ var customLayer = L.geoJson(null, {
         else if (feature.properties[todayString]>3000){
             return L.circleMarker(layer,large_icon)
         }
-    } else {
+    } else if (feature.properties[yesterdayString]) {
         if (feature.properties[yesterdayString]<1000){
         return L.circleMarker(layer, small_icon)
         }
@@ -238,7 +348,18 @@ var customLayer = L.geoJson(null, {
             return L.circleMarker(layer,large_icon)
         }
     }
+    else {
+        if (feature.properties[tDb_yesterdayString]<1000){
+        return L.circleMarker(layer, small_icon)
+        }
+        else if (feature.properties[tDb_yesterdayString]>=1000 && feature.properties[tDb_yesterdayString]<3000){
+            return L.circleMarker(layer,medium_icon)
+        }
+        else if (feature.properties[tDb_yesterdayString]>=3000){
+            return L.circleMarker(layer,large_icon)
+    }
 
+    }
     },
     onEachFeature (feature, layer) {      
         
@@ -255,7 +376,7 @@ var customLayer = L.geoJson(null, {
             layer.bindTooltip(text)
           
             }
-            else {
+            else if (feature.properties[yesterdayString]){
                 var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
             var text = L.tooltip({
@@ -268,11 +389,24 @@ var customLayer = L.geoJson(null, {
             layer.bindTooltip(text)
            
             }
+        else {
+            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[tDb_yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[tDb_yesterdayString];
+            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            var text = L.tooltip({
+            permanent: true,
+            direction: 'center',
+            className: 'text'
+            })
+            .setContent(feature.properties[tDb_yesterdayString])
+            .setLatLng(layer.getLatLng());
+            layer.bindTooltip(text)
+        }
 
     
         },
         
 });
+
 
 var customLayer2 = L.geoJson(null, {
     filter: function() {
@@ -282,30 +416,43 @@ var customLayer2 = L.geoJson(null, {
     
     pointToLayer (feature, layer) {
        if (feature.properties[todayString]){
-        if (feature.properties[todayString]<10){
+        if (feature.properties[todayString]<1000){
         return L.circleMarker(layer, small_icon)
         }
-        else if (feature.properties[todayString]>=10 && feature.properties[todayString]<100){
+        else if (feature.properties[todayString]>=1000 && feature.properties[todayString]<3000){
             return L.circleMarker(layer,medium_icon)
         }
-        else if (feature.properties[todayString]>=100){
+        else if (feature.properties[todayString]>3000){
             return L.circleMarker(layer,large_icon)
         }
-    } else {
-        if (feature.properties[yesterdayString]<10){
+    } else if (feature.properties[yesterdayString]) {
+        if (feature.properties[yesterdayString]<1000){
         return L.circleMarker(layer, small_icon)
         }
-        else if (feature.properties[yesterdayString]>=10 && feature.properties[yesterdayString]<100){
+        else if (feature.properties[yesterdayString]>=1000 && feature.properties[yesterdayString]<3000){
             return L.circleMarker(layer,medium_icon)
         }
-        else if (feature.properties[yesterdayString]>=100){
+        else if (feature.properties[yesterdayString]>=3000){
             return L.circleMarker(layer,large_icon)
         }
     }
+    else {
+        if (feature.properties[tDb_yesterdayString]<1000){
+        return L.circleMarker(layer, small_icon)
+        }
+        else if (feature.properties[tDb_yesterdayString]>=1000 && feature.properties[tDb_yesterdayString]<3000){
+            return L.circleMarker(layer,medium_icon)
+        }
+        else if (feature.properties[tDb_yesterdayString]>=3000){
+            return L.circleMarker(layer,large_icon)
+    }
+
+    }
     },
     onEachFeature (feature, layer) {      
+        
             if (feature.properties[todayString]){
-            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Deaths: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
+            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
             var text = L.tooltip({
             permanent: true,
@@ -315,10 +462,10 @@ var customLayer2 = L.geoJson(null, {
             .setContent(feature.properties[todayString])
             .setLatLng(layer.getLatLng());
             layer.bindTooltip(text)
-            
+          
             }
-            else {
-                var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State</b>: "+feature.properties["Province/State"]+"<br>"+ "<b>Deaths: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
+            else if (feature.properties[yesterdayString]){
+                var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
             var text = L.tooltip({
             permanent: true,
@@ -328,13 +475,26 @@ var customLayer2 = L.geoJson(null, {
             .setContent(feature.properties[yesterdayString])
             .setLatLng(layer.getLatLng());
             layer.bindTooltip(text)
-            
+           
             }
-         
-        },
+        else {
+            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[tDb_yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[tDb_yesterdayString];
+            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            var text = L.tooltip({
+            permanent: true,
+            direction: 'center',
+            className: 'text'
+            })
+            .setContent(feature.properties[tDb_yesterdayString])
+            .setLatLng(layer.getLatLng());
+            layer.bindTooltip(text)
+        }
 
+    
+        },
         
 });
+
 
 var customLayer3 = L.geoJson(null, {
     filter: function() {
@@ -350,10 +510,10 @@ var customLayer3 = L.geoJson(null, {
         else if (feature.properties[todayString]>=1000 && feature.properties[todayString]<2000){
             return L.circleMarker(layer,medium_icon_r)
         }
-        else if (feature.properties[todayString]>=2000){
+        else if (feature.properties[todayString]>2000){
             return L.circleMarker(layer,large_icon_r)
         }
-    } else {
+    } else if (feature.properties[yesterdayString]) {
         if (feature.properties[yesterdayString]<1000){
         return L.circleMarker(layer, small_icon_r)
         }
@@ -364,10 +524,23 @@ var customLayer3 = L.geoJson(null, {
             return L.circleMarker(layer,large_icon_r)
         }
     }
+    else {
+        if (feature.properties[tDb_yesterdayString]<1000){
+        return L.circleMarker(layer, small_icon_r)
+        }
+        else if (feature.properties[tDb_yesterdayString]>=1000 && feature.properties[tDb_yesterdayString]<2000){
+            return L.circleMarker(layer,medium_icon_r)
+        }
+        else if (feature.properties[tDb_yesterdayString]>=2000){
+            return L.circleMarker(layer,large_icon_r)
+    }
+
+    }
     },
     onEachFeature (feature, layer) {      
+        
             if (feature.properties[todayString]){
-            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State</b>: "+feature.properties["Province/State"]+"<br>"+ "<b>Recovered: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
+            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
             var text = L.tooltip({
             permanent: true,
@@ -377,9 +550,10 @@ var customLayer3 = L.geoJson(null, {
             .setContent(feature.properties[todayString])
             .setLatLng(layer.getLatLng());
             layer.bindTooltip(text)
+          
             }
-            else {
-            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State:</b> "+feature.properties["Province/State"]+"<br>"+ "<b>Recovered: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date :</b>"+[yesterdayString];
+            else if (feature.properties[yesterdayString]){
+                var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
             var text = L.tooltip({
             permanent: true,
@@ -390,14 +564,24 @@ var customLayer3 = L.geoJson(null, {
             .setLatLng(layer.getLatLng());
             layer.bindTooltip(text)
            
-        
-
             }
-    }
-            
+        else {
+            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[tDb_yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[tDb_yesterdayString];
+            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            var text = L.tooltip({
+            permanent: true,
+            direction: 'center',
+            className: 'text'
+            })
+            .setContent(feature.properties[tDb_yesterdayString])
+            .setLatLng(layer.getLatLng());
+            layer.bindTooltip(text)
+        }
+
+    
+        },
         
 });
-
 
 var confirmed= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv',null,customLayer)
 var deaths= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv',null,customLayer2)
@@ -428,7 +612,9 @@ var options = {
 };
 
 L.control.groupedLayers(baseLayers, overlayElements, options).addTo(map);
-
+ //initiating the side bar
+ var sidebar = L.control.sidebar({ container: 'sidebar', position: 'right' })
+            .addTo(map);
 
 </script> 
 </body>
