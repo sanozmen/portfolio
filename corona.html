@@ -4,6 +4,15 @@
 <meta charset=utf-8 />
 <title>Coronavirus Map </title>
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-57534785-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-57534785-2');
+  </script>
 <script src='https://api.mapbox.com/mapbox.js/v3.2.1/mapbox.js'></script>
 <link href='https://api.mapbox.com/mapbox.js/v3.2.1/mapbox.css' rel='stylesheet' />
  <!-- marker cluster styles-->
@@ -20,9 +29,14 @@
 
 <div id='map'></div>
 <script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+ <!-- for titling the layer groups-->
+ <script src="https://rawgithub.com/ismyrnow/Leaflet.groupedlayercontrol/master/src/leaflet.groupedlayercontrol.js"></script>
 <script>
-    
+
 var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
   subdomains: 'abcd',
@@ -74,6 +88,34 @@ var medium_icon = {
 var large_icon = {
     radius: 13,
     fillColor: "#e31a1c",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+};
+
+var small_icon_r = {
+    radius: 6,
+    fillColor: "#f0f9e8",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+};
+
+
+var medium_icon_r = {
+    radius: 10,
+    fillColor: "#7bccc4",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+};
+
+var large_icon_r = {
+    radius: 13,
+    fillColor: "#2b8cbe",
     color: "#000",
     weight: 1,
     opacity: 1,
@@ -152,43 +194,155 @@ var customLayer = L.geoJson(null, {
     
     pointToLayer (feature, layer) {
        if (feature.properties[todayString]){
-        if (feature.properties[todayString]<100){
+        if (feature.properties[todayString]<1000){
         return L.circleMarker(layer, small_icon)
         }
-        else if (feature.properties[todayString]>=100 && feature.properties[todayString]<300){
+        else if (feature.properties[todayString]>=1000 && feature.properties[todayString]<3000){
             return L.circleMarker(layer,medium_icon)
         }
-        else if (feature.properties[todayString]>300){
+        else if (feature.properties[todayString]>3000){
             return L.circleMarker(layer,large_icon)
         }
     } else {
-        if (feature.properties[yesterdayString]<100){
+        if (feature.properties[yesterdayString]<1000){
         return L.circleMarker(layer, small_icon)
         }
-        else if (feature.properties[yesterdayString]>=100 && feature.properties[yesterdayString]<300){
+        else if (feature.properties[yesterdayString]>=1000 && feature.properties[yesterdayString]<3000){
             return L.circleMarker(layer,medium_icon)
         }
-        else if (feature.properties[yesterdayString]>=800){
+        else if (feature.properties[yesterdayString]>=3000){
             return L.circleMarker(layer,large_icon)
         }
     }
     },
     onEachFeature (feature, layer) {      
             if (feature.properties[todayString]){
-            var content =  "Country/Region:"+feature.properties[country]+"<br>"+"Province/State:"+feature.properties["Province/State"]+"<br>"+ "Number of Incidents:"+feature.properties[todayString]+"<br>"+ "Date:"+[todayString];
+            var content =  "<b>Country/Region:</b>"+feature.properties[country]+"<br>"+"<b>Province/State:</b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases:</b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date:</b>"+[todayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
             }
             else {
-                var content =  "Country/Region:"+feature.properties[country]+"<br>"+"Province/State:"+feature.properties["Province/State"]+"<br>"+ "Number of Incidents:"+feature.properties[yesterdayString]+"<br>"+ "Date:"+[yesterdayString];
+                var content =  "<b>Country/Region:</b>"+feature.properties[country]+"<br>"+"<b>Province/State:</b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases:</b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date:</b>"+[yesterdayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
             }
 
         }
 });
 
-var myLayer= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv',null,customLayer)
+var customLayer2 = L.geoJson(null, {
+    filter: function() {
+        // my custom filter function
+        return true;
+    },
+    
+    pointToLayer (feature, layer) {
+       if (feature.properties[todayString]){
+        if (feature.properties[todayString]<10){
+        return L.circleMarker(layer, small_icon)
+        }
+        else if (feature.properties[todayString]>=10 && feature.properties[todayString]<100){
+            return L.circleMarker(layer,medium_icon)
+        }
+        else if (feature.properties[todayString]>=100){
+            return L.circleMarker(layer,large_icon)
+        }
+    } else {
+        if (feature.properties[yesterdayString]<10){
+        return L.circleMarker(layer, small_icon)
+        }
+        else if (feature.properties[yesterdayString]>=10 && feature.properties[yesterdayString]<100){
+            return L.circleMarker(layer,medium_icon)
+        }
+        else if (feature.properties[yesterdayString]>=100){
+            return L.circleMarker(layer,large_icon)
+        }
+    }
+    },
+    onEachFeature (feature, layer) {      
+            if (feature.properties[todayString]){
+            var content =  "<b>Country/Region:</b>"+feature.properties[country]+"<br>"+"<b>Province/State</b>:"+feature.properties["Province/State"]+"<br>"+ "<b>Deaths:</b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date:</b>"+[todayString];
+            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            }
+            else {
+                var content =  "<b>Country/Region:</b>"+feature.properties[country]+"<br>"+"<b>Province/State</b>:"+feature.properties["Province/State"]+"<br>"+ "<b>Deaths:</b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date:</b>"+[yesterdayString];
+            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            }
 
-myLayer.addTo(map)
+        }
+});
+
+var customLayer3 = L.geoJson(null, {
+    filter: function() {
+        // my custom filter function
+        return true;
+    },
+    
+    pointToLayer (feature, layer) {
+       if (feature.properties[todayString]){
+        if (feature.properties[todayString]<1000){
+        return L.circleMarker(layer, small_icon_r)
+        }
+        else if (feature.properties[todayString]>=1000 && feature.properties[todayString]<2000){
+            return L.circleMarker(layer,medium_icon_r)
+        }
+        else if (feature.properties[todayString]>=2000){
+            return L.circleMarker(layer,large_icon_r)
+        }
+    } else {
+        if (feature.properties[yesterdayString]<1000){
+        return L.circleMarker(layer, small_icon_r)
+        }
+        else if (feature.properties[yesterdayString]>=1000 && feature.properties[yesterdayString]<2000){
+            return L.circleMarker(layer,medium_icon_r)
+        }
+        else if (feature.properties[yesterdayString]>=2000){
+            return L.circleMarker(layer,large_icon_r)
+        }
+    }
+    },
+    onEachFeature (feature, layer) {      
+            if (feature.properties[todayString]){
+            var content =  "<b>Country/Region:</b>"+feature.properties[country]+"<br>"+"<b>Province/State</b>:"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered:</b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date:</b>"+[todayString];
+            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            }
+            else {
+                var content =  "<b>Country/Region:</b>"+feature.properties[country]+"<br>"+"<b>Province/State</b>:"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered:</b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date:</b>"+[yesterdayString];
+            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            }
+
+        }
+});
+
+
+var confirmed= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv',null,customLayer)
+var deaths= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv',null,customLayer2)
+var recovered= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv',null,customLayer3)
+
+confirmed.addTo(map)
+
+var baseLayers = {
+           
+		    
+           };
+
+         //grouping overlaying features
+        var overlayElements = {
+        "Coronavirus": {
+          "Confirmed Cases": confirmed,
+          "Deaths": deaths,
+          "Recovered": recovered
+
+    }
+};
+
+var options = {
+  // Make the "Landmarks" group exclusive (use radio inputs)
+  exclusiveGroups: ["Coronavirus"],
+  // Show a checkbox next to non-exclusive group labels for toggling all
+  groupCheckboxes: true,
+  collapsed: false
+};
+
+L.control.groupedLayers(baseLayers, overlayElements, options).addTo(map);
 
 
 </script> 
