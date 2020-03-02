@@ -24,12 +24,12 @@
   #map { position:absolute; top:0; bottom:0; width:100%; }
   .leaflet-tooltip-pane .text {
   color:black; 
-  -webkit-text-stroke: 0.03em white;
+  /*-webkit-text-stroke: 0.03em white;*/
   font-weight: bold;
   background: transparent;
   border:0;
   box-shadow: none;
-  font-size: 1.4em;
+  font-size: 1em;
 }
 </style>
 </head>
@@ -56,10 +56,20 @@ var CartoDB_DarkMatter = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all
 	subdomains: 'abcd',
 	maxZoom: 19
 });
+
+var Stadia_AlidadeSmoothDark = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
+	maxZoom: 20,
+	attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+});
+var CartoDB_Voyager = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+	subdomains: 'abcd',
+	maxZoom: 19
+});
 var map = L.map('map', {
           zoom: 3,
           center: [39.92,32.85],
-          layers: [CartoDB_DarkMatter]
+          layers: [grayscale]
 
         });
 /*L.mapbox.accessToken = 'pk.eyJ1Ijoic2Fub3ptZW4iLCJhIjoib2xwbVQtQSJ9.1ldcOvJz39J-WFX89QdO_Q';
@@ -79,7 +89,7 @@ var small_icon = {
     radius: 6,
     fillColor: "#fecc5c",
     color: "#000",
-    weight: 1,
+    weight: 0.2,
     opacity: 1,
     fillOpacity: 0.8
 };
@@ -89,7 +99,7 @@ var medium_icon = {
     radius: 10,
     fillColor: "#fd8d3c",
     color: "#000",
-    weight: 1,
+    weight: 0.2,
     opacity: 1,
     fillOpacity: 0.8
 };
@@ -98,16 +108,16 @@ var large_icon = {
     radius: 13,
     fillColor: "#e31a1c",
     color: "#000",
-    weight: 1,
+    weight: 0.2,
     opacity: 1,
     fillOpacity: 0.8
 };
 
 var small_icon_r = {
     radius: 6,
-    fillColor: "#f0f9e8",
-    color: "#000",
-    weight: 1,
+    fillColor: "#a1d99b",
+    color: "000",
+    weight: 0.2,
     opacity: 1,
     fillOpacity: 0.8
 };
@@ -117,7 +127,7 @@ var medium_icon_r = {
     radius: 10,
     fillColor: "#7bccc4",
     color: "#000",
-    weight: 1,
+    weight: 0.2,
     opacity: 1,
     fillOpacity: 0.8
 };
@@ -126,7 +136,7 @@ var large_icon_r = {
     radius: 13,
     fillColor: "#2b8cbe",
     color: "#000",
-    weight: 1,
+    weight: 0.2,
     opacity: 1,
     fillOpacity: 0.8
 };
