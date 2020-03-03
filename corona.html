@@ -63,20 +63,42 @@ div.leaflet-popup-content-wrapper {
     pointer-events: all;
     
 }
+.leaflet-sidebar-header {
+    font-size: 14px;
+}
+@media (max-width: 500px) {
+.leaflet-sidebar-header {
+    font-size: 10px;
+}
+}
 
+@media (max-width: 500px) {
+    .leaflet-sidebar-content {
+        opacity: 0.95 ;
+    }
+}
+
+@media (max-width: 500px) {
 .leaflet-right .leaflet-control {
-    margin-right: 40px;
+    margin-right: 60px;
+}
 }
 
 .leaflet-sidebar-header {
     background-color:rgb(47, 60, 66);
-    height: 60px;
-}
+  
 
+}
+.leaflet-sidebar-header p{
+    margin-bottom: 1px;
+    margin-top: 1px;
+}
 .leaflet-sidebar-tabs > li.active, .leaflet-sidebar-tabs > ul > li.active {
     background-color:rgb(47, 60, 66);
-    height: 60px;
+   
 }
+
+
 
 </style>
 </head>
@@ -103,7 +125,7 @@ div.leaflet-popup-content-wrapper {
         <div class="leaflet-sidebar-pane" id="home">
             <h1 class="leaflet-sidebar-header">
                <!-- in case of necessity write a title here such as "Minimize the bar" -->
-               <p style="font-size: 15px"><b>Click to Minimize the Bar and to See the Map</b></p>
+               <p ><b>Click to Minimize the Bar and to See the Map</b></p>
                 <span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span>
             </h1>
 
