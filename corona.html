@@ -100,11 +100,18 @@ div.leaflet-popup-content-wrapper {
 
             <p class="lorem" style="margin-top:20px">Click logo on the right to get back to the home page.</p>
 
-            <h4>A Basic Map with Various Functionalities</h4>
+            <h4>Global Coronavirus Map</h4>
 
-            <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >This is an experimental and very basic map based on Leaflet.js library whose self capabilities were brought together with various different plugins. While creating this map, I tried to show different functionalities of Leaflet from using plugins like <i>dynamic side bar, geolocator, geocoder, cursor coordinate displayer, measurement tool, ajax geojson loader, marker animation </i> to utilizing its own capabilities such as <i>creating some overlaying features, adding layer control, setting max. bounds, max.&min. zoom., hover popup, click popup etc. </i> </p>
+            <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >This interactive world map shows the total number of 2019 Novel Coronavirus
+                 disease (COVID-19) infections. Daily updated data is retrieved from <a href="https://github.com/CSSEGISandData/COVID-19" target="_blank">
+                    this data source</a>  </i> </p>
+            <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >There are 3 different layers to inform the users. First "Confirmed Cases"
+                shows the total number of infected people at those locations. Second one "Deaths" indicates total number deaths caused by this disease. Lastly, the layer "Recover" denotes
+                the number of people who got recovered. </p>
 
-            <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify ><i>This map has first been put together when public raised deep concerns such that alleged inapropriate <a href="http://www.hurriyetdailynews.com/dismantling-of-asbestos-filled-factory-halted-in-ankara--110351" target="_blank">dismantling of old coal-gas plant</a> in city center of Ankara (2017) risked healths of thousands of people living nearby (ca. 4km) by causing an uncontrolloed release of dangerous chemical of <a href="https://www.cancer.gov/about-cancer/causes-prevention/risk/substances/asbestos/asbestos-fact-sheet" target="_blank">asbestos</a>. As of Feb,2019 the map has been revised and recreated.</i></p>
+                <h6>How to use the map</h6>
+               <p style="margin-top:10px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >Click on radio-buttons to switch between layers. In order to open popup windows
+                with more details click circles on the map. </p> 
 
             <!--<p style="margin-top:120px;  font-family:'Ubuntu', sans-serif; line-height: 5px; font-size: 0.75em" align=justify ><i> References</i></p>
 
@@ -173,18 +180,7 @@ var map = L.map('map', {
           layers: [grayscale]
 
         });
-/*L.mapbox.accessToken = 'pk.eyJ1Ijoic2Fub3ptZW4iLCJhIjoib2xwbVQtQSJ9.1ldcOvJz39J-WFX89QdO_Q';
-var map = L.mapbox.map('map')
-  .setView([38, -95], 4)
-  .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11'));*/
 
-// Omnivore will AJAX-request this file behind the scenes and parse it:
-// note that there are considerations:
-// - The CSV file must contain latitude and longitude values, in column
-//   named roughly latitude and longitude
-// - The file must either be on the same domain as the page that requests it,
-//   or both the server it is requested from and the user's browser must
-//   support CORS.
 
 var small_icon = {
     radius: 10,
@@ -586,6 +582,7 @@ var customLayer3 = L.geoJson(null, {
 var confirmed= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv',null,customLayer)
 var deaths= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv',null,customLayer2)
 var recovered= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv',null,customLayer3)
+
 confirmed.addTo(map)
 
 var baseLayers = {
