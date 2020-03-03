@@ -101,7 +101,7 @@ div.leaflet-popup-content-wrapper {
         <div class="leaflet-sidebar-pane" id="home">
             <h1 class="leaflet-sidebar-header">
                <!-- in case of necessity write a title here such as "Minimize the bar" -->
-               <p style="font-size: 15px">Minimize the Bar</p>
+               <p style="font-size: 15px"><b>Click to Minimize the Bar and to See the Map</b></p>
                 <span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span>
             </h1>
 
@@ -620,7 +620,8 @@ var options = {
 L.control.groupedLayers(baseLayers, overlayElements, options).addTo(map);
  //initiating the side bar
  var sidebar = L.control.sidebar({ container: 'sidebar', position: 'right' })
-            .addTo(map);
+            .addTo(map)
+            .open('home');
 
 </script> 
 </body>
