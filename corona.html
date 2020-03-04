@@ -99,8 +99,41 @@ div.leaflet-popup-content-wrapper {
    
 }
 
-
-
+.info {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+.legend {
+    text-align: left;
+    line-height: 18px;
+    color: #555;
+}
+.legend i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7;
+}
+.legend .colorcircle {
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    margin-top: 0px;
+}
+.legend .circlepadding {
+    border-radius: 50%;
+    margin-top: 0px;
+    background: rgba(255, 255, 255, 0.8);
+}
 </style>
 </head>
 <body>
@@ -183,7 +216,6 @@ div.leaflet-popup-content-wrapper {
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
   <!-- below is for bootstrap -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   
@@ -646,9 +678,75 @@ var options = {
 };
 
 L.control.groupedLayers(baseLayers, overlayElements, options).addTo(map);
+
+function getColorConfirmed(y) {
+    return y ==100 ? '#fecc5c' : 
+           y ==200 ? '#fd8d3c' : 
+           y==300 ? '#e31a1c' :
+                    '#D04030';
+                      
+}
+
+//calculate radius so that resulting circles will be proportional by area
+function getRadius(y) {
+    r = Math.sqrt(y / Math.PI)
+    return r;
+}
+
+
+var legend1= L.control({position: 'bottomleft'});
+
+var legend2= L.control({position: 'bottomleft'});
+
+legend1.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = [100, 200, 300],
+        labels2=[0,1000,3000],
+        labels = ['<strong>Legend</strong>','Confirmed Cases'],
+        from, to;
+	//iterate through grades and create a color field and label for each
+    for (var i = 0; i < grades.length; i++) {
+        
+        from = grades[i];
+        to = grades[i + 1];
+       
+        labels.push( '<i class="circlepadding" style="width: '+Math.max(0,(40-1.8*getRadius(from)))+'px;"></i> <i style="background:'+ getColorConfirmed(from)+'; width: '+getRadius(from)*2+'px; height: '+getRadius(from)*2+'px; border-radius: 50%; margin-top: '+Math.max(0,(9-getRadius(from)))+'px;"></i> ' + labels2[i]+(labels2[i+1] ? '&ndash;' + labels2[i+1] : '+'));
+    }
+    div.innerHTML = labels.join('<br>');
+    return div;
+}
+legend2.onAdd = function (map) {
+
+var div = L.DomUtil.create('div', 'info legend');
+
+div.innerHTML += "<h4>Legend</h4>";
+div.innerHTML += "<h5>XYZ (Mm3) </h5>";
+div.innerHTML += '<i style="background: #feedde"></i><span> >-8000 and <-5000</span><br>';
+div.innerHTML += '<i style="background: #fdbe85"></i><span>  >-4999 and <-1500</span><br>';
+div.innerHTML += '<i style="background: #fd8d3c"></i><span> >-1499 and <1500</span><br>';
+div.innerHTML += '<i style="background: #e6550d"></i><span> >1501 and <4000 </span><br>';
+div.innerHTML += '<i style="background: #a63603"></i><span> >4001</span><br>';
+return div;
+}
+
+legend1.addTo(map)
+
+
+confirmed.beforeAdd = function (map) {
+    legend1.addTo(map);
+    legend2.remove(map);
+}
+deaths.beforeAdd = function (map) {
+    legend2.addTo(map);
+    legend1.remove(map);
+}
+
  //initiating the side bar
  var sidebar = L.control.sidebar({ container: 'sidebar', position: 'right' })
             .addTo(map);
+
+
 
 
 
