@@ -46,6 +46,41 @@
   font-size: 1em;
 }
 
+/* Icon pulse */
+.fa-pulse {
+	display: inline-block;
+	-moz-animation: pulse 2s infinite linear;
+	-o-animation: pulse 2s infinite linear;
+	-webkit-animation: pulse 2s infinite linear;
+	animation: pulse 2s infinite linear;
+}
+
+@-webkit-keyframes pulse {
+	0% { opacity: 1; }
+	50% { opacity: 0; }
+	100% { opacity: 1; }
+}
+@-moz-keyframes pulse {
+	0% { opacity: 1; }
+	50% { opacity: 0; }
+	100% { opacity: 1; }
+}
+@-o-keyframes pulse {
+	0% { opacity: 1; }
+	50% { opacity: 0; }
+	100% { opacity: 1; }
+}
+@-ms-keyframes pulse {
+	0% { opacity: 1; }
+	50% { opacity: 0; }
+	100% { opacity: 1; }
+}
+@keyframes pulse {
+	0% { opacity: 1; }
+	50% { opacity: 0; }
+	100% { opacity: 1; }
+}
+
 .leaflet-popup-content {
     padding: 10px 10px 15px;
     margin: 0;
@@ -65,21 +100,21 @@ div.leaflet-popup-content-wrapper {
     
 }
 .leaflet-sidebar-header {
-    font-size: 14px;
+    font-size: 15px;
 }
-@media (max-width: 767px) {
+@media (max-width: 769px) {
 .leaflet-sidebar-header {
-    font-size: 10px;
+    font-size: 13px;
 }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 769px) {
     .leaflet-sidebar-content {
         opacity: 0.95 ;
     }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 769px) {
 .leaflet-right .leaflet-control {
     margin-right: 60px;
 }
@@ -93,7 +128,7 @@ div.leaflet-popup-content-wrapper {
 }
 .leaflet-sidebar-header p{
     margin-bottom: 1px;
-    margin-top: 1px;
+    margin-top: 0px;
 }
 .leaflet-sidebar-tabs > li.active, .leaflet-sidebar-tabs > ul > li.active {
     background-color:rgb(47, 60, 66);
@@ -161,25 +196,26 @@ div.leaflet-popup-content-wrapper {
         <div class="leaflet-sidebar-pane" id="home">
             <h1 class="leaflet-sidebar-header">
                <!-- in case of necessity write a title here such as "Minimize the bar" -->
-               <p ><b>Click to Minimize the Bar and to See the Map</b></p>
-                <span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span>
+               <p ><b>Click and Hide the Pane</b></p>
+                <span class="leaflet-sidebar-close"><h4 class="fa-pulse">X</h4></span>
             </h1>
 
 
 
-            <p class="lorem" style="margin-top:20px">Click logo on the right to get back to the home page.</p>
+            <p class="lorem" style="margin-top:20px">Click "X" on top left corner to hide the pane and see the map.</p>
 
             <h4>Global Coronavirus Map (Updated Daily)</h4>
 
-            <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >This interactive world map aims to inform you about 2019 Novel Coronavirus
-                 disease (COVID-19) outbreak. Daily updated data is retrieved from <a href="https://github.com/CSSEGISandData/COVID-19" target="_blank">
-                    this data source</a>  </i> </p>
-            <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >There are 3 different layers to inform the users. First "Confirmed Cases"
+            <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >This interactive world map aims to track the global spread of 2019 Novel Coronavirus
+                 (COVID-19) outbreak, inspired by <a href="https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6" target="_blank"> this popular map</a> produced by researchers at Johns Hopkins CSSE. Daily updated data which has been 
+                 used to create this map shares the <a href="https://github.com/CSSEGISandData/COVID-19" target="_blank">
+                     the same  data source</a> provided by John Hopkin's researchers .</p>
+            <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >There are 3 different layers. First "Confirmed Cases"
                 shows the total number of infected people at those locations. Second one "Deaths" indicates total number deaths caused by this disease. Lastly, the layer "Recover" denotes
                 the number of people who got recovered. </p>
 
                 <h6>How to use the map</h6>
-               <p style="margin-top:10px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >Click on radio-buttons on top-right corner to switch between layers. In order to open popup windows
+               <p style="margin-top:10px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >Labels inside the circles represents the number of people. Click on radio-buttons on top-right corner to switch between layers. In order to open popup windows
                 with more details such as name of location, date of data etc. click on circles displayed on the map. </p> 
 
             <!--<p style="margin-top:120px;  font-family:'Ubuntu', sans-serif; line-height: 5px; font-size: 0.75em" align=justify ><i> References</i></p>
@@ -860,7 +896,8 @@ recovered.beforeAdd=function(map){
 
  //initiating the side bar
  var sidebar = L.control.sidebar({ container: 'sidebar', position: 'right' })
-            .addTo(map);
+            .addTo(map)
+            .open("home");
 
 
 
