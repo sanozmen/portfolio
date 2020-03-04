@@ -73,13 +73,13 @@ div.leaflet-popup-content-wrapper {
 }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 700px) {
     .leaflet-sidebar-content {
         opacity: 0.95 ;
     }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 700px) {
 .leaflet-right .leaflet-control {
     margin-right: 60px;
 }
@@ -101,7 +101,7 @@ div.leaflet-popup-content-wrapper {
 
 .info {
     padding: 6px 8px;
-    font: 14px/16px Arial, Helvetica, sans-serif;
+    font-size: 13px;
     background: white;
     background: rgba(255, 255, 255, 0.8);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
@@ -113,8 +113,9 @@ div.leaflet-popup-content-wrapper {
 }
 .legend {
     text-align: left;
-    line-height: 18px;
+    line-height: 30px;
     color: #555;
+    width: auto;
 }
 .legend i {
     width: 18px;
@@ -251,9 +252,11 @@ var map = L.map('map', {
         });
 
 
-var small_icon = {
+
+
+var smallMedium_icon = {
     radius: 10,
-    fillColor: "#fecc5c",
+    fillColor: "#feb24c",
     color: "#000",
     weight: 0.2,
     opacity: 1,
@@ -263,15 +266,15 @@ var small_icon = {
 
 var medium_icon = {
     radius: 14,
-    fillColor: "#fd8d3c",
+    fillColor: "#fc4e2a",
     color: "#000",
     weight: 0.2,
     opacity: 1,
     fillOpacity: 0.8
 };
 
-var large_icon = {
-    radius: 19,
+var mediumLarge_icon = {
+    radius: 18,
     fillColor: "#e31a1c",
     color: "#000",
     weight: 0.2,
@@ -279,8 +282,46 @@ var large_icon = {
     fillOpacity: 0.8
 };
 
-var small_icon_r = {
+var large_icon = {
+    radius: 22,
+    fillColor: "#bd0026",
+    color: "#000",
+    weight: 0.2,
+    opacity: 1,
+    fillOpacity: 0.8
+};
+
+
+var small_icon_d = {
     radius: 10,
+    fillColor: "#fcc5c0",
+    color: "#000",
+    weight: 0.2,
+    opacity: 1,
+    fillOpacity: 0.8
+};
+
+var medium_icon_d = {
+    radius: 14,
+    fillColor: "#f768a1",
+    color: "#000",
+    weight: 0.2,
+    opacity: 1,
+    fillOpacity: 0.8
+};
+
+var large_icon_d = {
+    radius: 18,
+    fillColor: "#ae017e",
+    color: "#000",
+    weight: 0.2,
+    opacity: 1,
+    fillOpacity: 0.8
+};
+
+
+var small_icon_r = {
+    radius: 8,
     fillColor: "#7fcdbb",
     color: "000",
     weight: 0.2,
@@ -385,7 +426,7 @@ console.log(todayString)
 var country="Country/Region"
 
 
-var customLayer = L.geoJson(null, {
+var confirmedLayer = L.geoJson(null, {
     filter: function() {
         // my custom filter function
         return true;
@@ -394,34 +435,131 @@ var customLayer = L.geoJson(null, {
     pointToLayer (feature, layer) {
        if (feature.properties[todayString]){
         if (feature.properties[todayString]<1000){
-        return L.circleMarker(layer, small_icon)
+        return L.circleMarker(layer, smallMedium_icon)
         }
-        else if (feature.properties[todayString]>=1000 && feature.properties[todayString]<3000){
+        else if (feature.properties[todayString]>=1000 && feature.properties[todayString]<5000){
             return L.circleMarker(layer,medium_icon)
         }
-        else if (feature.properties[todayString]>3000){
+        else if (feature.properties[todayString]>=5000 && feature.properties[todayString]<10000){
+            return L.circleMarker(layer,mediumLarge_icon)
+        }
+        else if (feature.properties[todayString]>=10000){
             return L.circleMarker(layer,large_icon)
         }
     } else if (feature.properties[yesterdayString]) {
         if (feature.properties[yesterdayString]<1000){
-        return L.circleMarker(layer, small_icon)
+        return L.circleMarker(layer, smallMedium_icon)
         }
-        else if (feature.properties[yesterdayString]>=1000 && feature.properties[yesterdayString]<3000){
+        else if (feature.properties[yesterdayString]>=1000 && feature.properties[yesterdayString]<5000){
             return L.circleMarker(layer,medium_icon)
         }
-        else if (feature.properties[yesterdayString]>=3000){
+        else if (feature.properties[yesterdayString]>=5000 && feature.properties[yesterdayString]<10000){
+            return L.circleMarker(layer,mediumLarge_icon)
+        }
+        else if (feature.properties[yesterdayString]>=10000){
             return L.circleMarker(layer,large_icon)
         }
     }
     else {
-        if (feature.properties[tDb_yesterdayString]<1000){
-        return L.circleMarker(layer, small_icon)
+        if (feature.properties[tDb_yesterdayString]<100){
+        return L.circleMarker(layer, smallMedium_icon)
         }
-        else if (feature.properties[tDb_yesterdayString]>=1000 && feature.properties[tDb_yesterdayString]<3000){
+        else if (feature.properties[tDb_yesterdayString]>=1000 && feature.properties[tDb_yesterdayString]<5000){
             return L.circleMarker(layer,medium_icon)
         }
-        else if (feature.properties[tDb_yesterdayString]>=3000){
+        else if (feature.properties[tDb_yesterdayString]>=5000 && feature.properties[tDb_yesterdayString]<10000){
+            return L.circleMarker(layer,mediumLarge_icon)
+        }
+        else if (feature.properties[tDb_yesterdayString]>=10000){
             return L.circleMarker(layer,large_icon)
+        }
+
+    }
+    },
+    onEachFeature (feature, layer) {      
+        
+            if (feature.properties[todayString]){
+            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
+            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            var text = L.tooltip({
+            permanent: true,
+            direction: 'center',
+            className: 'text'
+            })
+            .setContent(feature.properties[todayString])
+            .setLatLng(layer.getLatLng());
+            layer.bindTooltip(text)
+          
+            }
+            else if (feature.properties[yesterdayString]){
+                var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
+            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            var text = L.tooltip({
+            permanent: true,
+            direction: 'center',
+            className: 'text'
+            })
+            .setContent(feature.properties[yesterdayString])
+            .setLatLng(layer.getLatLng());
+            layer.bindTooltip(text)
+           
+            }
+        else {
+            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[tDb_yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[tDb_yesterdayString];
+            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            var text = L.tooltip({
+            permanent: true,
+            direction: 'center',
+            className: 'text'
+            })
+            .setContent(feature.properties[tDb_yesterdayString])
+            .setLatLng(layer.getLatLng());
+            layer.bindTooltip(text)
+        }
+
+    
+        },
+        
+});
+
+
+var deathsLayer = L.geoJson(null, {
+    filter: function() {
+        // my custom filter function
+        return true;
+    },
+    
+    pointToLayer (feature, layer) {
+       if (feature.properties[todayString]){
+        if (feature.properties[todayString]<50){
+        return L.circleMarker(layer, small_icon_d)
+        }
+        else if (feature.properties[todayString]>=50 && feature.properties[todayString]<500){
+            return L.circleMarker(layer,medium_icon_d)
+        }
+        else if (feature.properties[todayString]>=500){
+            return L.circleMarker(layer,large_icon_d)
+        }
+    } else if (feature.properties[yesterdayString]) {
+        if (feature.properties[yesterdayString]<50){
+        return L.circleMarker(layer, small_icon_d)
+        }
+        else if (feature.properties[yesterdayString]>=50 && feature.properties[yesterdayString]<500){
+            return L.circleMarker(layer,medium_icon_d)
+        }
+        else if (feature.properties[yesterdayString]>=500){
+            return L.circleMarker(layer,large_icon_d)
+        }
+    }
+    else {
+        if (feature.properties[tDb_yesterdayString]<50){
+        return L.circleMarker(layer, small_icon_d)
+        }
+        else if (feature.properties[tDb_yesterdayString]>=50 && feature.properties[tDb_yesterdayString]<500){
+            return L.circleMarker(layer,medium_icon_d)
+        }
+        else if (feature.properties[tDb_yesterdayString]>=500){
+            return L.circleMarker(layer,large_icon_d)
     }
 
     }
@@ -473,95 +611,7 @@ var customLayer = L.geoJson(null, {
 });
 
 
-var customLayer2 = L.geoJson(null, {
-    filter: function() {
-        // my custom filter function
-        return true;
-    },
-    
-    pointToLayer (feature, layer) {
-       if (feature.properties[todayString]){
-        if (feature.properties[todayString]<1000){
-        return L.circleMarker(layer, small_icon)
-        }
-        else if (feature.properties[todayString]>=1000 && feature.properties[todayString]<3000){
-            return L.circleMarker(layer,medium_icon)
-        }
-        else if (feature.properties[todayString]>3000){
-            return L.circleMarker(layer,large_icon)
-        }
-    } else if (feature.properties[yesterdayString]) {
-        if (feature.properties[yesterdayString]<1000){
-        return L.circleMarker(layer, small_icon)
-        }
-        else if (feature.properties[yesterdayString]>=1000 && feature.properties[yesterdayString]<3000){
-            return L.circleMarker(layer,medium_icon)
-        }
-        else if (feature.properties[yesterdayString]>=3000){
-            return L.circleMarker(layer,large_icon)
-        }
-    }
-    else {
-        if (feature.properties[tDb_yesterdayString]<1000){
-        return L.circleMarker(layer, small_icon)
-        }
-        else if (feature.properties[tDb_yesterdayString]>=1000 && feature.properties[tDb_yesterdayString]<3000){
-            return L.circleMarker(layer,medium_icon)
-        }
-        else if (feature.properties[tDb_yesterdayString]>=3000){
-            return L.circleMarker(layer,large_icon)
-    }
-
-    }
-    },
-    onEachFeature (feature, layer) {      
-        
-            if (feature.properties[todayString]){
-            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
-            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
-            var text = L.tooltip({
-            permanent: true,
-            direction: 'center',
-            className: 'text'
-            })
-            .setContent(feature.properties[todayString])
-            .setLatLng(layer.getLatLng());
-            layer.bindTooltip(text)
-          
-            }
-            else if (feature.properties[yesterdayString]){
-                var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
-            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
-            var text = L.tooltip({
-            permanent: true,
-            direction: 'center',
-            className: 'text'
-            })
-            .setContent(feature.properties[yesterdayString])
-            .setLatLng(layer.getLatLng());
-            layer.bindTooltip(text)
-           
-            }
-        else {
-            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[tDb_yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[tDb_yesterdayString];
-            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
-            var text = L.tooltip({
-            permanent: true,
-            direction: 'center',
-            className: 'text'
-            })
-            .setContent(feature.properties[tDb_yesterdayString])
-            .setLatLng(layer.getLatLng());
-            layer.bindTooltip(text)
-        }
-
-    
-        },
-        
-});
-
-
-var customLayer3 = L.geoJson(null, {
+var recoveredLayer= L.geoJson(null, {
     filter: function() {
         // my custom filter function
         return true;
@@ -575,7 +625,7 @@ var customLayer3 = L.geoJson(null, {
         else if (feature.properties[todayString]>=1000 && feature.properties[todayString]<2000){
             return L.circleMarker(layer,medium_icon_r)
         }
-        else if (feature.properties[todayString]>2000){
+        else if (feature.properties[todayString]>=2000){
             return L.circleMarker(layer,large_icon_r)
         }
     } else if (feature.properties[yesterdayString]) {
@@ -648,9 +698,9 @@ var customLayer3 = L.geoJson(null, {
         
 });
 
-var confirmed= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv',null,customLayer)
-var deaths= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv',null,customLayer2)
-var recovered= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv',null,customLayer3)
+var confirmed= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv',null,confirmedLayer)
+var deaths= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv',null,deathsLayer)
+var recovered= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv',null,recoveredLayer)
 
 confirmed.addTo(map)
 
@@ -670,7 +720,7 @@ var baseLayers = {
 };
 
 var options = {
-  // Make the "Landmarks" group exclusive (use radio inputs)
+  // Make the "Coronavirus" group exclusive (use radio inputs)
   exclusiveGroups: ["Coronavirus"],
   // Show a checkbox next to non-exclusive group labels for toggling all
   groupCheckboxes: true,
@@ -680,12 +730,33 @@ var options = {
 L.control.groupedLayers(baseLayers, overlayElements, options).addTo(map);
 
 function getColorConfirmed(y) {
-    return y ==100 ? '#fecc5c' : 
-           y ==200 ? '#fd8d3c' : 
-           y==300 ? '#e31a1c' :
+    return y ==500 ? '#bd0026' : 
+           y ==400 ? '#e31a1c' : 
+           y==300 ? '#fc4e2a' :
+           y==200 ? '#feb24c' :
                     '#D04030';
                       
 }
+
+
+function getColorDeaths(y) {
+    return y==300 ? '#ae017e' :
+           y==200 ? '#f768a1' :
+           y==100 ? '#fcc5c0' :
+                    '#D04030';
+                      
+}
+
+
+
+function getColorRecovered(y) {
+    return y==300 ? '#225ea8' :
+           y==200 ? '#1d91c0' :
+           y==100 ? '#7fcdbb' :
+                    '#D04030';
+                      
+}
+
 
 //calculate radius so that resulting circles will be proportional by area
 function getRadius(y) {
@@ -694,16 +765,18 @@ function getRadius(y) {
 }
 
 
-var legend1= L.control({position: 'bottomleft'});
+var confirmedLegend= L.control({position: 'bottomleft'});
 
-var legend2= L.control({position: 'bottomleft'});
+var deathsLegend= L.control({position: 'bottomleft'});
 
-legend1.onAdd = function (map) {
+var recoveredLegend= L.control({position: 'bottomleft'});
+
+confirmedLegend.onAdd = function (map) {
 
     var div = L.DomUtil.create('div', 'info legend'),
-        grades = [100, 200, 300],
-        labels2=[0,1000,3000],
-        labels = ['<strong>Legend</strong>','Confirmed Cases'],
+        grades = [200, 300,400,500],
+        labels2=[0,1000,5000,10000],
+        labels = ['<strong>Legend</strong>', "Confirmed Cases"],
         from, to;
 	//iterate through grades and create a color field and label for each
     for (var i = 0; i < grades.length; i++) {
@@ -716,30 +789,72 @@ legend1.onAdd = function (map) {
     div.innerHTML = labels.join('<br>');
     return div;
 }
-legend2.onAdd = function (map) {
 
-var div = L.DomUtil.create('div', 'info legend');
 
-div.innerHTML += "<h4>Legend</h4>";
-div.innerHTML += "<h5>XYZ (Mm3) </h5>";
-div.innerHTML += '<i style="background: #feedde"></i><span> >-8000 and <-5000</span><br>';
-div.innerHTML += '<i style="background: #fdbe85"></i><span>  >-4999 and <-1500</span><br>';
-div.innerHTML += '<i style="background: #fd8d3c"></i><span> >-1499 and <1500</span><br>';
-div.innerHTML += '<i style="background: #e6550d"></i><span> >1501 and <4000 </span><br>';
-div.innerHTML += '<i style="background: #a63603"></i><span> >4001</span><br>';
-return div;
+deathsLegend.onAdd = function (map) {
+
+
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = [100, 200, 300],
+        labels2=[0,50,500],
+        labels = ['<strong>Legend</strong>', "Deaths"],
+        from, to;
+	//iterate through grades and create a color field and label for each
+    for (var i = 0; i < grades.length; i++) {
+        
+        from = grades[i];
+        to = grades[i + 1];
+       
+        labels.push( '<i class="circlepadding" style="width: '+Math.max(0,(40-1.8*getRadius(from)))+'px;"></i> <i style="background:'+ getColorDeaths(from)+'; width: '+getRadius(from)*2+'px; height: '+getRadius(from)*2+'px; border-radius: 50%; margin-top: '+Math.max(0,(9-getRadius(from)))+'px;"></i> ' + labels2[i]+(labels2[i+1] ? '&ndash;' + labels2[i+1] : '+'));
+    }
+    div.innerHTML = labels.join('<br>');
+    return div;
+
+
+
 }
 
-legend1.addTo(map)
+recoveredLegend.onAdd = function (map) {
+
+
+var div = L.DomUtil.create('div', 'info legend'),
+    grades = [100, 200, 300],
+    labels2=[0,1000,2000],
+    labels = ['<strong>Legend</strong>', "Recovered"],
+    from, to;
+//iterate through grades and create a color field and label for each
+for (var i = 0; i < grades.length; i++) {
+    
+    from = grades[i];
+    to = grades[i + 1];
+   
+    labels.push( '<i class="circlepadding" style="width: '+Math.max(0,(40-1.8*getRadius(from)))+'px;"></i> <i style="background:'+ getColorRecovered(from)+'; width: '+getRadius(from)*2+'px; height: '+getRadius(from)*2+'px; border-radius: 50%; margin-top: '+Math.max(0,(9-getRadius(from)))+'px;"></i> ' + labels2[i]+(labels2[i+1] ? '&ndash;' + labels2[i+1] : '+'));
+}
+div.innerHTML = labels.join('<br>');
+return div;
+
+
+
+}
+
+confirmedLegend.addTo(map)
 
 
 confirmed.beforeAdd = function (map) {
-    legend1.addTo(map);
-    legend2.remove(map);
+    confirmedLegend.addTo(map);
+    deathsLegend.remove(map);
+    recoveredLegend.remove(map);
 }
 deaths.beforeAdd = function (map) {
-    legend2.addTo(map);
-    legend1.remove(map);
+    deathsLegend.addTo(map);
+    confirmedLegend.remove(map);
+    recoveredLegend.remove(map);
+}
+
+recovered.beforeAdd=function(map){
+    deathsLegend.remove(map);
+    confirmedLegend.remove(map);
+    recoveredLegend.addTo(map);
 }
 
  //initiating the side bar
