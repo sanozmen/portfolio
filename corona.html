@@ -478,12 +478,33 @@ var yesterdayString=month+"/"+yesterday+"/"+year
 var tDb_yesterdayString=month+"/"+tDb_Yesterday+"/"+year
 
 var country="Country/Region"
-
+var countryNames=[]
+var totalConfirmed=[]
 /* first one, confirmed cases geojson custom layer*/
 var confirmedLayer = L.geoJson(null, {
     filter: function() {
         // no custom filter function but still keeping it
         return true;
+    },
+    filter: function(feature,layer) {
+        if (feature.properties[todayString]){
+            countryNames.push(feature.properties[country])
+            totalConfirmed.push(feature.properties[todayString])
+            return totalConfirmed
+            return countryNames
+        } 
+        else if (feature.properties[yesterdayString]){
+            countryNames.push(feature.properties[country])
+            totalConfirmed.push(feature.properties[yesterdayString])
+            return totalConfirmed
+            return countryNames
+        }
+        else {
+            countryNames.push(feature.properties[country])
+            totalConfirmed.push(feature.properties[tDb_yesterdayString])
+            return totalConfirmed
+            return countryNames
+        }
     },
     /*points to the layer with the latest day's data from the csv*/
     pointToLayer (feature, layer) {
@@ -529,6 +550,8 @@ var confirmedLayer = L.geoJson(null, {
         }
 
     }
+    
+    
     },
     onEachFeature (feature, layer) {      
             /*popup content*/
@@ -579,7 +602,11 @@ var confirmedLayer = L.geoJson(null, {
     
         },
         
+        
 });
+
+
+console.log(countryNames, totalConfirmed)
 
 /*deaths custom geojson layer*/
 var deathsLayer = L.geoJson(null, {
