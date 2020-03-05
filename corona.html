@@ -3,6 +3,7 @@
 <head>
 <meta charset=utf-8 />
 <title>Coronavirus Map </title>
+<!--metda data-->
 <meta name="description" content="coronavirus, corona, COVID-19, china, novel, new, map, interactive map, death, infection, disease, outbreak, global map, spread, track, people, sick"/>
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
   <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -14,26 +15,32 @@
 
     gtag('config', 'UA-57534785-2');
   </script>
+<!--Google fonts-->
   <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Spartan&display=swap" rel="stylesheet">
-   <!-- Make sure you put this AFTER Leaflet's CSS -->
- <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
- integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
- crossorigin=""></script>
+ 
+<!--leaflet style-->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
   crossorigin=""/>
-  <link rel="stylesheet" href="assets/css/leaflet-sidebar.css" />
 
+<!-- leaflet js. Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+ integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+ crossorigin=""></script> 
+<!--sidebar style-->
+  <link rel="stylesheet" href="assets/css/leaflet-sidebar.css" />
+<!--font awesome style-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- marker cluster styles-->
  <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.Default.css">
  <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.css">
  <!-- bootstrap css-->
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+<!--marker cluster javascript-->
 <script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js"></script>
 <style>
+
   body { margin:0; padding:0; }
   #map { position:absolute; top:0; bottom:0; width:100%; }
   .leaflet-tooltip-pane .text {
@@ -46,7 +53,7 @@
   font-size: 1em;
 }
 
-/* Icon pulse */
+/*/////////////////// Icon pulse ////////////////*/
 .fa-pulse {
 	display: inline-block;
 	-moz-animation: pulse 2s infinite linear;
@@ -80,7 +87,7 @@
 	50% { opacity: 0; }
 	100% { opacity: 1; }
 }
-
+/*/////////////////End of Icon Pulse////////////////////*/
 .leaflet-popup-content {
     padding: 10px 10px 15px;
     margin: 0;
@@ -102,6 +109,8 @@ div.leaflet-popup-content-wrapper {
 .leaflet-sidebar-header {
     font-size: 15px;
 }
+/*This part is for avoiding overlap in sidebar and layer control in smaller
+screens  */
 @media (max-width: 769px) {
 .leaflet-sidebar-header {
     font-size: 13px;
@@ -174,7 +183,9 @@ div.leaflet-popup-content-wrapper {
 </style>
 </head>
 <body>
-<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
+
+<!-- SIDEBAR STARTS HERE-->
+
 <div id="sidebar" class="leaflet-sidebar collapsed">
     <!-- Nav tabs -->
     <div class="leaflet-sidebar-tabs">
@@ -195,12 +206,10 @@ div.leaflet-popup-content-wrapper {
     <div class="leaflet-sidebar-content">
         <div class="leaflet-sidebar-pane" id="home">
             <h1 class="leaflet-sidebar-header">
-               <!-- in case of necessity write a title here such as "Minimize the bar" -->
+            
                <p ><b>Click and Hide the Pane</b></p>
                 <span class="leaflet-sidebar-close"><h4 class="fa-pulse">X</h4></span>
             </h1>
-
-
 
             <p class="lorem" style="margin-top:20px">Click "X" on top left corner to hide the pane and see the map.</p>
 
@@ -218,18 +227,9 @@ div.leaflet-popup-content-wrapper {
                <p style="margin-top:10px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >Labels inside the circles represents the number of people. Click on radio-buttons on top-right corner to switch between layers. In order to open popup windows
                 with more details such as name of location, date of data. </p> 
 
-            <!--<p style="margin-top:120px;  font-family:'Ubuntu', sans-serif; line-height: 5px; font-size: 0.75em" align=justify ><i> References</i></p>
-
-             <p style="margin-top:5px;  font-family:'Ubuntu', sans-serif; line-height: 20px; font-size: 0.75em" align=justify ><i> Truck icon made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"              title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"              title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></i></p> -->
-
+        
              <p style="margin-top:130px; font-family:'Ubuntu' ,sans-serif; font-size:10px; line-height: 10px" align=justify >
                 tags: coronavirus, corona, COVID-19, china, novel, new, map, interactive map, infection, disease, outbreak, global map, spread, track, people, sick, death</p>
-
-
-
-
-            <!-- just added this button as a reminder for using this bar as button container in future works-->
-            <!-- <button type="button" class="btn btn-primary">Primary</button> -->
 
         </div>
 
@@ -247,8 +247,10 @@ div.leaflet-popup-content-wrapper {
     </div>
 </div>
 <div id='map'></div>
+<!--Side bar javascript file-->
 <script src="assets/js/leaflet-sidebar.js"></script>
-<script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js"></script>
+
+<!--Jquery-->
 <script
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
@@ -259,8 +261,11 @@ div.leaflet-popup-content-wrapper {
   
  <!-- for titling the layer groups-->
  <script src="https://rawgithub.com/ismyrnow/Leaflet.groupedlayercontrol/master/src/leaflet.groupedlayercontrol.js"></script>
+ <!--Leaflet mapbox omnivore plugin for reading various formats including csv-->
+ <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
 <script>
 
+/*various options for the basemap*/
 var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
   subdomains: 'abcd',
@@ -288,8 +293,7 @@ var map = L.map('map', {
 
         });
 
-
-
+/* Defining icons in different shapes and colors for different layers*/
 
 var smallMedium_icon = {
     radius: 10,
@@ -384,15 +388,24 @@ var large_icon_r = {
     opacity: 1,
     fillOpacity: 0.8
 };
+/* end of marker style (icon) definitions*/
 
+/*utilizing date functionality in js
+in order to autmatically update data*/
 var d = new Date();
 year=d.getFullYear();
 year=year-2000
 month=d.getMonth();
 month=month+1
 day=d.getDate()
-yesterday=day-1
-tDb_Yesterday=day-2
+/*if current day's data has not been 
+uploaded check yesterday. And if yesterday's data has also not been
+uploade check the day before yesterday (tDB_yesterday)*/
+var yesterday=day-1
+var tDb_Yesterday=day-2
+/*part below written to re-assign month, yesterday and tDb_Yesterday 
+variable with new value if current day is the first day of the month*/
+function firstDayOfTheMonth(){
 if (day==1 && month==1){
     tDb_Yesterday=30
     yesterday=31
@@ -453,22 +466,25 @@ else if (day==1 && month==12){
     yesterday=30
     month=11
 }
+}
+/*call the function*/
+firstDayOfTheMonth()
 
+/* string arguments to be used in geojson templates before using them as arguments for
+csv omnivore plugin*/
 var todayString=month+"/"+day+"/"+year
 var yesterdayString=month+"/"+yesterday+"/"+year
 var tDb_yesterdayString=month+"/"+tDb_Yesterday+"/"+year
-console.log(todayString)
-
 
 var country="Country/Region"
 
-
+/* first one, confirmed cases geojson custom layer*/
 var confirmedLayer = L.geoJson(null, {
     filter: function() {
-        // my custom filter function
+        // no custom filter function but still keeping it
         return true;
     },
-    
+    /*points to the layer with the latest day's data from the csv*/
     pointToLayer (feature, layer) {
        if (feature.properties[todayString]){
         if (feature.properties[todayString]<1000){
@@ -514,10 +530,11 @@ var confirmedLayer = L.geoJson(null, {
     }
     },
     onEachFeature (feature, layer) {      
-        
+            /*popup content*/
             if (feature.properties[todayString]){
             var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            /* for labels inside circles*/
             var text = L.tooltip({
             permanent: true,
             direction: 'center',
@@ -529,8 +546,10 @@ var confirmedLayer = L.geoJson(null, {
           
             }
             else if (feature.properties[yesterdayString]){
-                var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
+            /*popup content*/
+            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            /* for labels inside circles*/
             var text = L.tooltip({
             permanent: true,
             direction: 'center',
@@ -542,8 +561,10 @@ var confirmedLayer = L.geoJson(null, {
            
             }
         else {
+             /*popup content*/
             var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[tDb_yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[tDb_yesterdayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            /* for labels inside circles*/
             var text = L.tooltip({
             permanent: true,
             direction: 'center',
@@ -559,14 +580,15 @@ var confirmedLayer = L.geoJson(null, {
         
 });
 
-
+/*deaths custom geojson layer*/
 var deathsLayer = L.geoJson(null, {
     filter: function() {
-        // my custom filter function
+        // no custom filter function but still keeping it
         return true;
     },
     
     pointToLayer (feature, layer) {
+        /*points to the layer with the latest day's data from the csv*/
        if (feature.properties[todayString]){
         if (feature.properties[todayString]<50){
         return L.circleMarker(layer, small_icon_d)
@@ -602,10 +624,12 @@ var deathsLayer = L.geoJson(null, {
     }
     },
     onEachFeature (feature, layer) {      
-        
+            /*popup content*/
             if (feature.properties[todayString]){
+            /*popup content*/
             var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            /* for labels inside circles*/
             var text = L.tooltip({
             permanent: true,
             direction: 'center',
@@ -617,8 +641,10 @@ var deathsLayer = L.geoJson(null, {
           
             }
             else if (feature.properties[yesterdayString]){
-                var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
+            /*popup content*/
+            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            /* for labels inside circles*/
             var text = L.tooltip({
             permanent: true,
             direction: 'center',
@@ -630,8 +656,10 @@ var deathsLayer = L.geoJson(null, {
            
             }
         else {
+            /*popup content*/
             var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[tDb_yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[tDb_yesterdayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            /* for labels inside circles*/
             var text = L.tooltip({
             permanent: true,
             direction: 'center',
@@ -647,14 +675,15 @@ var deathsLayer = L.geoJson(null, {
         
 });
 
-
+/*recovered, custom geojson layer*/
 var recoveredLayer= L.geoJson(null, {
     filter: function() {
-        // my custom filter function
+        // no custom filter function but still keeping it
         return true;
     },
     
     pointToLayer (feature, layer) {
+         /*points to the layer with the latest day's data from the csv*/
        if (feature.properties[todayString]){
         if (feature.properties[todayString]<1000){
         return L.circleMarker(layer, small_icon_r)
@@ -690,10 +719,11 @@ var recoveredLayer= L.geoJson(null, {
     }
     },
     onEachFeature (feature, layer) {      
-        
+            /*popup content*/
             if (feature.properties[todayString]){
             var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            /* for labels inside circles*/
             var text = L.tooltip({
             permanent: true,
             direction: 'center',
@@ -705,8 +735,10 @@ var recoveredLayer= L.geoJson(null, {
           
             }
             else if (feature.properties[yesterdayString]){
-                var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
+            /*popup content*/
+            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            /* for labels inside circles*/
             var text = L.tooltip({
             permanent: true,
             direction: 'center',
@@ -718,8 +750,10 @@ var recoveredLayer= L.geoJson(null, {
            
             }
         else {
+            /*popup content*/
             var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[tDb_yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[tDb_yesterdayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            /* for labels inside circles*/
             var text = L.tooltip({
             permanent: true,
             direction: 'center',
@@ -735,6 +769,7 @@ var recoveredLayer= L.geoJson(null, {
         
 });
 
+/*csv resources called and assigned to a variable*/
 var confirmed= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv',null,confirmedLayer)
 var deaths= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv',null,deathsLayer)
 var recovered= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv',null,recoveredLayer)
@@ -742,22 +777,22 @@ var recovered= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/CO
 confirmed.addTo(map)
 
 var baseLayers = {
-           
+           //not any baselayers
 		    
            };
 
          //grouping overlaying features
         var overlayElements = {
         "Coronavirus": {
-          "Confirmed Cases": confirmed,
-          "Deaths": deaths,
-          "Recovered": recovered
+        "Confirmed Cases": confirmed,
+        "Deaths": deaths,
+        "Recovered": recovered
 
     }
 };
 
 var options = {
-  // Make the "Coronavirus" group exclusive (use radio inputs)
+  // Make the "Coronavirus" group exclusive (to use radio inputs)
   exclusiveGroups: ["Coronavirus"],
   // Show a checkbox next to non-exclusive group labels for toggling all
   groupCheckboxes: true,
@@ -766,6 +801,7 @@ var options = {
 
 L.control.groupedLayers(baseLayers, overlayElements, options).addTo(map);
 
+//colors to be used as palette for coloring the legend of confirmed layers
 function getColorConfirmed(y) {
     return y ==500 ? '#bd0026' : 
            y ==400 ? '#e31a1c' : 
@@ -775,7 +811,7 @@ function getColorConfirmed(y) {
                       
 }
 
-
+//colors to be used as palette for coloring the legend of deaths layer
 function getColorDeaths(y) {
     return y==300 ? '#ae017e' :
            y==200 ? '#f768a1' :
@@ -784,8 +820,7 @@ function getColorDeaths(y) {
                       
 }
 
-
-
+//colors to be used as palette for coloring the legend of recovered layer
 function getColorRecovered(y) {
     return y==300 ? '#225ea8' :
            y==200 ? '#1d91c0' :
@@ -801,13 +836,14 @@ function getRadius(y) {
     return r;
 }
 
-
+//defining legends
 var confirmedLegend= L.control({position: 'bottomleft'});
 
 var deathsLegend= L.control({position: 'bottomleft'});
 
 var recoveredLegend= L.control({position: 'bottomleft'});
 
+//creating all legends
 confirmedLegend.onAdd = function (map) {
 
     var div = L.DomUtil.create('div', 'info legend'),
@@ -829,7 +865,6 @@ confirmedLegend.onAdd = function (map) {
 
 
 deathsLegend.onAdd = function (map) {
-
 
     var div = L.DomUtil.create('div', 'info legend'),
         grades = [100, 200, 300],
@@ -874,9 +909,10 @@ return div;
 
 }
 
+//initally add first layers legend
 confirmedLegend.addTo(map)
 
-
+//conditional add/remove of legends
 confirmed.beforeAdd = function (map) {
     confirmedLegend.addTo(map);
     deathsLegend.remove(map);
@@ -894,13 +930,10 @@ recovered.beforeAdd=function(map){
     recoveredLegend.addTo(map);
 }
 
- //initiating the side bar
+ //adding the side bar
  var sidebar = L.control.sidebar({ container: 'sidebar', position: 'right' })
             .addTo(map)
             .open("home");
-
-
-
 
 
 </script> 
