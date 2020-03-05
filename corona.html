@@ -657,7 +657,7 @@ var deathsLayer = L.geoJson(null, {
             /*popup content*/
             if (feature.properties[todayString]){
             /*popup content*/
-            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
+            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Deaths: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
             /* for labels inside circles*/
             var text = L.tooltip({
@@ -672,7 +672,7 @@ var deathsLayer = L.geoJson(null, {
             }
             else if (feature.properties[yesterdayString]){
             /*popup content*/
-            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
+            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Deaths: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
             /* for labels inside circles*/
             var text = L.tooltip({
@@ -687,7 +687,7 @@ var deathsLayer = L.geoJson(null, {
             }
         else {
             /*popup content*/
-            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[tDb_yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[tDb_yesterdayString];
+            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Deaths: </b>"+feature.properties[tDb_yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[tDb_yesterdayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
             /* for labels inside circles*/
             var text = L.tooltip({
@@ -751,7 +751,7 @@ var recoveredLayer= L.geoJson(null, {
     onEachFeature (feature, layer) {      
             /*popup content*/
             if (feature.properties[todayString]){
-            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
+            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
             /* for labels inside circles*/
             var text = L.tooltip({
@@ -766,7 +766,7 @@ var recoveredLayer= L.geoJson(null, {
             }
             else if (feature.properties[yesterdayString]){
             /*popup content*/
-            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
+            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
             /* for labels inside circles*/
             var text = L.tooltip({
@@ -781,7 +781,7 @@ var recoveredLayer= L.geoJson(null, {
             }
         else {
             /*popup content*/
-            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[tDb_yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[tDb_yesterdayString];
+            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered: </b>"+feature.properties[tDb_yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[tDb_yesterdayString];
             layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
             /* for labels inside circles*/
             var text = L.tooltip({
