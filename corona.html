@@ -181,6 +181,186 @@ screens  */
     background: rgba(255, 255, 255, 0.8);
 }
 </style>
+    <meta charset=utf-8 />
+    <title>Coronavirus Map </title>
+    <!--metda data-->
+    <meta name="description" content="coronavirus, corona, COVID-19, china, wuhan, virus, novel, new, map, interactive map, death, infection, disease, outbreak, global map, spread, track, people, sick"/>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-57534785-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-57534785-2');
+    </script>
+    <!--Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Spartan&display=swap" rel="stylesheet">
+
+    <!--leaflet style-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+          crossorigin=""/>
+
+    <!-- leaflet js. Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+            integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+            crossorigin=""></script>
+    <!--sidebar style-->
+    <link rel="stylesheet" href="assets/css/leaflet-sidebar.css" />
+    <!--font awesome style-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- marker cluster styles-->
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.Default.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.css">
+    <!-- bootstrap css-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!--marker cluster javascript-->
+    <script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js"></script>
+    <style>
+
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+        .leaflet-tooltip-pane .text {
+            color:black;
+            /*-webkit-text-stroke: 0.03em white;*/
+            font-weight: bold;
+            background: transparent;
+            border:0;
+            box-shadow: none;
+            font-size: 1em;
+        }
+
+        /*/////////////////// Icon pulse ////////////////*/
+        .fa-pulse {
+            display: inline-block;
+            -moz-animation: pulse 2s infinite linear;
+            -o-animation: pulse 2s infinite linear;
+            -webkit-animation: pulse 2s infinite linear;
+            animation: pulse 2s infinite linear;
+        }
+
+        @-webkit-keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @-moz-keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @-o-keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @-ms-keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        /*/////////////////End of Icon Pulse////////////////////*/
+        .leaflet-popup-content {
+            padding: 10px 10px 15px;
+            margin: 0;
+            line-height: inherit;
+        }
+
+        div.leaflet-popup-content-wrapper {
+            background-color: rgb(47, 60, 66);
+            color: white;
+            font-size: 12px;
+            font-family:'Ubuntu';
+            border-radius: 3px;
+            box-shadow: 0 1px 2px rgba(0,0,0,.1);
+            padding: 1px;
+            text-align: left;
+            pointer-events: all;
+
+        }
+        .leaflet-sidebar-header {
+            font-size: 15px;
+        }
+        /*This part is for avoiding overlap in sidebar and layer control in smaller
+        screens  */
+        @media (max-width: 769px) {
+            .leaflet-sidebar-header {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 769px) {
+            .leaflet-sidebar-content {
+                opacity: 0.95 ;
+            }
+        }
+
+        @media (max-width: 769px) {
+            .leaflet-right .leaflet-control {
+                margin-right: 60px;
+            }
+        }
+
+
+        .leaflet-sidebar-header {
+            background-color:rgb(47, 60, 66);
+
+
+        }
+        .leaflet-sidebar-header p{
+            margin-bottom: 1px;
+            margin-top: 0px;
+        }
+        .leaflet-sidebar-tabs > li.active, .leaflet-sidebar-tabs > ul > li.active {
+            background-color:rgb(47, 60, 66);
+
+        }
+
+        .info {
+            padding: 6px 8px;
+            font-size: 13px;
+            background: white;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+        .info h4 {
+            margin: 0 0 5px;
+            color: #777;
+        }
+        .legend {
+            text-align: left;
+            line-height: 30px;
+            color: #555;
+            width: auto;
+        }
+        .legend i {
+            width: 18px;
+            height: 18px;
+            float: left;
+            margin-right: 8px;
+            opacity: 0.7;
+        }
+        .legend .colorcircle {
+            border-radius: 50%;
+            width: 15px;
+            height: 15px;
+            margin-top: 0px;
+        }
+        .legend .circlepadding {
+            border-radius: 50%;
+            margin-top: 0px;
+            background: rgba(255, 255, 255, 0.8);
+        }
+    </style>
 </head>
 <body>
 
@@ -194,7 +374,7 @@ screens  */
             <li><a href="index.html" role="tab"><img src="images/logo.svg" style="width: 20px; height: 20px;" alt="" /></i></a></li>
             <!-- <li class="disabled"><a href="#messages" role="tab"><i class="fa fa-envelope"></i></a></li> -->
         </ul>
-         <ul role="tablist">
+        <ul role="tablist">
             <li><a href="https://github.com/sanozmen/" role="tab" target="_blank"><i class="fa fa-github fa-lg"></i></a></li>
         </ul>
         <!--<ul role="tablist">
@@ -206,8 +386,8 @@ screens  */
     <div class="leaflet-sidebar-content">
         <div class="leaflet-sidebar-pane" id="home">
             <h1 class="leaflet-sidebar-header">
-            
-               <p ><b>Click and Hide the Pane</b></p>
+
+                <p ><b>Click and Hide the Pane</b></p>
                 <span class="leaflet-sidebar-close"><h4 class="fa-pulse">X</h4></span>
             </h1>
 
@@ -216,20 +396,20 @@ screens  */
             <h4>Global Coronavirus Map (Updated Daily)</h4>
 
             <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >This interactive world map aims to track the global spread of 2019 Novel Coronavirus
-                 (COVID-19) outbreak, inspired by <a href="https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6"
-                  target="_blank"> this popular map</a> produced by researchers at Johns Hopkins CSSE. <a href="https://github.com/CSSEGISandData/COVID-19" target="_blank">
+                (COVID-19) outbreak, inspired by <a href="https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6"
+                                                    target="_blank"> this popular map</a> produced by researchers at Johns Hopkins CSSE. <a href="https://github.com/CSSEGISandData/COVID-19" target="_blank">
                     Daily updated data </a> is also provided by John Hopkin's researchers.</p>
             <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >There are 3 different layers. First "Confirmed Cases"
-                shows the cumulative number of infected people at those locations. Second one "Deaths" indicates cumulative number of deaths caused by 
+                shows the cumulative number of infected people at those locations. Second one "Deaths" indicates cumulative number of deaths caused by
                 this disease. Lastly, the layer "Recover" denotes
                 the cumulative number of people who got recovered. </p>
 
-                <h6>How to use the map</h6>
-               <p style="margin-top:10px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >Labels inside the circles represents the cumulative number of people. Click on radio-buttons on top-right corner to switch between layers. In order to open popup windows
-                with more details such as name of location, date of data. </p> 
+            <h6>How to use the map</h6>
+            <p style="margin-top:10px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >Labels inside the circles represents the cumulative number of people. Click on radio-buttons on top-right corner to switch between layers. In order to open popup windows
+                with more details such as name of location, date of data. </p>
 
-        
-             <p style="margin-top:130px; font-family:'Ubuntu' ,sans-serif; font-size:10px; line-height: 10px" align=justify >
+
+            <p style="margin-top:130px; font-family:'Ubuntu' ,sans-serif; font-size:10px; line-height: 10px" align=justify >
                 tags: coronavirus, corona, COVID-19, china, novel, new, map, interactive map, infection, disease, outbreak, global map, spread, track, people, sick, death</p>
 
         </div>
@@ -253,719 +433,719 @@ screens  */
 
 <!--Jquery-->
 <script
-  src="https://code.jquery.com/jquery-3.4.1.js"
-  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  crossorigin="anonymous"></script>
-  <!-- below is for bootstrap -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  
- <!-- for titling the layer groups-->
- <script src="https://rawgithub.com/ismyrnow/Leaflet.groupedlayercontrol/master/src/leaflet.groupedlayercontrol.js"></script>
- <!--Leaflet mapbox omnivore plugin for reading various formats including csv-->
- <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
+        src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+<!-- below is for bootstrap -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<!-- for titling the layer groups-->
+<script src="https://rawgithub.com/ismyrnow/Leaflet.groupedlayercontrol/master/src/leaflet.groupedlayercontrol.js"></script>
+<!--Leaflet mapbox omnivore plugin for reading various formats including csv-->
+<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
 <script>
 
-/*various options for the basemap*/
-var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-  subdomains: 'abcd',
-  maxZoom: 19
-});
-var CartoDB_DarkMatter = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-	subdomains: 'abcd',
-	maxZoom: 19
-});
+    /*various options for the basemap*/
+    var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 19
+    });
+    var CartoDB_DarkMatter = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 19
+    });
 
-var Stadia_AlidadeSmoothDark = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
-	maxZoom: 20,
-	attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-});
-var CartoDB_Voyager = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-	subdomains: 'abcd',
-	maxZoom: 19
-});
-var map = L.map('map', {
-          zoom: 3,
-          center: [39.92,95.85],
-          layers: [grayscale]
+    var Stadia_AlidadeSmoothDark = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
+        maxZoom: 20,
+        attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+    });
+    var CartoDB_Voyager = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 19
+    });
+    var map = L.map('map', {
+        zoom: 3,
+        center: [39.92,95.85],
+        layers: [grayscale]
 
-        });
+    });
 
-/* Defining icons in different shapes and colors for different layers*/
+    /* Defining icons in different shapes and colors for different layers*/
 
-var smallMedium_icon = {
-    radius: 10,
-    fillColor: "#feb24c",
-    color: "#000",
-    weight: 0.2,
-    opacity: 1,
-    fillOpacity: 0.8
-};
-
-
-var medium_icon = {
-    radius: 14,
-    fillColor: "#fc4e2a",
-    color: "#000",
-    weight: 0.2,
-    opacity: 1,
-    fillOpacity: 0.8
-};
-
-var mediumLarge_icon = {
-    radius: 18,
-    fillColor: "#e31a1c",
-    color: "#000",
-    weight: 0.2,
-    opacity: 1,
-    fillOpacity: 0.8
-};
-
-var large_icon = {
-    radius: 22,
-    fillColor: "#bd0026",
-    color: "#000",
-    weight: 0.2,
-    opacity: 1,
-    fillOpacity: 0.8
-};
+    var smallMedium_icon = {
+        radius: 10,
+        fillColor: "#feb24c",
+        color: "#000",
+        weight: 0.2,
+        opacity: 1,
+        fillOpacity: 0.8
+    };
 
 
-var small_icon_d = {
-    radius: 10,
-    fillColor: "#fcc5c0",
-    color: "#000",
-    weight: 0.2,
-    opacity: 1,
-    fillOpacity: 0.8
-};
+    var medium_icon = {
+        radius: 14,
+        fillColor: "#fc4e2a",
+        color: "#000",
+        weight: 0.2,
+        opacity: 1,
+        fillOpacity: 0.8
+    };
 
-var medium_icon_d = {
-    radius: 14,
-    fillColor: "#f768a1",
-    color: "#000",
-    weight: 0.2,
-    opacity: 1,
-    fillOpacity: 0.8
-};
+    var mediumLarge_icon = {
+        radius: 18,
+        fillColor: "#e31a1c",
+        color: "#000",
+        weight: 0.2,
+        opacity: 1,
+        fillOpacity: 0.8
+    };
 
-var large_icon_d = {
-    radius: 18,
-    fillColor: "#ae017e",
-    color: "#000",
-    weight: 0.2,
-    opacity: 1,
-    fillOpacity: 0.8
-};
-
-
-var small_icon_r = {
-    radius: 8,
-    fillColor: "#7fcdbb",
-    color: "000",
-    weight: 0.2,
-    opacity: 1,
-    fillOpacity: 0.8
-};
+    var large_icon = {
+        radius: 22,
+        fillColor: "#bd0026",
+        color: "#000",
+        weight: 0.2,
+        opacity: 1,
+        fillOpacity: 0.8
+    };
 
 
-var medium_icon_r = {
-    radius: 14,
-    fillColor: "#1d91c0",
-    color: "#000",
-    weight: 0.2,
-    opacity: 1,
-    fillOpacity: 0.8
-};
+    var small_icon_d = {
+        radius: 10,
+        fillColor: "#fcc5c0",
+        color: "#000",
+        weight: 0.2,
+        opacity: 1,
+        fillOpacity: 0.8
+    };
 
-var large_icon_r = {
-    radius: 19,
-    fillColor: "#225ea8",
-    color: "#000",
-    weight: 0.2,
-    opacity: 1,
-    fillOpacity: 0.8
-};
-/* end of marker style (icon) definitions*/
+    var medium_icon_d = {
+        radius: 14,
+        fillColor: "#f768a1",
+        color: "#000",
+        weight: 0.2,
+        opacity: 1,
+        fillOpacity: 0.8
+    };
 
-/*utilizing date functionality in js
-in order to autmatically update data*/
-var d = new Date();
-year=d.getFullYear();
-year=year-2000
-month=d.getMonth();
-month=month+1
-day=d.getDate()
-/*if current day's data has not been 
-uploaded check yesterday. And if yesterday's data has also not been
-uploade check the day before yesterday (tDB_yesterday)*/
-var yesterday=day-1
-var tDb_Yesterday=day-2
-/*part below written to re-assign month, yesterday and tDb_Yesterday 
-variable with new value if current day is the first day of the month*/
-function firstDayOfTheMonth(){
-if (day==1 && month==1){
-    tDb_Yesterday=30
-    yesterday=31
-    month=12
-}
-else if (day==1 && month==2){
-    tDb_Yesterday=30
-    yesterday=31
-    month=1
-}
-else if (day==1 && month==3){
-    tDb_Yesterday=28
-    yesterday=29
-    month=2
-}
-else if (day==1 && month==4){
-    tDb_Yesterday=30
-    yesterday=31
-    month=3
-}
-else if (day==1 && month==5){
-    tDb_Yesterday=29
-    yesterday=30
-    month=4
-}
-else if (day==1 && month==6){
-    tDb_Yesterday=30
-    yesterday=31
-    month=5
-}
-else if (day==1 && month==7){
-    tDb_Yesterday=29
-    yesterday=30
-    month=6
-}
-else if (day==1 && month==8){
-    tDb_Yesterday=30
-    yesterday=31
-    month=7
-}
-else if (day==1 && month==9){
-    tDb_Yesterday=30
-    yesterday=31
-    month=8
-}
-else if (day==1 && month==10){
-    tDb_Yesterday=29
-    yesterday=30
-    month=9
-}
-else if (day==1 && month==11){
-    tDb_Yesterday=30
-    yesterday=31
-    month=10
-}
-else if (day==1 && month==12){
-    tDb_Yesterday=29
-    yesterday=30
-    month=11
-}
-}
-/*call the function*/
-firstDayOfTheMonth()
+    var large_icon_d = {
+        radius: 18,
+        fillColor: "#ae017e",
+        color: "#000",
+        weight: 0.2,
+        opacity: 1,
+        fillOpacity: 0.8
+    };
 
-/* string arguments to be used in geojson templates before using them as arguments for
-csv omnivore plugin*/
-var todayString=month+"/"+day+"/"+year
-var yesterdayString=month+"/"+yesterday+"/"+year
-var tDb_yesterdayString=month+"/"+tDb_Yesterday+"/"+year
 
-var country="Country/Region"
-var countryNames=[]
-var totalConfirmed=[]
-/* first one, confirmed cases geojson custom layer*/
-var confirmedLayer = L.geoJson(null, {
-    filter: function() {
-        // no custom filter function but still keeping it
-        return true;
-    },
-    filter: function(feature,layer) {
-        if (feature.properties[todayString]){
-            countryNames.push(feature.properties[country])
-            totalConfirmed.push(feature.properties[todayString])
-            return totalConfirmed
-            return countryNames
-        } 
-        else if (feature.properties[yesterdayString]){
-            countryNames.push(feature.properties[country])
-            totalConfirmed.push(feature.properties[yesterdayString])
-            return totalConfirmed
-            return countryNames
+    var small_icon_r = {
+        radius: 10,
+        fillColor: "#7fcdbb",
+        color: "000",
+        weight: 0.2,
+        opacity: 1,
+        fillOpacity: 0.8
+    };
+
+
+    var medium_icon_r = {
+        radius: 14,
+        fillColor: "#1d91c0",
+        color: "#000",
+        weight: 0.2,
+        opacity: 1,
+        fillOpacity: 0.8
+    };
+
+    var large_icon_r = {
+        radius: 18,
+        fillColor: "#225ea8",
+        color: "#000",
+        weight: 0.2,
+        opacity: 1,
+        fillOpacity: 0.8
+    };
+    /* end of marker style (icon) definitions*/
+
+    /*utilizing date functionality in js
+    in order to autmatically update data*/
+    var d = new Date();
+    year=d.getFullYear();
+    year=year-2000
+    month=d.getMonth();
+    month=month+1
+    day=d.getDate()
+    /*if current day's data has not been
+    uploaded check yesterday. And if yesterday's data has also not been
+    uploade check the day before yesterday (tDB_yesterday)*/
+    var yesterday=day-1
+    var tDb_Yesterday=day-2
+    /*part below written to re-assign month, yesterday and tDb_Yesterday
+    variable with new value if current day is the first day of the month*/
+    function firstDayOfTheMonth(){
+        if (day==1 && month==1){
+            tDb_Yesterday=30
+            yesterday=31
+            month=12
         }
-        else {
-            countryNames.push(feature.properties[country])
-            totalConfirmed.push(feature.properties[tDb_yesterdayString])
-            return totalConfirmed
-            return countryNames
+        else if (day==1 && month==2){
+            tDb_Yesterday=30
+            yesterday=31
+            month=1
         }
-    },
-    /*points to the layer with the latest day's data from the csv*/
-    pointToLayer (feature, layer) {
-       if (feature.properties[todayString]){
-        if (feature.properties[todayString]<1000){
-        return L.circleMarker(layer, smallMedium_icon)
+        else if (day==1 && month==3){
+            tDb_Yesterday=28
+            yesterday=29
+            month=2
         }
-        else if (feature.properties[todayString]>=1000 && feature.properties[todayString]<5000){
-            return L.circleMarker(layer,medium_icon)
+        else if (day==1 && month==4){
+            tDb_Yesterday=30
+            yesterday=31
+            month=3
         }
-        else if (feature.properties[todayString]>=5000 && feature.properties[todayString]<10000){
-            return L.circleMarker(layer,mediumLarge_icon)
+        else if (day==1 && month==5){
+            tDb_Yesterday=29
+            yesterday=30
+            month=4
         }
-        else if (feature.properties[todayString]>=10000){
-            return L.circleMarker(layer,large_icon)
+        else if (day==1 && month==6){
+            tDb_Yesterday=30
+            yesterday=31
+            month=5
         }
-    } else if (feature.properties[yesterdayString]) {
-        if (feature.properties[yesterdayString]<1000){
-        return L.circleMarker(layer, smallMedium_icon)
+        else if (day==1 && month==7){
+            tDb_Yesterday=29
+            yesterday=30
+            month=6
         }
-        else if (feature.properties[yesterdayString]>=1000 && feature.properties[yesterdayString]<5000){
-            return L.circleMarker(layer,medium_icon)
+        else if (day==1 && month==8){
+            tDb_Yesterday=30
+            yesterday=31
+            month=7
         }
-        else if (feature.properties[yesterdayString]>=5000 && feature.properties[yesterdayString]<10000){
-            return L.circleMarker(layer,mediumLarge_icon)
+        else if (day==1 && month==9){
+            tDb_Yesterday=30
+            yesterday=31
+            month=8
         }
-        else if (feature.properties[yesterdayString]>=10000){
-            return L.circleMarker(layer,large_icon)
+        else if (day==1 && month==10){
+            tDb_Yesterday=29
+            yesterday=30
+            month=9
+        }
+        else if (day==1 && month==11){
+            tDb_Yesterday=30
+            yesterday=31
+            month=10
+        }
+        else if (day==1 && month==12){
+            tDb_Yesterday=29
+            yesterday=30
+            month=11
         }
     }
-    else {
-        if (feature.properties[tDb_yesterdayString]<100){
-        return L.circleMarker(layer, smallMedium_icon)
-        }
-        else if (feature.properties[tDb_yesterdayString]>=1000 && feature.properties[tDb_yesterdayString]<5000){
-            return L.circleMarker(layer,medium_icon)
-        }
-        else if (feature.properties[tDb_yesterdayString]>=5000 && feature.properties[tDb_yesterdayString]<10000){
-            return L.circleMarker(layer,mediumLarge_icon)
-        }
-        else if (feature.properties[tDb_yesterdayString]>=10000){
-            return L.circleMarker(layer,large_icon)
-        }
+    /*call the function*/
+    firstDayOfTheMonth()
 
-    }
-    
-    
-    },
-    onEachFeature (feature, layer) {      
-            /*popup content*/
+    /* string arguments to be used in geojson templates before using them as arguments for
+    csv omnivore plugin*/
+    var todayString=month+"/"+day+"/"+year
+    var yesterdayString=month+"/"+yesterday+"/"+year
+    var tDb_yesterdayString=month+"/"+tDb_Yesterday+"/"+year
+
+    var country="Country/Region"
+    var countryNames=[]
+    var totalConfirmed=[]
+    /* first one, confirmed cases geojson custom layer*/
+    var confirmedLayer = L.geoJson(null, {
+        filter: function() {
+            // no custom filter function but still keeping it
+            return true;
+        },
+        filter: function(feature,layer) {
             if (feature.properties[todayString]){
-            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
-            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
-            /* for labels inside circles*/
-            var text = L.tooltip({
-            permanent: true,
-            direction: 'center',
-            className: 'text'
-            })
-            .setContent(feature.properties[todayString])
-            .setLatLng(layer.getLatLng());
-            layer.bindTooltip(text)
-          
+                countryNames.push(feature.properties[country])
+                totalConfirmed.push(feature.properties[todayString])
+                return totalConfirmed
+                return countryNames
             }
             else if (feature.properties[yesterdayString]){
-            /*popup content*/
-            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
-            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
-            /* for labels inside circles*/
-            var text = L.tooltip({
-            permanent: true,
-            direction: 'center',
-            className: 'text'
-            })
-            .setContent(feature.properties[yesterdayString])
-            .setLatLng(layer.getLatLng());
-            layer.bindTooltip(text)
-           
+                countryNames.push(feature.properties[country])
+                totalConfirmed.push(feature.properties[yesterdayString])
+                return totalConfirmed
+                return countryNames
             }
-        else {
-             /*popup content*/
-            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[tDb_yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[tDb_yesterdayString];
-            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
-            /* for labels inside circles*/
-            var text = L.tooltip({
-            permanent: true,
-            direction: 'center',
-            className: 'text'
-            })
-            .setContent(feature.properties[tDb_yesterdayString])
-            .setLatLng(layer.getLatLng());
-            layer.bindTooltip(text)
-        }
-
-    
+            else {
+                countryNames.push(feature.properties[country])
+                totalConfirmed.push(feature.properties[tDb_yesterdayString])
+                return totalConfirmed
+                return countryNames
+            }
         },
-        
-        
-});
-
-//arrayMy=[1,2]
-//console.log(totalConfirmed)
-//console.log(arrayMy[1]);
-
-
-/*deaths custom geojson layer*/
-var deathsLayer = L.geoJson(null, {
-    filter: function() {
-        // no custom filter function but still keeping it
-        return true;
-    },
-    
-    pointToLayer (feature, layer) {
         /*points to the layer with the latest day's data from the csv*/
-       if (feature.properties[todayString]){
-        if (feature.properties[todayString]<50){
-        return L.circleMarker(layer, small_icon_d)
-        }
-        else if (feature.properties[todayString]>=50 && feature.properties[todayString]<500){
-            return L.circleMarker(layer,medium_icon_d)
-        }
-        else if (feature.properties[todayString]>=500){
-            return L.circleMarker(layer,large_icon_d)
-        }
-    } else if (feature.properties[yesterdayString]) {
-        if (feature.properties[yesterdayString]<50){
-        return L.circleMarker(layer, small_icon_d)
-        }
-        else if (feature.properties[yesterdayString]>=50 && feature.properties[yesterdayString]<500){
-            return L.circleMarker(layer,medium_icon_d)
-        }
-        else if (feature.properties[yesterdayString]>=500){
-            return L.circleMarker(layer,large_icon_d)
-        }
-    }
-    else {
-        if (feature.properties[tDb_yesterdayString]<50){
-        return L.circleMarker(layer, small_icon_d)
-        }
-        else if (feature.properties[tDb_yesterdayString]>=50 && feature.properties[tDb_yesterdayString]<500){
-            return L.circleMarker(layer,medium_icon_d)
-        }
-        else if (feature.properties[tDb_yesterdayString]>=500){
-            return L.circleMarker(layer,large_icon_d)
-    }
+        pointToLayer (feature, layer) {
+            if (feature.properties[todayString]){
+                if (feature.properties[todayString]<1000){
+                    return L.circleMarker(layer, smallMedium_icon)
+                }
+                else if (feature.properties[todayString]>=1000 && feature.properties[todayString]<5000){
+                    return L.circleMarker(layer,medium_icon)
+                }
+                else if (feature.properties[todayString]>=5000 && feature.properties[todayString]<10000){
+                    return L.circleMarker(layer,mediumLarge_icon)
+                }
+                else if (feature.properties[todayString]>=10000){
+                    return L.circleMarker(layer,large_icon)
+                }
+            } else if (feature.properties[yesterdayString]) {
+                if (feature.properties[yesterdayString]<1000){
+                    return L.circleMarker(layer, smallMedium_icon)
+                }
+                else if (feature.properties[yesterdayString]>=1000 && feature.properties[yesterdayString]<5000){
+                    return L.circleMarker(layer,medium_icon)
+                }
+                else if (feature.properties[yesterdayString]>=5000 && feature.properties[yesterdayString]<10000){
+                    return L.circleMarker(layer,mediumLarge_icon)
+                }
+                else if (feature.properties[yesterdayString]>=10000){
+                    return L.circleMarker(layer,large_icon)
+                }
+            }
+            else {
+                if (feature.properties[tDb_yesterdayString]<100){
+                    return L.circleMarker(layer, smallMedium_icon)
+                }
+                else if (feature.properties[tDb_yesterdayString]>=1000 && feature.properties[tDb_yesterdayString]<5000){
+                    return L.circleMarker(layer,medium_icon)
+                }
+                else if (feature.properties[tDb_yesterdayString]>=5000 && feature.properties[tDb_yesterdayString]<10000){
+                    return L.circleMarker(layer,mediumLarge_icon)
+                }
+                else if (feature.properties[tDb_yesterdayString]>=10000){
+                    return L.circleMarker(layer,large_icon)
+                }
 
-    }
-    },
-    onEachFeature (feature, layer) {      
+            }
+
+
+        },
+        onEachFeature (feature, layer) {
             /*popup content*/
             if (feature.properties[todayString]){
-            /*popup content*/
-            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Deaths: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
-            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
-            /* for labels inside circles*/
-            var text = L.tooltip({
-            permanent: true,
-            direction: 'center',
-            className: 'text'
-            })
-            .setContent(feature.properties[todayString])
-            .setLatLng(layer.getLatLng());
-            layer.bindTooltip(text)
-          
+                var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
+                layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+                /* for labels inside circles*/
+                var text = L.tooltip({
+                    permanent: true,
+                    direction: 'center',
+                    className: 'text'
+                })
+                    .setContent(feature.properties[todayString])
+                    .setLatLng(layer.getLatLng());
+                layer.bindTooltip(text)
+
             }
             else if (feature.properties[yesterdayString]){
-            /*popup content*/
-            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Deaths: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
-            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
-            /* for labels inside circles*/
-            var text = L.tooltip({
-            permanent: true,
-            direction: 'center',
-            className: 'text'
-            })
-            .setContent(feature.properties[yesterdayString])
-            .setLatLng(layer.getLatLng());
-            layer.bindTooltip(text)
-           
+                /*popup content*/
+                var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
+                layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+                /* for labels inside circles*/
+                var text = L.tooltip({
+                    permanent: true,
+                    direction: 'center',
+                    className: 'text'
+                })
+                    .setContent(feature.properties[yesterdayString])
+                    .setLatLng(layer.getLatLng());
+                layer.bindTooltip(text)
+
             }
-        else {
-            /*popup content*/
-            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Deaths: </b>"+feature.properties[tDb_yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[tDb_yesterdayString];
-            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
-            /* for labels inside circles*/
-            var text = L.tooltip({
-            permanent: true,
-            direction: 'center',
-            className: 'text'
-            })
-            .setContent(feature.properties[tDb_yesterdayString])
-            .setLatLng(layer.getLatLng());
-            layer.bindTooltip(text)
-        }
+            else {
+                /*popup content*/
+                var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[tDb_yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[tDb_yesterdayString];
+                layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+                /* for labels inside circles*/
+                var text = L.tooltip({
+                    permanent: true,
+                    direction: 'center',
+                    className: 'text'
+                })
+                    .setContent(feature.properties[tDb_yesterdayString])
+                    .setLatLng(layer.getLatLng());
+                layer.bindTooltip(text)
+            }
 
-    
+
         },
-        
-});
 
-/*recovered, custom geojson layer*/
-var recoveredLayer= L.geoJson(null, {
-    filter: function() {
-        // no custom filter function but still keeping it
-        return true;
-    },
-    
-    pointToLayer (feature, layer) {
-         /*points to the layer with the latest day's data from the csv*/
-       if (feature.properties[todayString]){
-        if (feature.properties[todayString]<1000){
-        return L.circleMarker(layer, small_icon_r)
-        }
-        else if (feature.properties[todayString]>=1000 && feature.properties[todayString]<2000){
-            return L.circleMarker(layer,medium_icon_r)
-        }
-        else if (feature.properties[todayString]>=2000){
-            return L.circleMarker(layer,large_icon_r)
-        }
-    } else if (feature.properties[yesterdayString]) {
-        if (feature.properties[yesterdayString]<1000){
-        return L.circleMarker(layer, small_icon_r)
-        }
-        else if (feature.properties[yesterdayString]>=1000 && feature.properties[yesterdayString]<2000){
-            return L.circleMarker(layer,medium_icon_r)
-        }
-        else if (feature.properties[yesterdayString]>=2000){
-            return L.circleMarker(layer,large_icon_r)
-        }
-    }
-    else {
-        if (feature.properties[tDb_yesterdayString]<1000){
-        return L.circleMarker(layer, small_icon_r)
-        }
-        else if (feature.properties[tDb_yesterdayString]>=1000 && feature.properties[tDb_yesterdayString]<2000){
-            return L.circleMarker(layer,medium_icon_r)
-        }
-        else if (feature.properties[tDb_yesterdayString]>=2000){
-            return L.circleMarker(layer,large_icon_r)
-    }
 
-    }
-    },
-    onEachFeature (feature, layer) {      
+    });
+
+    //arrayMy=[1,2]
+    //console.log(totalConfirmed)
+    //console.log(arrayMy[1]);
+
+
+    /*deaths custom geojson layer*/
+    var deathsLayer = L.geoJson(null, {
+        filter: function() {
+            // no custom filter function but still keeping it
+            return true;
+        },
+
+        pointToLayer (feature, layer) {
+            /*points to the layer with the latest day's data from the csv*/
+            if (feature.properties[todayString]){
+                if (feature.properties[todayString]<50){
+                    return L.circleMarker(layer, small_icon_d)
+                }
+                else if (feature.properties[todayString]>=50 && feature.properties[todayString]<500){
+                    return L.circleMarker(layer,medium_icon_d)
+                }
+                else if (feature.properties[todayString]>=500){
+                    return L.circleMarker(layer,large_icon_d)
+                }
+            } else if (feature.properties[yesterdayString]) {
+                if (feature.properties[yesterdayString]<50){
+                    return L.circleMarker(layer, small_icon_d)
+                }
+                else if (feature.properties[yesterdayString]>=50 && feature.properties[yesterdayString]<500){
+                    return L.circleMarker(layer,medium_icon_d)
+                }
+                else if (feature.properties[yesterdayString]>=500){
+                    return L.circleMarker(layer,large_icon_d)
+                }
+            }
+            else {
+                if (feature.properties[tDb_yesterdayString]<50){
+                    return L.circleMarker(layer, small_icon_d)
+                }
+                else if (feature.properties[tDb_yesterdayString]>=50 && feature.properties[tDb_yesterdayString]<500){
+                    return L.circleMarker(layer,medium_icon_d)
+                }
+                else if (feature.properties[tDb_yesterdayString]>=500){
+                    return L.circleMarker(layer,large_icon_d)
+                }
+
+            }
+        },
+        onEachFeature (feature, layer) {
             /*popup content*/
             if (feature.properties[todayString]){
-            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
-            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
-            /* for labels inside circles*/
-            var text = L.tooltip({
-            permanent: true,
-            direction: 'center',
-            className: 'text'
-            })
-            .setContent(feature.properties[todayString])
-            .setLatLng(layer.getLatLng());
-            layer.bindTooltip(text)
-          
+                /*popup content*/
+                var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Deaths: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
+                layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+                /* for labels inside circles*/
+                var text = L.tooltip({
+                    permanent: true,
+                    direction: 'center',
+                    className: 'text'
+                })
+                    .setContent(feature.properties[todayString])
+                    .setLatLng(layer.getLatLng());
+                layer.bindTooltip(text)
+
             }
             else if (feature.properties[yesterdayString]){
-            /*popup content*/
-            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
-            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
-            /* for labels inside circles*/
-            var text = L.tooltip({
-            permanent: true,
-            direction: 'center',
-            className: 'text'
-            })
-            .setContent(feature.properties[yesterdayString])
-            .setLatLng(layer.getLatLng());
-            layer.bindTooltip(text)
-           
+                /*popup content*/
+                var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Deaths: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
+                layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+                /* for labels inside circles*/
+                var text = L.tooltip({
+                    permanent: true,
+                    direction: 'center',
+                    className: 'text'
+                })
+                    .setContent(feature.properties[yesterdayString])
+                    .setLatLng(layer.getLatLng());
+                layer.bindTooltip(text)
+
             }
-        else {
-            /*popup content*/
-            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered: </b>"+feature.properties[tDb_yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[tDb_yesterdayString];
-            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
-            /* for labels inside circles*/
-            var text = L.tooltip({
-            permanent: true,
-            direction: 'center',
-            className: 'text'
-            })
-            .setContent(feature.properties[tDb_yesterdayString])
-            .setLatLng(layer.getLatLng());
-            layer.bindTooltip(text)
-        }
+            else {
+                /*popup content*/
+                var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Deaths: </b>"+feature.properties[tDb_yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[tDb_yesterdayString];
+                layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+                /* for labels inside circles*/
+                var text = L.tooltip({
+                    permanent: true,
+                    direction: 'center',
+                    className: 'text'
+                })
+                    .setContent(feature.properties[tDb_yesterdayString])
+                    .setLatLng(layer.getLatLng());
+                layer.bindTooltip(text)
+            }
 
-    
+
         },
-        
-});
 
-/*csv resources called and assigned to a variable*/
-var confirmed= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv',null,confirmedLayer)
-var deaths= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv',null,deathsLayer)
-var recovered= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv',null,recoveredLayer)
+    });
 
-confirmed.addTo(map)
+    /*recovered, custom geojson layer*/
+    var recoveredLayer= L.geoJson(null, {
+        filter: function() {
+            // no custom filter function but still keeping it
+            return true;
+        },
 
-var baseLayers = {
-           //not any baselayers
-		    
-           };
+        pointToLayer (feature, layer) {
+            /*points to the layer with the latest day's data from the csv*/
+            if (feature.properties[todayString]){
+                if (feature.properties[todayString]<1000){
+                    return L.circleMarker(layer, small_icon_r)
+                }
+                else if (feature.properties[todayString]>=1000 && feature.properties[todayString]<2000){
+                    return L.circleMarker(layer,medium_icon_r)
+                }
+                else if (feature.properties[todayString]>=2000){
+                    return L.circleMarker(layer,large_icon_r)
+                }
+            } else if (feature.properties[yesterdayString]) {
+                if (feature.properties[yesterdayString]<1000){
+                    return L.circleMarker(layer, small_icon_r)
+                }
+                else if (feature.properties[yesterdayString]>=1000 && feature.properties[yesterdayString]<2000){
+                    return L.circleMarker(layer,medium_icon_r)
+                }
+                else if (feature.properties[yesterdayString]>=2000){
+                    return L.circleMarker(layer,large_icon_r)
+                }
+            }
+            else {
+                if (feature.properties[tDb_yesterdayString]<1000){
+                    return L.circleMarker(layer, small_icon_r)
+                }
+                else if (feature.properties[tDb_yesterdayString]>=1000 && feature.properties[tDb_yesterdayString]<2000){
+                    return L.circleMarker(layer,medium_icon_r)
+                }
+                else if (feature.properties[tDb_yesterdayString]>=2000){
+                    return L.circleMarker(layer,large_icon_r)
+                }
 
-         //grouping overlaying features
-        var overlayElements = {
+            }
+        },
+        onEachFeature (feature, layer) {
+            /*popup content*/
+            if (feature.properties[todayString]){
+                var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
+                layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+                /* for labels inside circles*/
+                var text = L.tooltip({
+                    permanent: true,
+                    direction: 'center',
+                    className: 'text'
+                })
+                    .setContent(feature.properties[todayString])
+                    .setLatLng(layer.getLatLng());
+                layer.bindTooltip(text)
+
+            }
+            else if (feature.properties[yesterdayString]){
+                /*popup content*/
+                var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
+                layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+                /* for labels inside circles*/
+                var text = L.tooltip({
+                    permanent: true,
+                    direction: 'center',
+                    className: 'text'
+                })
+                    .setContent(feature.properties[yesterdayString])
+                    .setLatLng(layer.getLatLng());
+                layer.bindTooltip(text)
+
+            }
+            else {
+                /*popup content*/
+                var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered: </b>"+feature.properties[tDb_yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[tDb_yesterdayString];
+                layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+                /* for labels inside circles*/
+                var text = L.tooltip({
+                    permanent: true,
+                    direction: 'center',
+                    className: 'text'
+                })
+                    .setContent(feature.properties[tDb_yesterdayString])
+                    .setLatLng(layer.getLatLng());
+                layer.bindTooltip(text)
+            }
+
+
+        },
+
+    });
+
+    /*csv resources called and assigned to a variable*/
+    var confirmed= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv',null,confirmedLayer)
+    var deaths= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv',null,deathsLayer)
+    var recovered= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv',null,recoveredLayer)
+
+    confirmed.addTo(map)
+
+    var baseLayers = {
+        //not any baselayers
+
+    };
+
+    //grouping overlaying features
+    var overlayElements = {
         "Coronavirus": {
-        "Confirmed Cases": confirmed,
-        "Deaths": deaths,
-        "Recovered": recovered
+            "Confirmed Cases": confirmed,
+            "Deaths": deaths,
+            "Recovered": recovered
+
+        }
+    };
+
+    var options = {
+        // Make the "Coronavirus" group exclusive (to use radio inputs)
+        exclusiveGroups: ["Coronavirus"],
+        // Show a checkbox next to non-exclusive group labels for toggling all
+        groupCheckboxes: true,
+        collapsed: false
+    };
+
+    L.control.groupedLayers(baseLayers, overlayElements, options).addTo(map);
+
+    //colors to be used as palette for coloring the legend of confirmed layers
+    function getColorConfirmed(y) {
+        return y ==500 ? '#bd0026' :
+            y ==400 ? '#e31a1c' :
+                y==300 ? '#fc4e2a' :
+                    y==200 ? '#feb24c' :
+                        '#D04030';
 
     }
-};
 
-var options = {
-  // Make the "Coronavirus" group exclusive (to use radio inputs)
-  exclusiveGroups: ["Coronavirus"],
-  // Show a checkbox next to non-exclusive group labels for toggling all
-  groupCheckboxes: true,
-  collapsed: false
-};
-
-L.control.groupedLayers(baseLayers, overlayElements, options).addTo(map);
-
-//colors to be used as palette for coloring the legend of confirmed layers
-function getColorConfirmed(y) {
-    return y ==500 ? '#bd0026' : 
-           y ==400 ? '#e31a1c' : 
-           y==300 ? '#fc4e2a' :
-           y==200 ? '#feb24c' :
+    //colors to be used as palette for coloring the legend of deaths layer
+    function getColorDeaths(y) {
+        return y==300 ? '#ae017e' :
+            y==200 ? '#f768a1' :
+                y==100 ? '#fcc5c0' :
                     '#D04030';
-                      
-}
 
-//colors to be used as palette for coloring the legend of deaths layer
-function getColorDeaths(y) {
-    return y==300 ? '#ae017e' :
-           y==200 ? '#f768a1' :
-           y==100 ? '#fcc5c0' :
-                    '#D04030';
-                      
-}
-
-//colors to be used as palette for coloring the legend of recovered layer
-function getColorRecovered(y) {
-    return y==300 ? '#225ea8' :
-           y==200 ? '#1d91c0' :
-           y==100 ? '#7fcdbb' :
-                    '#D04030';
-                      
-}
-
-
-//calculate radius so that resulting circles will be proportional by area
-function getRadius(y) {
-    r = Math.sqrt(y / Math.PI)
-    return r;
-}
-
-//defining legends
-var confirmedLegend= L.control({position: 'bottomleft'});
-
-var deathsLegend= L.control({position: 'bottomleft'});
-
-var recoveredLegend= L.control({position: 'bottomleft'});
-
-//creating all legends
-confirmedLegend.onAdd = function (map) {
-
-    var div = L.DomUtil.create('div', 'info legend'),
-        grades = [200, 300,400,500],
-        labels2=[0,1000,5000,10000],
-        labels = ['<strong>Legend</strong>', "Confirmed Cases"],
-        from, to;
-	//iterate through grades and create a color field and label for each
-    for (var i = 0; i < grades.length; i++) {
-        
-        from = grades[i];
-        to = grades[i + 1];
-       
-        labels.push( '<i class="circlepadding" style="width: '+Math.max(0,(40-1.8*getRadius(from)))+'px;"></i> <i style="background:'+ getColorConfirmed(from)+'; width: '+getRadius(from)*2+'px; height: '+getRadius(from)*2+'px; border-radius: 50%; margin-top: '+Math.max(0,(9-getRadius(from)))+'px;"></i> ' + labels2[i]+(labels2[i+1] ? '&ndash;' + labels2[i+1] : '+'));
     }
-    div.innerHTML = labels.join('<br>');
-    return div;
-}
 
+    //colors to be used as palette for coloring the legend of recovered layer
+    function getColorRecovered(y) {
+        return y==300 ? '#225ea8' :
+            y==200 ? '#1d91c0' :
+                y==100 ? '#7fcdbb' :
+                    '#D04030';
 
-deathsLegend.onAdd = function (map) {
-
-    var div = L.DomUtil.create('div', 'info legend'),
-        grades = [100, 200, 300],
-        labels2=[0,50,500],
-        labels = ['<strong>Legend</strong>', "Deaths"],
-        from, to;
-	//iterate through grades and create a color field and label for each
-    for (var i = 0; i < grades.length; i++) {
-        
-        from = grades[i];
-        to = grades[i + 1];
-       
-        labels.push( '<i class="circlepadding" style="width: '+Math.max(0,(40-1.8*getRadius(from)))+'px;"></i> <i style="background:'+ getColorDeaths(from)+'; width: '+getRadius(from)*2+'px; height: '+getRadius(from)*2+'px; border-radius: 50%; margin-top: '+Math.max(0,(9-getRadius(from)))+'px;"></i> ' + labels2[i]+(labels2[i+1] ? '&ndash;' + labels2[i+1] : '+'));
     }
-    div.innerHTML = labels.join('<br>');
-    return div;
+
+
+    //calculate radius so that resulting circles will be proportional by area
+    function getRadius(y) {
+        r = Math.sqrt(y / Math.PI)
+        return r;
+    }
+
+    //defining legends
+    var confirmedLegend= L.control({position: 'bottomleft'});
+
+    var deathsLegend= L.control({position: 'bottomleft'});
+
+    var recoveredLegend= L.control({position: 'bottomleft'});
+
+    //creating all legends
+    confirmedLegend.onAdd = function (map) {
+
+        var div = L.DomUtil.create('div', 'info legend'),
+            grades = [200, 300,400,500],
+            labels2=[0,1000,5000,10000],
+            labels = ['<strong>Legend</strong>', "Confirmed Cases"],
+            from, to;
+        //iterate through grades and create a color field and label for each
+        for (var i = 0; i < grades.length; i++) {
+
+            from = grades[i];
+            to = grades[i + 1];
+
+            labels.push( '<i class="circlepadding" style="width: '+Math.max(0,(40-1.8*getRadius(from)))+'px;"></i> <i style="background:'+ getColorConfirmed(from)+'; width: '+getRadius(from)*2+'px; height: '+getRadius(from)*2+'px; border-radius: 50%; margin-top: '+Math.max(0,(9-getRadius(from)))+'px;"></i> ' + labels2[i]+(labels2[i+1] ? '&ndash;' + labels2[i+1] : '+'));
+        }
+        div.innerHTML = labels.join('<br>');
+        return div;
+    }
+
+
+    deathsLegend.onAdd = function (map) {
+
+        var div = L.DomUtil.create('div', 'info legend'),
+            grades = [100, 200, 300],
+            labels2=[0,50,500],
+            labels = ['<strong>Legend</strong>', "Deaths"],
+            from, to;
+        //iterate through grades and create a color field and label for each
+        for (var i = 0; i < grades.length; i++) {
+
+            from = grades[i];
+            to = grades[i + 1];
+
+            labels.push( '<i class="circlepadding" style="width: '+Math.max(0,(40-1.8*getRadius(from)))+'px;"></i> <i style="background:'+ getColorDeaths(from)+'; width: '+getRadius(from)*2+'px; height: '+getRadius(from)*2+'px; border-radius: 50%; margin-top: '+Math.max(0,(9-getRadius(from)))+'px;"></i> ' + labels2[i]+(labels2[i+1] ? '&ndash;' + labels2[i+1] : '+'));
+        }
+        div.innerHTML = labels.join('<br>');
+        return div;
 
 
 
-}
+    }
 
-recoveredLegend.onAdd = function (map) {
+    recoveredLegend.onAdd = function (map) {
 
 
-var div = L.DomUtil.create('div', 'info legend'),
-    grades = [100, 200, 300],
-    labels2=[0,1000,2000],
-    labels = ['<strong>Legend</strong>', "Recovered"],
-    from, to;
+        var div = L.DomUtil.create('div', 'info legend'),
+            grades = [100, 200, 300],
+            labels2=[0,1000,2000],
+            labels = ['<strong>Legend</strong>', "Recovered"],
+            from, to;
 //iterate through grades and create a color field and label for each
-for (var i = 0; i < grades.length; i++) {
-    
-    from = grades[i];
-    to = grades[i + 1];
-   
-    labels.push( '<i class="circlepadding" style="width: '+Math.max(0,(40-1.8*getRadius(from)))+'px;"></i> <i style="background:'+ getColorRecovered(from)+'; width: '+getRadius(from)*2+'px; height: '+getRadius(from)*2+'px; border-radius: 50%; margin-top: '+Math.max(0,(9-getRadius(from)))+'px;"></i> ' + labels2[i]+(labels2[i+1] ? '&ndash;' + labels2[i+1] : '+'));
-}
-div.innerHTML = labels.join('<br>');
-return div;
+        for (var i = 0; i < grades.length; i++) {
+
+            from = grades[i];
+            to = grades[i + 1];
+
+            labels.push( '<i class="circlepadding" style="width: '+Math.max(0,(40-1.8*getRadius(from)))+'px;"></i> <i style="background:'+ getColorRecovered(from)+'; width: '+getRadius(from)*2+'px; height: '+getRadius(from)*2+'px; border-radius: 50%; margin-top: '+Math.max(0,(9-getRadius(from)))+'px;"></i> ' + labels2[i]+(labels2[i+1] ? '&ndash;' + labels2[i+1] : '+'));
+        }
+        div.innerHTML = labels.join('<br>');
+        return div;
 
 
 
-}
+    }
 
-//initally add first layers legend
-confirmedLegend.addTo(map)
+    //initally add first layers legend
+    confirmedLegend.addTo(map)
 
-//conditional add/remove of legends
-confirmed.beforeAdd = function (map) {
-    confirmedLegend.addTo(map);
-    deathsLegend.remove(map);
-    recoveredLegend.remove(map);
-}
-deaths.beforeAdd = function (map) {
-    deathsLegend.addTo(map);
-    confirmedLegend.remove(map);
-    recoveredLegend.remove(map);
-}
+    //conditional add/remove of legends
+    confirmed.beforeAdd = function (map) {
+        confirmedLegend.addTo(map);
+        deathsLegend.remove(map);
+        recoveredLegend.remove(map);
+    }
+    deaths.beforeAdd = function (map) {
+        deathsLegend.addTo(map);
+        confirmedLegend.remove(map);
+        recoveredLegend.remove(map);
+    }
 
-recovered.beforeAdd=function(map){
-    deathsLegend.remove(map);
-    confirmedLegend.remove(map);
-    recoveredLegend.addTo(map);
-}
+    recovered.beforeAdd=function(map){
+        deathsLegend.remove(map);
+        confirmedLegend.remove(map);
+        recoveredLegend.addTo(map);
+    }
 
- //adding the side bar
- var sidebar = L.control.sidebar({ container: 'sidebar', position: 'right' })
-            .addTo(map)
-            .open("home");
+    //adding the side bar
+    var sidebar = L.control.sidebar({ container: 'sidebar', position: 'right' })
+        .addTo(map)
+        .open("home");
 
 
-</script> 
+</script>
 </body>
 </html>
