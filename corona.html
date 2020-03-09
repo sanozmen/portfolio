@@ -444,6 +444,10 @@ screens  */
 <script src="https://rawgithub.com/ismyrnow/Leaflet.groupedlayercontrol/master/src/leaflet.groupedlayercontrol.js"></script>
 <!--Leaflet mapbox omnivore plugin for reading various formats including csv-->
 <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
+
+<!--CSV parser Papa parse-->
+<script src="node_modules/papaparse/papaparse.js"></script>
+
 <script>
 
     /*various options for the basemap*/
@@ -666,26 +670,6 @@ screens  */
             // no custom filter function but still keeping it
             return true;
         },
-        filter: function(feature,layer) {
-            if (feature.properties[todayString]){
-                countryNames.push(feature.properties[country])
-                totalConfirmed.push(feature.properties[todayString])
-                return totalConfirmed
-                return countryNames
-            }
-            else if (feature.properties[yesterdayString]){
-                countryNames.push(feature.properties[country])
-                totalConfirmed.push(feature.properties[yesterdayString])
-                return totalConfirmed
-                return countryNames
-            }
-            else {
-                countryNames.push(feature.properties[country])
-                totalConfirmed.push(feature.properties[tDb_yesterdayString])
-                return totalConfirmed
-                return countryNames
-            }
-        },
         /*points to the layer with the latest day's data from the csv*/
         pointToLayer (feature, layer) {
             if (feature.properties[todayString]){
@@ -785,9 +769,6 @@ screens  */
 
     });
 
-    //arrayMy=[1,2]
-    //console.log(totalConfirmed)
-    //console.log(arrayMy[1]);
 
 
     /*deaths custom geojson layer*/
@@ -1145,6 +1126,56 @@ screens  */
         .addTo(map)
         .open("home");
 
+    //GRAPH, TABLE DATA OPERATIONS & PREPERATION
+    var confirmedLabels=[];
+    var confirmedValues=[];
+
+    var totalConfirmed_US=0;
+    var totalConfirmed_China=0;
+    var totalConfirmed_Canada=0;
+    var totalConfirmed_Aus=0;
+    //putting confirmed cases into array format, into the empty arrays defined above
+    var PapaCSV=Papa.parse("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv", {
+	download: true,
+	complete: function(results) {
+        
+       
+
+        var lastCol=results.data[1].length-1
+      
+        for (i=1; i< results.data.length; i++) {
+        if (results.data[i][1]=="US"){
+            var nmbr=parseInt(results.data[i][lastCol])
+            totalConfirmed_US=totalConfirmed_US + nmbr
+        }
+        else if (results.data[i][1]=="Mainland China"){
+            var nmbr=parseInt(results.data[i][lastCol])
+            totalConfirmed_China=totalConfirmed_China + nmbr
+        }
+        else if (results.data[i][1]=="Canada"){
+            var nmbr=parseInt(results.data[i][lastCol])
+            totalConfirmed_Canada=totalConfirmed_Canada + nmbr
+        }
+        else if (results.data[i][1]=="Australia"){
+            var nmbr=parseInt(results.data[i][lastCol])
+            totalConfirmed_Aus=totalConfirmed_Aus + nmbr
+        }
+       else if (results.data[i][1]!="US" || results.data[i][1]!="Mainland China"
+       || results.data[i][1]!="Canada" || results.data[i][1]!="Australia" ){
+            var nmbr=parseInt(results.data[i][lastCol])
+            confirmedValues.push(nmbr)
+            confirmedLabels.push(results.data[i][1])
+        }
+        else {
+            console.log("ERROR")
+        }
+        }
+        confirmedLabels.push("US","China","Canada","Australia")
+        confirmedValues.push(totalConfirmed_US,totalConfirmed_China, totalConfirmed_Canada, totalConfirmed_Aus)
+        console.log(confirmedLabels+"\n"+confirmedValues)
+		
+	}
+});
 
 </script>
 </body>
