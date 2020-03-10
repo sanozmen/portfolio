@@ -1242,6 +1242,26 @@ screens  */
         confirmedValues.push(totalConfirmed_US,totalConfirmed_China, totalConfirmed_Canada, totalConfirmed_Aus)
         console.log(confirmedLabels+"\n"+confirmedValues)
 
+        var c = confirmedLabels.map(function(e, i) {
+            return [e, confirmedValues[i]];
+            });
+            c.sort()
+        console.log(c)
+
+        sortedConfirmedLabels=[]
+        sortedConfirmedValues=[]
+
+        for (n=0;n<c.length;n++){
+            sortedConfirmedLabels.push(c[n][0])
+        }
+
+        for (n=0;n<c.length;n++){
+            sortedConfirmedValues.push(c[n][1])
+        }
+
+        //console.log(sortedConfirmedLabels)
+        //console.log(sortedConfirmedValues)
+
         Highcharts.chart('container', {
     chart: {
         type: 'bar'
@@ -1253,7 +1273,7 @@ screens  */
         text: 'Total Confirmed by Countries'
     },
     xAxis: {
-        categories: confirmedLabels,
+        categories: sortedConfirmedLabels,
         title: {
             text: null
         }
@@ -1295,7 +1315,7 @@ screens  */
     },
     series: [{
         name: 'Confirmed Cases',
-        data:confirmedValues
+        data:sortedConfirmedValues
     
     }]
 });
