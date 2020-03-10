@@ -1,215 +1,215 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset=utf-8 />
-<title>Coronavirus Map </title>
-<!--metda data-->
-<meta name="description" content="coronavirus, corona, COVID-19, china, wuhan, novel, new, map, interactive map, death, infection, disease, outbreak, global map, spread, track, people, sick, leaflet.js, mapbox, carto, visualization"/>
-<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-57534785-2"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+    <meta charset=utf-8 />
+    <title>Coronavirus Map </title>
+    <!--metda data-->
+    <meta name="description" content="coronavirus, corona, COVID-19, china, wuhan, novel, new, map, interactive map, death, infection, disease, outbreak, global map, spread, track, people, sick, leaflet.js, mapbox, carto, visualization"/>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-57534785-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-    gtag('config', 'UA-57534785-2');
-  </script>
-<!--Google fonts-->
-  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Spartan&display=swap" rel="stylesheet">
- 
-<!--leaflet style-->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-  crossorigin=""/>
+        gtag('config', 'UA-57534785-2');
+    </script>
+    <!--Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Spartan&display=swap" rel="stylesheet">
 
-<!-- leaflet js. Make sure you put this AFTER Leaflet's CSS -->
- <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
- integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
- crossorigin=""></script> 
-<!--sidebar style-->
-  <link rel="stylesheet" href="assets/css/leaflet-sidebar.css" />
-<!--font awesome style-->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <!-- marker cluster styles-->
- <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.Default.css">
- <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.css">
- <!-- bootstrap css-->
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<!--marker cluster javascript-->
-<script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js"></script>
-<style>
+    <!--leaflet style-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+          crossorigin=""/>
 
-  body { margin:0; padding:0; }
-  #map { position:absolute; top:0; bottom:0; width:100%; }
-  .leaflet-tooltip-pane .text {
-  color:black; 
-  /*-webkit-text-stroke: 0.03em white;*/
-  font-weight: bold;
-  background: transparent;
-  border:0;
-  box-shadow: none;
-  font-size: 1em;
-}
+    <!-- leaflet js. Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+            integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+            crossorigin=""></script>
+    <!--sidebar style-->
+    <link rel="stylesheet" href="assets/css/leaflet-sidebar.css" />
+    <!--font awesome style-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- marker cluster styles-->
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.Default.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.css">
+    <!-- bootstrap css-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!--marker cluster javascript-->
+    <script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js"></script>
+    <style>
 
-/*/////////////////// Icon pulse ////////////////*/
-.fa-pulse {
-	display: inline-block;
-	-moz-animation: pulse 2s infinite linear;
-	-o-animation: pulse 2s infinite linear;
-	-webkit-animation: pulse 2s infinite linear;
-	animation: pulse 2s infinite linear;
-}
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+        .leaflet-tooltip-pane .text {
+            color:black;
+            /*-webkit-text-stroke: 0.03em white;*/
+            font-weight: bold;
+            background: transparent;
+            border:0;
+            box-shadow: none;
+            font-size: 1em;
+        }
 
-@-webkit-keyframes pulse {
-	0% { opacity: 1; }
-	50% { opacity: 0; }
-	100% { opacity: 1; }
-}
-@-moz-keyframes pulse {
-	0% { opacity: 1; }
-	50% { opacity: 0; }
-	100% { opacity: 1; }
-}
-@-o-keyframes pulse {
-	0% { opacity: 1; }
-	50% { opacity: 0; }
-	100% { opacity: 1; }
-}
-@-ms-keyframes pulse {
-	0% { opacity: 1; }
-	50% { opacity: 0; }
-	100% { opacity: 1; }
-}
-@keyframes pulse {
-	0% { opacity: 1; }
-	50% { opacity: 0; }
-	100% { opacity: 1; }
-}
-/*/////////////////End of Icon Pulse////////////////////*/
-.leaflet-popup-content {
-    padding: 10px 10px 15px;
-    margin: 0;
-    line-height: inherit;
-}
+        /*/////////////////// Icon pulse ////////////////*/
+        .fa-pulse {
+            display: inline-block;
+            -moz-animation: pulse 2s infinite linear;
+            -o-animation: pulse 2s infinite linear;
+            -webkit-animation: pulse 2s infinite linear;
+            animation: pulse 2s infinite linear;
+        }
 
-div.leaflet-popup-content-wrapper {
-    background-color: rgb(47, 60, 66);
-    color: white;
-    font-size: 12px;
-    font-family:'Ubuntu';
-    border-radius: 3px;
-    box-shadow: 0 1px 2px rgba(0,0,0,.1);
-    padding: 1px;
-    text-align: left;
-    pointer-events: all;
-    
-}
-.leaflet-sidebar-header {
-    font-size: 15px;
-}
-/*This part is for avoiding overlap in sidebar and layer control in smaller
-screens  */
-@media (max-width: 769px) {
-.leaflet-sidebar-header {
-    font-size: 13px;
-}
-}
+        @-webkit-keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @-moz-keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @-o-keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @-ms-keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        /*/////////////////End of Icon Pulse////////////////////*/
+        .leaflet-popup-content {
+            padding: 10px 10px 15px;
+            margin: 0;
+            line-height: inherit;
+        }
 
-@media (max-width: 769px) {
-    .leaflet-sidebar-content {
-        opacity: 0.95 ;
-    }
-}
+        div.leaflet-popup-content-wrapper {
+            background-color: rgb(47, 60, 66);
+            color: white;
+            font-size: 12px;
+            font-family:'Ubuntu';
+            border-radius: 3px;
+            box-shadow: 0 1px 2px rgba(0,0,0,.1);
+            padding: 1px;
+            text-align: left;
+            pointer-events: all;
 
-@media (max-width: 769px) {
-.leaflet-right .leaflet-control {
-    margin-right: 60px;
-}
-}
+        }
+        .leaflet-sidebar-header {
+            font-size: 15px;
+        }
+        /*This part is for avoiding overlap in sidebar and layer control in smaller
+        screens  */
+        @media (max-width: 769px) {
+            .leaflet-sidebar-header {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 769px) {
+            .leaflet-sidebar-content {
+                opacity: 0.95 ;
+            }
+        }
+
+        @media (max-width: 769px) {
+            .leaflet-right .leaflet-control {
+                margin-right: 60px;
+            }
+        }
 
 
-.leaflet-sidebar-header {
-    background-color:rgb(47, 60, 66);
-  
+        .leaflet-sidebar-header {
+            background-color:rgb(47, 60, 66);
 
-}
-.leaflet-sidebar-header p{
-    margin-bottom: 1px;
-    margin-top: 0px;
-}
-.leaflet-sidebar-tabs > li.active, .leaflet-sidebar-tabs > ul > li.active {
-    background-color:rgb(47, 60, 66);
-   
-}
 
-.info {
-    padding: 6px 8px;
-    font-size: 13px;
-    background: white;
-    background: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-}
-.info h4 {
-    margin: 0 0 5px;
-    color: #777;
-}
-.legend {
-    text-align: left;
-    line-height: 30px;
-    color: #555;
-    width: auto;
-}
-.legend i {
-    width: 18px;
-    height: 18px;
-    float: left;
-    margin-right: 8px;
-    opacity: 0.7;
-}
-.legend .colorcircle {
-    border-radius: 50%;
-    width: 15px;
-    height: 15px;
-    margin-top: 0px;
-}
-.legend .circlepadding {
-    border-radius: 50%;
-    margin-top: 0px;
-    background: rgba(255, 255, 255, 0.8);
-}
+        }
+        .leaflet-sidebar-header p{
+            margin-bottom: 1px;
+            margin-top: 0px;
+        }
+        .leaflet-sidebar-tabs > li.active, .leaflet-sidebar-tabs > ul > li.active {
+            background-color:rgb(47, 60, 66);
 
-.highcharts-data-table table {
-	font-family: Verdana, sans-serif;
-	border-collapse: collapse;
-	border: 1px solid #EBEBEB;
-	margin: 10px auto;
-	text-align: center;
-	width: 100%;
-	max-width: 500px;
-}
-.highcharts-data-table caption {
-    padding: 1em 0;
-    font-size: 1.2em;
-    color: #555;
-}
-.highcharts-data-table th {
-	font-weight: 600;
-    padding: 0.5em;
-}
-.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
-    padding: 0.5em;
-}
-.highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
-    background: #f8f8f8;
-}
-.highcharts-data-table tr:hover {
-    background: #f1f7ff;
-}
+        }
 
-</style>
+        .info {
+            padding: 6px 8px;
+            font-size: 13px;
+            background: white;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+        .info h4 {
+            margin: 0 0 5px;
+            color: #777;
+        }
+        .legend {
+            text-align: left;
+            line-height: 30px;
+            color: #555;
+            width: auto;
+        }
+        .legend i {
+            width: 18px;
+            height: 18px;
+            float: left;
+            margin-right: 8px;
+            opacity: 0.7;
+        }
+        .legend .colorcircle {
+            border-radius: 50%;
+            width: 15px;
+            height: 15px;
+            margin-top: 0px;
+        }
+        .legend .circlepadding {
+            border-radius: 50%;
+            margin-top: 0px;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .highcharts-data-table table {
+            font-family: Verdana, sans-serif;
+            border-collapse: collapse;
+            border: 1px solid #EBEBEB;
+            margin: 10px auto;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+        .highcharts-data-table caption {
+            padding: 1em 0;
+            font-size: 1.2em;
+            color: #555;
+        }
+        .highcharts-data-table th {
+            font-weight: 600;
+            padding: 0.5em;
+        }
+        .highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+            padding: 0.5em;
+        }
+        .highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+        .highcharts-data-table tr:hover {
+            background: #f1f7ff;
+        }
+
+    </style>
     <meta charset=utf-8 />
     <title>Coronavirus Map </title>
     <!--metda data-->
@@ -390,37 +390,37 @@ screens  */
             background: rgba(255, 255, 255, 0.8);
         }
 
-    #container {
-    height: 1800px;
-}
+        #container {
+            height: 1800px;
+        }
 
-.highcharts-data-table table {
-	font-family: Verdana, sans-serif;
-	border-collapse: collapse;
-	border: 1px solid #EBEBEB;
-	margin: 10px auto;
-	text-align: center;
-	width: 100%;
-	max-width: 500px;
-}
-.highcharts-data-table caption {
-    padding: 1em 0;
-    font-size: 1.2em;
-    color: #555;
-}
-.highcharts-data-table th {
-	font-weight: 600;
-    padding: 0.5em;
-}
-.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
-    padding: 0.5em;
-}
-.highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
-    background: #f8f8f8;
-}
-.highcharts-data-table tr:hover {
-    background: #f1f7ff;
-}
+        .highcharts-data-table table {
+            font-family: Verdana, sans-serif;
+            border-collapse: collapse;
+            border: 1px solid #EBEBEB;
+            margin: 10px auto;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+        .highcharts-data-table caption {
+            padding: 1em 0;
+            font-size: 1.2em;
+            color: #555;
+        }
+        .highcharts-data-table th {
+            font-weight: 600;
+            padding: 0.5em;
+        }
+        .highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+            padding: 0.5em;
+        }
+        .highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+        .highcharts-data-table tr:hover {
+            background: #f1f7ff;
+        }
 
     </style>
 </head>
@@ -470,7 +470,7 @@ screens  */
             <p style="margin-top:10px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >Labels inside the circles represents the cumulative number of people. Click on radio-buttons on top-right corner to switch between layers. In order to open popup windows
                 with more details such as name of location, date of data. </p>
 
-                <div id="container" style="width:100%; height:2000px;"></div>
+            <div id="container" style="width:100%; height:2000px;"></div>
             <p style="margin-top:130px; font-family:'Ubuntu' ,sans-serif; font-size:10px; line-height: 10px" align=justify >
                 tags: coronavirus, corona, COVID-19, china, novel, new, map, interactive map, infection, disease, outbreak, global map, spread, track, people, sick, death</p>
 
@@ -1195,7 +1195,7 @@ screens  */
         .open("home");
 
     //GRAPH, TABLE DATA OPERATIONS & PREPERATION
-    
+
     var confirmedLabels=[];
     var confirmedValues=[];
 
@@ -1205,126 +1205,126 @@ screens  */
     var totalConfirmed_Aus=0;
     //putting confirmed cases into array format, into the empty arrays defined above
     var PapaCSV=Papa.parse("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv", {
-	download: true,
-	complete: function(results) {
-       
-        
-        var lastCol=results.data[1].length-1
-      
-        for (i=1; i< results.data.length; i++) {
-        if (results.data[i][1]=="US"){
-            var nmbr=parseInt(results.data[i][lastCol])
-            totalConfirmed_US=totalConfirmed_US + nmbr
-        }
-        else if (results.data[i][1]=="Mainland China"){
-            var nmbr=parseInt(results.data[i][lastCol])
-            totalConfirmed_China=totalConfirmed_China + nmbr
-        }
-        else if (results.data[i][1]=="Canada"){
-            var nmbr=parseInt(results.data[i][lastCol])
-            totalConfirmed_Canada=totalConfirmed_Canada + nmbr
-        }
-        else if (results.data[i][1]=="Australia"){
-            var nmbr=parseInt(results.data[i][lastCol])
-            totalConfirmed_Aus=totalConfirmed_Aus + nmbr
-        }
-       else if (results.data[i][1]!="US" || results.data[i][1]!="Mainland China"
-       || results.data[i][1]!="Canada" || results.data[i][1]!="Australia" ){
-            var nmbr=parseInt(results.data[i][lastCol])
-            confirmedValues.push(nmbr)
-            confirmedLabels.push(results.data[i][1])
-        }
-        else {
-            console.log("ERROR")
-        }
-        }
-        confirmedLabels.push("US","China","Canada","Australia")
-        confirmedValues.push(totalConfirmed_US,totalConfirmed_China, totalConfirmed_Canada, totalConfirmed_Aus)
-        console.log(confirmedLabels+"\n"+confirmedValues)
+        download: true,
+        complete: function(results) {
 
-        var c = confirmedLabels.map(function(e, i) {
-            return [e, confirmedValues[i]];
+
+            var lastCol=results.data[1].length-1
+
+            for (i=1; i< results.data.length; i++) {
+                if (results.data[i][1]=="US"){
+                    var nmbr=parseInt(results.data[i][lastCol])
+                    totalConfirmed_US=totalConfirmed_US + nmbr
+                }
+                else if (results.data[i][1]=="Mainland China"){
+                    var nmbr=parseInt(results.data[i][lastCol])
+                    totalConfirmed_China=totalConfirmed_China + nmbr
+                }
+                else if (results.data[i][1]=="Canada"){
+                    var nmbr=parseInt(results.data[i][lastCol])
+                    totalConfirmed_Canada=totalConfirmed_Canada + nmbr
+                }
+                else if (results.data[i][1]=="Australia"){
+                    var nmbr=parseInt(results.data[i][lastCol])
+                    totalConfirmed_Aus=totalConfirmed_Aus + nmbr
+                }
+                else if (results.data[i][1]!="US" || results.data[i][1]!="Mainland China"
+                    || results.data[i][1]!="Canada" || results.data[i][1]!="Australia" ){
+                    var nmbr=parseInt(results.data[i][lastCol])
+                    confirmedValues.push(nmbr)
+                    confirmedLabels.push(results.data[i][1])
+                }
+                else {
+                    console.log("ERROR")
+                }
+            }
+            confirmedLabels.push("US","China","Canada","Australia")
+            confirmedValues.push(totalConfirmed_US,totalConfirmed_China, totalConfirmed_Canada, totalConfirmed_Aus)
+            //console.log(confirmedLabels+"\n"+confirmedValues)
+
+            var c = confirmedLabels.map(function(e, i) {
+                return [e, confirmedValues[i]];
             });
             c.sort()
-        console.log(c)
+            //console.log(c)
 
-        sortedConfirmedLabels=[]
-        sortedConfirmedValues=[]
+            sortedConfirmedLabels=[]
+            sortedConfirmedValues=[]
 
-        for (n=0;n<c.length;n++){
-            sortedConfirmedLabels.push(c[n][0])
-        }
-
-        for (n=0;n<c.length;n++){
-            sortedConfirmedValues.push(c[n][1])
-        }
-
-        //console.log(sortedConfirmedLabels)
-        //console.log(sortedConfirmedValues)
-
-        Highcharts.chart('container', {
-    chart: {
-        type: 'bar'
-    },
-    title: {
-        text: 'Confirmed COVID-19 CASES'
-    },
-    subtitle: {
-        text: 'Total Confirmed by Countries'
-    },
-    xAxis: {
-        categories: sortedConfirmedLabels,
-        title: {
-            text: null
-        }
-    },
-    yAxis: {
-        min: 0,
-        title: {
-            text: 'Number of People',
-            align: 'high'
-        },
-        labels: {
-            overflow: 'justify'
-        }
-    },
-    tooltip: {
-        valueSuffix: ' '
-    },
-    plotOptions: {
-        bar: {
-            dataLabels: {
-                enabled: true
+            for (n=0;n<c.length;n++){
+                sortedConfirmedLabels.push(c[n][0])
             }
-        }
-    },
-    /*legend: {
-        layout: 'vertical',
-        align: 'right',
-        verticalAlign: 'top',
-        x: -40,
-        y: 80,
-        floating: true,
-        borderWidth: 1,
-        backgroundColor:
-            Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
-        shadow: true
-    },*/
-    credits: {
-        enabled: false
-    },
-    series: [{
-        name: 'Confirmed Cases',
-        data:sortedConfirmedValues
-    
-    }]
-});
-		
-	},
 
-    
-    
-});
+            for (n=0;n<c.length;n++){
+                sortedConfirmedValues.push(c[n][1])
+            }
+
+            //console.log(sortedConfirmedLabels)
+            //console.log(sortedConfirmedValues)
+
+            Highcharts.chart('container', {
+                chart: {
+                    type: 'bar'
+                },
+                title: {
+                    text: 'Confirmed COVID-19 CASES'
+                },
+                subtitle: {
+                    text: 'Total Confirmed by Countries'
+                },
+                xAxis: {
+                    categories: sortedConfirmedLabels,
+                    title: {
+                        text: null
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Number of People',
+                        align: 'high'
+                    },
+                    labels: {
+                        overflow: 'justify'
+                    }
+                },
+                tooltip: {
+                    valueSuffix: ' '
+                },
+                plotOptions: {
+                    bar: {
+                        dataLabels: {
+                            enabled: true
+                        }
+                    }
+                },
+                /*legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'top',
+                    x: -40,
+                    y: 80,
+                    floating: true,
+                    borderWidth: 1,
+                    backgroundColor:
+                        Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
+                    shadow: true
+                },*/
+                credits: {
+                    enabled: false
+                },
+                series: [{
+                    name: 'Confirmed Cases',
+                    data:sortedConfirmedValues
+
+                }]
+            });
+
+        },
+
+
+
+    });
 
 
 
