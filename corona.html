@@ -248,18 +248,21 @@
             <p class="lorem" style="margin-top:20px">Click "X" on top left corner to hide the pane and see the map.</p>
 
             <h4>Global Coronavirus Map (Updated Daily)</h4>
+            <h5 id="totalConfirmed"></h5>
+            <h5 id="totalDeath"></h5>
+            <h5 id="totalRecovered"></h5>
 
             <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >This interactive world map aims to track the global spread of 2019 Novel Coronavirus
                 (COVID-19) outbreak, inspired by <a href="https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6"
                                                     target="_blank"> this popular map</a> produced by researchers at Johns Hopkins CSSE. <a href="https://github.com/CSSEGISandData/COVID-19" target="_blank">
                     Daily updated data </a> is also provided by John Hopkin's researchers.</p>
             <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >There are 3 different layers. First "Confirmed Cases"
-                shows the cumulative number of infected people at those locations. Second one "Deaths" indicates cumulative number of deaths caused by
+                shows the cumulative number of infected individuals at those locations. Second one "Deaths" indicates cumulative number of deaths caused by
                 this disease. Lastly, the layer "Recover" denotes
-                the cumulative number of people who got recovered. </p>
+                the cumulative number of persons who got recovered. </p>
 
             <h6>How to use the map</h6>
-            <p style="margin-top:10px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >Labels inside the circles represents the cumulative number of people. Click on radio-buttons on top-right corner to switch between layers. In order to open popup windows
+            <p style="margin-top:10px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >Labels inside the circles represents the cumulative number of persons. Click on radio-buttons on top-right corner to switch between layers. In order to open popup windows
                 with more details such as name of location, date of data. </p>
 
             <div id="container" style="width:100%; height:3000px;"></div>
@@ -309,6 +312,7 @@
 <script src="assets/js/papaparse.min.js"></script>
 
 <script>
+    window.onload= function () {
 
     /*various options for the basemap*/
     var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
@@ -983,8 +987,8 @@
         .addTo(map)
         .open("home");
 
-    //GRAPH, DATA OPERATIONS
-
+    //GRAPH, DATA OPERATIONS for Confirmed
+    let worldTotal_Confirmed=0
     let confirmedLabels=[];
     let confirmedValues=[];
     //In order to find total cases in US,China,Canada and Australia
@@ -1005,7 +1009,7 @@
                     var nmbr=parseInt(results.data[i][lastCol]);
                     totalConfirmed_US=totalConfirmed_US + nmbr
                 }
-                else if (results.data[i][1]=="Mainland China"){
+                else if (results.data[i][1]=="China"){
                     var nmbr=parseInt(results.data[i][lastCol]);
                     totalConfirmed_China=totalConfirmed_China + nmbr
                 }
@@ -1019,7 +1023,7 @@
                 }
                 //except US,China,Canada and Australia. Push the country name to the labels list
                 //and push the corresponding value to the values list
-                else if (results.data[i][1]!="US" || results.data[i][1]!="Mainland China"
+                else if (results.data[i][1]!="US" || results.data[i][1]!="Mainland China"|| results.data[i][1]!="China"
                     || results.data[i][1]!="Canada" || results.data[i][1]!="Australia" ){
                     var nmbr=parseInt(results.data[i][lastCol]);
                     confirmedValues.push(nmbr);
@@ -1057,6 +1061,19 @@
 
             separateValues()
 
+            //all total confirmed regardless of country
+            let worldTotal_Confirmed=0
+            function totalGlobal_Confirmed() {
+                for (n = 0; n < c.length; n++) {
+                    worldTotal_Confirmed+=c[n][1]
+            }
+            return worldTotal_Confirmed
+            }
+            totalGlobal_Confirmed()
+            //console.log(worldTotal_Confirmed)
+
+            document.getElementById("totalConfirmed").innerHTML="Total Confirmed Cases: "+worldTotal_Confirmed
+
             //console.log(sortedConfirmedLabels)
             //console.log(sortedConfirmedValues)
 
@@ -1079,7 +1096,7 @@
                 yAxis: {
                     min: 0,
                     title: {
-                        text: 'Number of People',
+                        text: 'Number of Persons',
                         align: 'high'
                     },
                     labels: {
@@ -1124,9 +1141,320 @@
 
     });
 
+    //GRAPH, DATA OPERATIONS for deaths
+    let worldTotal_Deaths=0
+    let deathsLabels=[];
+    let deathsValues=[];
+    //In order to find total cases in US,China,Canada and Australia
+    let totalDeaths_US=0;
+    let totalDeaths_China=0;
+    let totalDeaths_Canada=0;
+    let totalDeaths_Aus=0;
+    //putting confirmed cases into array format, into the empty arrays defined above
+    Papa.parse("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv", {
+        download: true,
+        complete: function(results) {
+            //select the latest column
+            let lastCol=results.data[1].length-1;
+            //find the row where country name is either "US","China","Canada" or "Australia"
+            //and add the corresponding value to the total sum of that country
+            for (i=1; i< results.data.length; i++) {
+                if (results.data[i][1]=="US"){
+                    var nmbr=parseInt(results.data[i][lastCol]);
+                    totalDeaths_US=totalDeaths_US + nmbr
+                }
+                else if (results.data[i][1]=="China"){
+                    var nmbr=parseInt(results.data[i][lastCol]);
+                    totalDeaths_China=totalDeaths_China + nmbr
+                }
+                else if (results.data[i][1]=="Canada"){
+                    var nmbr=parseInt(results.data[i][lastCol]);
+                    totalDeaths_Canada=totalDeaths_Canada + nmbr
+                }
+                else if (results.data[i][1]=="Australia"){
+                    var nmbr=parseInt(results.data[i][lastCol]);
+                    totalDeaths_Aus=totalDeaths_Aus + nmbr
+                }
+                //except US,China,Canada and Australia. Push the country name to the labels list
+                //and push the corresponding value to the values list
+                else if (results.data[i][1]!="US" || results.data[i][1]!="Mainland China"|| results.data[i][1]!="China"
+                    || results.data[i][1]!="Canada" || results.data[i][1]!="Australia" ){
+                    var nmbr=parseInt(results.data[i][lastCol]);
+                    deathsValues.push(nmbr);
+                    deathsLabels.push(results.data[i][1])
+                }
+                else {
+                    console.log("ERROR")
+                }
+            }
+            deathsLabels.push("US","China","Canada","Australia");
+            deathsValues.push(totalDeaths_US,totalDeaths_China, totalDeaths_Canada, totalDeaths_Aus);
+            //console.log(confirmedLabels+"\n"+confirmedValues)
+
+            //zip values from both lists
+            var c = deathsLabels.map(function(e, i) {
+                return [e, deathsValues[i]];
+            });
+            //sort by country names
+            c.sort();
+            //console.log(c)
+
+            //create new lists to separate and store the sorted data
+            sortedDeathLabels=[];
+            sortedDeathValues=[];
+
+            function separateValues() {
+                for (n = 0; n < c.length; n++) {
+                    sortedDeathLabels.push(c[n][0])
+                }
+
+                for (n = 0; n < c.length; n++) {
+                    sortedDeathValues.push(c[n][1])
+                }
+            }
+
+            separateValues()
+
+            //all total confirmed regardless of country
+            let worldTotal_Deaths=0
+            function totalGlobal_Deaths() {
+                for (n = 0; n < c.length; n++) {
+                    worldTotal_Deaths+=c[n][1]
+            }
+            return worldTotal_Deaths
+            }
+            totalGlobal_Deaths()
+            //console.log(worldTotal_Confirmed)
+
+            document.getElementById("totalDeath").innerHTML="Total Death: "+worldTotal_Deaths
+
+            //console.log(sortedConfirmedLabels)
+            //console.log(sortedConfirmedValues)
+
+           /* Highcharts.chart('container', {
+                chart: {
+                    type: 'bar'
+                },
+                title: {
+                    text: 'Confirmed COVID-19 CASES'
+                },
+                subtitle: {
+                    text: 'Total Confirmed by Countries'
+                },
+                xAxis: {
+                    categories: sortedConfirmedLabels,
+                    title: {
+                        text: null
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Number of Persons',
+                        align: 'high'
+                    },
+                    labels: {
+                        overflow: 'justify'
+                    }
+                },
+                tooltip: {
+                    valueSuffix: ' '
+                },
+                plotOptions: {
+                    bar: {
+                        dataLabels: {
+                            enabled: true
+                        }
+                    }
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'top',
+                    x: -40,
+                    y: 80,
+                    floating: true,
+                    borderWidth: 1,
+                    backgroundColor:
+                        Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
+                    shadow: true
+                },
+                credits: {
+                    enabled: false
+                },
+                series: [{
+                    name: 'Confirmed Cases',
+                    data:sortedConfirmedValues
+
+                }]
+            });
+                */
+        },
+        
 
 
 
+    });
+
+        //GRAPH, DATA OPERATIONS for recovered
+    let worldTotal_Recovered=0
+    let recoveredLabels=[];
+    let recoveredValues=[];
+    //In order to find total cases in US,China,Canada and Australia
+    let totalRecovered_US=0;
+    let totalRecovered_China=0;
+    let totalRecovered_Canada=0;
+    let totalRecovered_Aus=0;
+    //putting confirmed cases into array format, into the empty arrays defined above
+    Papa.parse("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv", {
+        download: true,
+        complete: function(results) {
+            //select the latest column
+            let lastCol=results.data[1].length-1;
+            //find the row where country name is either "US","China","Canada" or "Australia"
+            //and add the corresponding value to the total sum of that country
+            for (i=1; i< results.data.length; i++) {
+                if (results.data[i][1]=="US"){
+                    var nmbr=parseInt(results.data[i][lastCol]);
+                    totalRecovered_US=totalRecovered_US + nmbr
+                }
+                else if (results.data[i][1]=="China"){
+                    var nmbr=parseInt(results.data[i][lastCol]);
+                    totalRecovered_China=totalRecovered_China + nmbr
+                }
+                else if (results.data[i][1]=="Canada"){
+                    var nmbr=parseInt(results.data[i][lastCol]);
+                    totalRecovered_Canada=totalRecovered_Canada + nmbr
+                }
+                else if (results.data[i][1]=="Australia"){
+                    var nmbr=parseInt(results.data[i][lastCol]);
+                    totalRecovered_Aus=totalRecovered_Aus + nmbr
+                }
+                //except US,China,Canada and Australia. Push the country name to the labels list
+                //and push the corresponding value to the values list
+                else if (results.data[i][1]!="US" || results.data[i][1]!="Mainland China"|| results.data[i][1]!="China"
+                    || results.data[i][1]!="Canada" || results.data[i][1]!="Australia" ){
+                    var nmbr=parseInt(results.data[i][lastCol]);
+                    recoveredValues.push(nmbr);
+                    recoveredLabels.push(results.data[i][1])
+                }
+                else {
+                    console.log("ERROR")
+                }
+            }
+            recoveredLabels.push("US","China","Canada","Australia");
+            recoveredValues.push(totalRecovered_US,totalRecovered_China, totalRecovered_Canada, totalRecovered_Aus);
+            //console.log(confirmedLabels+"\n"+confirmedValues)
+
+            //zip values from both lists
+            var c = recoveredLabels.map(function(e, i) {
+                return [e, recoveredValues[i]];
+            });
+            //sort by country names
+            c.sort();
+            //console.log(c)
+
+            //create new lists to separate and store the sorted data
+            sortedRecoveredLabels=[];
+            sortedRecoveredValues=[];
+
+            function separateValues() {
+                for (n = 0; n < c.length; n++) {
+                    sortedRecoveredLabels.push(c[n][0])
+                }
+
+                for (n = 0; n < c.length; n++) {
+                    sortedRecoveredValues.push(c[n][1])
+                }
+            }
+
+            separateValues()
+
+            //all total confirmed regardless of country
+            let worldTotal_Recovered=0
+            function totalGlobal_Recovered() {
+                for (n = 0; n < c.length; n++) {
+                    worldTotal_Recovered+=c[n][1]
+            }
+            return worldTotal_Recovered
+            }
+            totalGlobal_Recovered()
+            //console.log(worldTotal_Confirmed)
+
+            document.getElementById("totalRecovered").innerHTML="Total Recovered: "+worldTotal_Recovered
+
+            //console.log(sortedConfirmedLabels)
+            //console.log(sortedConfirmedValues)
+
+           /* Highcharts.chart('container', {
+                chart: {
+                    type: 'bar'
+                },
+                title: {
+                    text: 'Confirmed COVID-19 CASES'
+                },
+                subtitle: {
+                    text: 'Total Confirmed by Countries'
+                },
+                xAxis: {
+                    categories: sortedConfirmedLabels,
+                    title: {
+                        text: null
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Number of Persons',
+                        align: 'high'
+                    },
+                    labels: {
+                        overflow: 'justify'
+                    }
+                },
+                tooltip: {
+                    valueSuffix: ' '
+                },
+                plotOptions: {
+                    bar: {
+                        dataLabels: {
+                            enabled: true
+                        }
+                    }
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'top',
+                    x: -40,
+                    y: 80,
+                    floating: true,
+                    borderWidth: 1,
+                    backgroundColor:
+                        Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
+                    shadow: true
+                },
+                credits: {
+                    enabled: false
+                },
+                series: [{
+                    name: 'Confirmed Cases',
+                    data:sortedConfirmedValues
+
+                }]
+            });
+                */
+        },
+        
+
+
+
+    });
+
+
+    
+
+    };
 
 </script>
 </body>
