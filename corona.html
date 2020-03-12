@@ -262,7 +262,7 @@
             <p style="margin-top:10px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >Labels inside the circles represents the cumulative number of people. Click on radio-buttons on top-right corner to switch between layers. In order to open popup windows
                 with more details such as name of location, date of data. </p>
 
-            <div id="container" style="width:100%; height:2000px;"></div>
+            <div id="container" style="width:100%; height:3000px;"></div>
             <p style="margin-top:130px; font-family:'Ubuntu' ,sans-serif; font-size:10px; line-height: 10px" align=justify >
                 tags: coronavirus, corona, COVID-19, china, novel, new, map, interactive map, infection, disease, outbreak, global map, spread, track, people, sick, death</p>
 
@@ -531,7 +531,7 @@
         },
         /*points to the layer with the latest day's data from the csv*/
         pointToLayer (feature, layer) {
-            if (feature.properties[todayString]){
+            if (feature.properties[todayString]&&feature.properties[country]!="Iran (Islamic Republic of)" && feature.properties[country]!="Mainland China"&&feature.properties[country]!="Republic of Korea"&&feature.properties[country]!="Czech Republic"){
                 if (feature.properties[todayString]<1000){
                     return L.circleMarker(layer, smallMedium_icon)
                 }
@@ -544,7 +544,7 @@
                 else if (feature.properties[todayString]>=10000){
                     return L.circleMarker(layer,large_icon)
                 }
-            } else if (feature.properties[yesterdayString]) {
+            } else if (feature.properties[yesterdayString]&&feature.properties[country]!="Iran (Islamic Republic of)" && feature.properties[country]!="Mainland China"&&feature.properties[country]!="Republic of Korea"&&feature.properties[country]!="Czech Republic") {
                 if (feature.properties[yesterdayString]<1000){
                     return L.circleMarker(layer, smallMedium_icon)
                 }
@@ -558,7 +558,7 @@
                     return L.circleMarker(layer,large_icon)
                 }
             }
-            else {
+            else if (feature.properties[tDb_yesterdayString]&&feature.properties[country]!="Iran (Islamic Republic of)" && feature.properties[country]!="Mainland China"&&feature.properties[country]!="Republic of Korea"&&feature.properties[country]!="Czech Republic") {
                 if (feature.properties[tDb_yesterdayString]<100){
                     return L.circleMarker(layer, smallMedium_icon)
                 }
@@ -637,7 +637,7 @@
 
         pointToLayer (feature, layer) {
             /*points to the layer with the latest day's data from the csv*/
-            if (feature.properties[todayString]){
+            if (feature.properties[todayString] &&feature.properties[country]!="Iran (Islamic Republic of)" && feature.properties[country]!="Mainland China"&&feature.properties[country]!="Republic of Korea"&&feature.properties[country]!="Czech Republic"){
                 if (feature.properties[todayString]<50){
                     return L.circleMarker(layer, small_icon_d)
                 }
@@ -647,7 +647,7 @@
                 else if (feature.properties[todayString]>=500){
                     return L.circleMarker(layer,large_icon_d)
                 }
-            } else if (feature.properties[yesterdayString]) {
+            } else if (feature.properties[yesterdayString]&&feature.properties[country]!="Iran (Islamic Republic of)" && feature.properties[country]!="Mainland China"&&feature.properties[country]!="Republic of Korea"&&feature.properties[country]!="Czech Republic") {
                 if (feature.properties[yesterdayString]<50){
                     return L.circleMarker(layer, small_icon_d)
                 }
@@ -658,7 +658,7 @@
                     return L.circleMarker(layer,large_icon_d)
                 }
             }
-            else {
+            else if (feature.properties[tDb_yesterdayString]&&feature.properties[country]!="Iran (Islamic Republic of)" && feature.properties[country]!="Mainland China"&&feature.properties[country]!="Republic of Korea"&&feature.properties[country]!="Czech Republic"){
                 if (feature.properties[tDb_yesterdayString]<50){
                     return L.circleMarker(layer, small_icon_d)
                 }
@@ -732,7 +732,7 @@
 
         pointToLayer (feature, layer) {
             /*points to the layer with the latest day's data from the csv*/
-            if (feature.properties[todayString]){
+            if (feature.properties[todayString]&&feature.properties[country]!="Iran (Islamic Republic of)" && feature.properties[country]!="Mainland China"&&feature.properties[country]!="Republic of Korea"&&feature.properties[country]!="Czech Republic"){
                 if (feature.properties[todayString]<1000){
                     return L.circleMarker(layer, small_icon_r)
                 }
@@ -742,7 +742,7 @@
                 else if (feature.properties[todayString]>=2000){
                     return L.circleMarker(layer,large_icon_r)
                 }
-            } else if (feature.properties[yesterdayString]) {
+            } else if (feature.properties[yesterdayString]&&feature.properties[country]!="Iran (Islamic Republic of)" && feature.properties[country]!="Mainland China"&&feature.properties[country]!="Republic of Korea"&&feature.properties[country]!="Czech Republic") {
                 if (feature.properties[yesterdayString]<1000){
                     return L.circleMarker(layer, small_icon_r)
                 }
@@ -753,7 +753,7 @@
                     return L.circleMarker(layer,large_icon_r)
                 }
             }
-            else {
+            else if (feature.properties[tDb_yesterdayString]&&feature.properties[country]!="Iran (Islamic Republic of)" && feature.properties[country]!="Mainland China"&&feature.properties[country]!="Republic of Korea"&&feature.properties[country]!="Czech Republic") {
                 if (feature.properties[tDb_yesterdayString]<1000){
                     return L.circleMarker(layer, small_icon_r)
                 }
