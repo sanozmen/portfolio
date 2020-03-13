@@ -7,7 +7,7 @@
     <!--metda data-->
     <meta name="description" content="coronavirus, corona, COVID-19, china, wuhan, virus, novel, new, map, interactive map, death, infection, disease, outbreak, global map, spread, track, people, sick"/>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+         <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-57534785-2"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -137,7 +137,7 @@
 
         }
         .leaflet-sidebar-header p{
-            margin-bottom: 1px;
+            margin-bottom: 0px;
             margin-top: 0px;
         }
         .leaflet-sidebar-tabs > li.active, .leaflet-sidebar-tabs > ul > li.active {
@@ -145,6 +145,7 @@
 
         }
 
+       
         .info {
             padding: 6px 8px;
             font-size: 13px;
@@ -214,11 +215,42 @@
             background: #f1f7ff;
         }
 
-        h5 {
-            margin-top:30px;
-            font-family:'Ubuntu'
+        .upperInfo {
+            background: rgb(243, 238, 163);
+            border-radius: 7px;
+
         }
-      
+
+        h5 {
+            width:100%;
+            margin-top:10px;
+            font-family:'Ubuntu';
+            padding:0.4em;
+            
+        }
+
+        .lowerInfo{
+
+            background: rgb(241, 203, 159);
+            border-radius: 7px;
+
+        }
+
+        h6 {
+            width:100%;
+            margin-top:10px;
+            font-family:'Ubuntu';
+            padding:0.4em;
+            
+        }
+
+
+        #sidebar > div.leaflet-sidebar-tabs > ul:nth-child(1) > li.active > a > span {
+            margin-top: 10px;
+        }
+        #sidebar > div.leaflet-sidebar-tabs > ul:nth-child(1) > li:nth-child(1) > a > span {
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -229,8 +261,8 @@
     <!-- Nav tabs -->
     <div class="leaflet-sidebar-tabs">
         <ul role="tablist">
-            <li><a href="#home" role="tab"><i class="fa fa-bars"></i></a></li>
-            <li><a href="index.html" role="tab"><img src="images/logo.svg" style="width: 20px; height: 20px;" alt="" /></i></a></li>
+            <li><a href="#home" role="tab"><span class="fa fa-bars"></span></a></li>
+            <li><a href="index.html" role="tab"><img src="images/logo.svg" style="width: 20px; height: 20px; margin-top: 10px;" alt="" /></i></a></li>
             <!-- <li class="disabled"><a href="#messages" role="tab"><i class="fa fa-envelope"></i></a></li> -->
         </ul>
         <ul role="tablist">
@@ -241,21 +273,29 @@
         </ul> -->
     </div>
 
-    <!-- Tab panes -->
+    <!-- Tab panes. -->
     <div class="leaflet-sidebar-content">
         <div class="leaflet-sidebar-pane" id="home">
             <h1 class="leaflet-sidebar-header">
 
                 <p ><b>Click and Hide the Pane</b></p>
-                <span class="leaflet-sidebar-close"><h4 class="fa-pulse">X</h4></span>
+                <span class="leaflet-sidebar-close"><p class="fa-pulse">X</p></span>
             </h1>
 
             <p class="lorem" style="margin-top:20px">Click "X" on top left corner to hide the pane and see the map.</p>
 
             <h4>Global Coronavirus Map (Updated Daily)</h4>
-            <h5 id="totalConfirmed"></h5>
-            <h5 id="totalDeath"></h5>
-            <h5 id="totalRecovered"></h5>
+            <div class="upperInfo"> 
+                <h5 id="totalConfirmed"></h5>
+                <h5 id="totalDeath"></h5>
+                <h5 id="totalRecovered"></h5>
+            </div>
+            
+            <div class="lowerInfo"> 
+
+            <h6 id="firstCases"></h6>
+            <h6 id="topFive"></h6>
+            </div>
 
             <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >This interactive world map aims to track the global spread of 2019 Novel Coronavirus
                 (COVID-19) outbreak, inspired by <a href="https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6"
@@ -266,7 +306,7 @@
                 this disease. Lastly, the layer "Recover" denotes
                 the cumulative number of persons who got recovered. </p>
 
-            <h6>How to use the map</h6>
+            <h6 style="background: none;">How to use the map</h6>
             <p style="margin-top:10px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >Labels inside the circles represents the cumulative number of persons. Click on radio-buttons on top-right corner to switch between layers. In order to open popup windows
                 with more details such as name of location, date of data. </p>
 
@@ -347,6 +387,8 @@
 
     });
 
+
+    var myRenderer = L.canvas({ padding: 0.1 });
     /* Defining icons in different shapes and colors for different layers*/
 
     var smallMedium_icon = {
@@ -355,7 +397,8 @@
         color: "#000",
         weight: 0.2,
         opacity: 1,
-        fillOpacity: 0.8
+        fillOpacity: 0.8,
+        renderer: myRenderer
     };
 
 
@@ -365,7 +408,8 @@
         color: "#000",
         weight: 0.2,
         opacity: 1,
-        fillOpacity: 0.8
+        fillOpacity: 0.8,
+        renderer: myRenderer
     };
 
     var mediumLarge_icon = {
@@ -374,7 +418,8 @@
         color: "#000",
         weight: 0.2,
         opacity: 1,
-        fillOpacity: 0.8
+        fillOpacity: 0.8,
+        renderer: myRenderer
     };
 
     var large_icon = {
@@ -383,7 +428,8 @@
         color: "#000",
         weight: 0.2,
         opacity: 1,
-        fillOpacity: 0.8
+        fillOpacity: 0.8,
+        renderer: myRenderer
     };
 
 
@@ -393,7 +439,8 @@
         color: "#000",
         weight: 0.2,
         opacity: 1,
-        fillOpacity: 0.8
+        fillOpacity: 0.8,
+        renderer: myRenderer
     };
 
     var medium_icon_d = {
@@ -402,7 +449,8 @@
         color: "#000",
         weight: 0.2,
         opacity: 1,
-        fillOpacity: 0.8
+        fillOpacity: 0.8,
+        renderer: myRenderer
     };
 
     var large_icon_d = {
@@ -411,7 +459,8 @@
         color: "#000",
         weight: 0.2,
         opacity: 1,
-        fillOpacity: 0.8
+        fillOpacity: 0.8,
+        renderer: myRenderer
     };
 
 
@@ -421,7 +470,8 @@
         color: "000",
         weight: 0.2,
         opacity: 1,
-        fillOpacity: 0.8
+        fillOpacity: 0.8,
+        renderer: myRenderer
     };
 
 
@@ -431,7 +481,8 @@
         color: "#000",
         weight: 0.2,
         opacity: 1,
-        fillOpacity: 0.8
+        fillOpacity: 0.8,
+        renderer: myRenderer
     };
 
     var large_icon_r = {
@@ -440,7 +491,8 @@
         color: "#000",
         weight: 0.2,
         opacity: 1,
-        fillOpacity: 0.8
+        fillOpacity: 0.8,
+        renderer: myRenderer
     };
     /* end of marker style (icon) definitions*/
 
@@ -541,7 +593,7 @@
         /*points to the layer with the latest day's data from the csv*/
         pointToLayer (feature, layer) {
             if (feature.properties[todayString]&&feature.properties[country]!="Iran (Islamic Republic of)" && feature.properties[country]!="Mainland China"&&feature.properties[country]!="Republic of Korea"&&feature.properties[country]!="Czech Republic"){
-                if (feature.properties[todayString]<1000){
+                if (feature.properties[todayString]<1000 && feature.properties[todayString]!=0 ){
                     return L.circleMarker(layer, smallMedium_icon)
                 }
                 else if (feature.properties[todayString]>=1000 && feature.properties[todayString]<5000){
@@ -554,7 +606,7 @@
                     return L.circleMarker(layer,large_icon)
                 }
             } else if (feature.properties[yesterdayString]&&feature.properties[country]!="Iran (Islamic Republic of)" && feature.properties[country]!="Mainland China"&&feature.properties[country]!="Republic of Korea"&&feature.properties[country]!="Czech Republic") {
-                if (feature.properties[yesterdayString]<1000){
+                if (feature.properties[yesterdayString]<1000 && feature.properties[yesterdayString]!=0 ){
                     return L.circleMarker(layer, smallMedium_icon)
                 }
                 else if (feature.properties[yesterdayString]>=1000 && feature.properties[yesterdayString]<5000){
@@ -568,7 +620,7 @@
                 }
             }
             else if (feature.properties[tDb_yesterdayString]&&feature.properties[country]!="Iran (Islamic Republic of)" && feature.properties[country]!="Mainland China"&&feature.properties[country]!="Republic of Korea"&&feature.properties[country]!="Czech Republic") {
-                if (feature.properties[tDb_yesterdayString]<100){
+                if (feature.properties[tDb_yesterdayString]<100 && feature.properties[tDb_yesterdayString]!=0){
                     return L.circleMarker(layer, smallMedium_icon)
                 }
                 else if (feature.properties[tDb_yesterdayString]>=1000 && feature.properties[tDb_yesterdayString]<5000){
@@ -647,7 +699,7 @@
         pointToLayer (feature, layer) {
             /*points to the layer with the latest day's data from the csv*/
             if (feature.properties[todayString] &&feature.properties[country]!="Iran (Islamic Republic of)" && feature.properties[country]!="Mainland China"&&feature.properties[country]!="Republic of Korea"&&feature.properties[country]!="Czech Republic"){
-                if (feature.properties[todayString]<50){
+                if (feature.properties[todayString]<50 && feature.properties[todayString]!=0){
                     return L.circleMarker(layer, small_icon_d)
                 }
                 else if (feature.properties[todayString]>=50 && feature.properties[todayString]<500){
@@ -657,7 +709,7 @@
                     return L.circleMarker(layer,large_icon_d)
                 }
             } else if (feature.properties[yesterdayString]&&feature.properties[country]!="Iran (Islamic Republic of)" && feature.properties[country]!="Mainland China"&&feature.properties[country]!="Republic of Korea"&&feature.properties[country]!="Czech Republic") {
-                if (feature.properties[yesterdayString]<50){
+                if (feature.properties[yesterdayString]<50 && feature.properties[yesterdayString]!=0 ){
                     return L.circleMarker(layer, small_icon_d)
                 }
                 else if (feature.properties[yesterdayString]>=50 && feature.properties[yesterdayString]<500){
@@ -668,7 +720,7 @@
                 }
             }
             else if (feature.properties[tDb_yesterdayString]&&feature.properties[country]!="Iran (Islamic Republic of)" && feature.properties[country]!="Mainland China"&&feature.properties[country]!="Republic of Korea"&&feature.properties[country]!="Czech Republic"){
-                if (feature.properties[tDb_yesterdayString]<50){
+                if (feature.properties[tDb_yesterdayString]<50 && feature.properties[tDb_yesterdayString]!=0 ){
                     return L.circleMarker(layer, small_icon_d)
                 }
                 else if (feature.properties[tDb_yesterdayString]>=50 && feature.properties[tDb_yesterdayString]<500){
@@ -742,7 +794,7 @@
         pointToLayer (feature, layer) {
             /*points to the layer with the latest day's data from the csv*/
             if (feature.properties[todayString]&&feature.properties[country]!="Iran (Islamic Republic of)" && feature.properties[country]!="Mainland China"&&feature.properties[country]!="Republic of Korea"&&feature.properties[country]!="Czech Republic"){
-                if (feature.properties[todayString]<1000){
+                if (feature.properties[todayString]<1000 && feature.properties[todayString]!=0){
                     return L.circleMarker(layer, small_icon_r)
                 }
                 else if (feature.properties[todayString]>=1000 && feature.properties[todayString]<2000){
@@ -752,7 +804,7 @@
                     return L.circleMarker(layer,large_icon_r)
                 }
             } else if (feature.properties[yesterdayString]&&feature.properties[country]!="Iran (Islamic Republic of)" && feature.properties[country]!="Mainland China"&&feature.properties[country]!="Republic of Korea"&&feature.properties[country]!="Czech Republic") {
-                if (feature.properties[yesterdayString]<1000){
+                if (feature.properties[yesterdayString]<1000 && feature.properties[yesterdayString]!=0){
                     return L.circleMarker(layer, small_icon_r)
                 }
                 else if (feature.properties[yesterdayString]>=1000 && feature.properties[yesterdayString]<2000){
@@ -763,7 +815,7 @@
                 }
             }
             else if (feature.properties[tDb_yesterdayString]&&feature.properties[country]!="Iran (Islamic Republic of)" && feature.properties[country]!="Mainland China"&&feature.properties[country]!="Republic of Korea"&&feature.properties[country]!="Czech Republic") {
-                if (feature.properties[tDb_yesterdayString]<1000){
+                if (feature.properties[tDb_yesterdayString]<1000 && feature.properties[tDb_yesterdayString]!=0){
                     return L.circleMarker(layer, small_icon_r)
                 }
                 else if (feature.properties[tDb_yesterdayString]>=1000 && feature.properties[tDb_yesterdayString]<2000){
@@ -996,43 +1048,62 @@
     let worldTotal_Confirmed=0
     let confirmedLabels=[];
     let confirmedValues=[];
+    let confirmedLabels_OneDayAgo=[];
+    let confirmedValues_OneDayAgo=[];
     //In order to find total cases in US,China,Canada and Australia
     let totalConfirmed_US=0;
     let totalConfirmed_China=0;
     let totalConfirmed_Canada=0;
     let totalConfirmed_Aus=0;
+
+    let totalConfirmed_US_OneDayAgo=0;
+    let totalConfirmed_China_OneDayAgo=0;
+    let totalConfirmed_Canada_OneDayAgo=0;
+    let totalConfirmed_Aus_OneDayAgo=0;
     //putting confirmed cases into array format, into the empty arrays defined above
     Papa.parse("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv", {
         download: true,
         complete: function(results) {
             //select the latest column
             let lastCol=results.data[1].length-1;
+            let last2Col=results.data[1].length-2;
             //find the row where country name is either "US","China","Canada" or "Australia"
             //and add the corresponding value to the total sum of that country
             for (i=1; i< results.data.length; i++) {
                 if (results.data[i][1]=="US"){
                     var nmbr=parseInt(results.data[i][lastCol]);
+                    var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
                     totalConfirmed_US=totalConfirmed_US + nmbr
+                    totalConfirmed_US_OneDayAgo+=nmbr_OneDayAgo
                 }
                 else if (results.data[i][1]=="China"){
                     var nmbr=parseInt(results.data[i][lastCol]);
+                    var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
                     totalConfirmed_China=totalConfirmed_China + nmbr
+                    totalConfirmed_China_OneDayAgo+=nmbr_OneDayAgo
                 }
                 else if (results.data[i][1]=="Canada"){
                     var nmbr=parseInt(results.data[i][lastCol]);
+                    var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
                     totalConfirmed_Canada=totalConfirmed_Canada + nmbr
+                    totalConfirmed_Canada_OneDayAgo+=nmbr_OneDayAgo
                 }
                 else if (results.data[i][1]=="Australia"){
+                    var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
                     var nmbr=parseInt(results.data[i][lastCol]);
                     totalConfirmed_Aus=totalConfirmed_Aus + nmbr
+                    totalConfirmed_Aus_OneDayAgo+=nmbr_OneDayAgo
                 }
                 //except US,China,Canada and Australia. Push the country name to the labels list
                 //and push the corresponding value to the values list
                 else if (results.data[i][1]!="US" || results.data[i][1]!="Mainland China"|| results.data[i][1]!="China"
                     || results.data[i][1]!="Canada" || results.data[i][1]!="Australia" ){
+                    var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
                     var nmbr=parseInt(results.data[i][lastCol]);
                     confirmedValues.push(nmbr);
                     confirmedLabels.push(results.data[i][1])
+                    confirmedValues_OneDayAgo.push(nmbr_OneDayAgo)
+
                 }
                 else {
                     console.log("ERROR")
@@ -1040,7 +1111,77 @@
             }
             confirmedLabels.push("US","China","Canada","Australia");
             confirmedValues.push(totalConfirmed_US,totalConfirmed_China, totalConfirmed_Canada, totalConfirmed_Aus);
-            //console.log(confirmedLabels+"\n"+confirmedValues)
+            confirmedValues_OneDayAgo.push(totalConfirmed_US_OneDayAgo,totalConfirmed_China_OneDayAgo,totalConfirmed_Canada_OneDayAgo,totalConfirmed_Aus_OneDayAgo)
+
+
+            //console.log(confirmedValues_OneDayAgo)
+            //console.log(confirmedValues)
+            let percentChangeDailyArray=[]
+
+            function DailyChange(){
+            for (n = 0; n < confirmedValues.length; n++) {
+                    let perc= Math.round((confirmedValues[n]-confirmedValues_OneDayAgo[n])*100/confirmedValues_OneDayAgo[n])
+                    if (perc==Infinity) {
+                        percentChangeDailyArray.push("First Case")
+                    }
+                    else {
+                        percentChangeDailyArray.push(perc)
+                    }
+                    }
+                }
+
+
+            DailyChange();
+
+
+            //console.log(percentChangeDailyArray)
+
+            //zip values from both lists
+            var k = confirmedLabels.map(function(e, i) {
+                return [e, percentChangeDailyArray[i]];
+            });
+            //sort by country names
+            k.sort(function(a,b){return b[1]-a[1];});
+            //console.log(k)
+
+             let newCases=[]
+
+            function SelectNewCases(){
+
+                for (p=0; p<k.length; p++) {
+
+                    if (k[p][1]=="First Case") {
+
+                        newCases.push(k[p][0])
+
+                    }
+
+                }
+
+            }
+            SelectNewCases()
+            let topFive=[]
+            function selectTopFive() {
+                topFive=k.slice(1,6)
+            }
+            selectTopFive()
+
+            var topFiveString="";
+            function createString(){
+                for (v=0;v<topFive.length;v++){
+                    topFiveString+=topFive[v][0]
+                    topFiveString+=" "
+                    topFiveString+=topFive[v][1]
+                    topFiveString+="%  -   "
+                }
+            }
+            createString()
+            //console.log(topFiveString)
+
+            document.getElementById("firstCases").innerHTML="<b>Countries that most recently announced the first confirmed cases within their borders:</b> "+"</br>"+newCases
+
+            document.getElementById("topFive").innerHTML="<b>Countries with the Highest Daily Change %: </b> "+"</br>"+topFiveString
+
 
             //zip values from both lists
             var c = confirmedLabels.map(function(e, i) {
@@ -1143,7 +1284,6 @@
         },
 
 
-
     });
 
     //GRAPH, DATA OPERATIONS for deaths
@@ -1161,6 +1301,7 @@
         complete: function(results) {
             //select the latest column
             let lastCol=results.data[1].length-1;
+
             //find the row where country name is either "US","China","Canada" or "Australia"
             //and add the corresponding value to the total sum of that country
             for (i=1; i< results.data.length; i++) {
@@ -1295,7 +1436,7 @@
             });
                 */
         },
-        
+
 
 
 
@@ -1450,14 +1591,14 @@
             });
                 */
         },
-        
+
 
 
 
     });
 
 
-    
+
 
     };
 
