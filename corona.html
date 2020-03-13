@@ -284,7 +284,7 @@
 
             <p class="lorem" style="margin-top:20px">Click "X" on top left corner to hide the pane and see the map.</p>
 
-            <h4>Global Coronavirus Map (Updated Daily)</h4>
+            <h4 style="margin-bottom:10px; font-family:'Ubuntu',sans-serif;">Global Coronavirus Map (Updated Daily)</h4>
             <div class="upperInfo"> 
                 <h5 id="totalConfirmed"></h5>
                 <h5 id="totalDeath"></h5>
@@ -1221,9 +1221,35 @@
             return worldTotal_Confirmed
             }
             totalGlobal_Confirmed()
-            //console.log(worldTotal_Confirmed)
+            
+            //splitting the number visually from 1000's
+            partsOfValue=[]
+            while (worldTotal_Confirmed>1000) {
+                worldTotal_Confirmed=worldTotal_Confirmed/1000
+                partsOfValue.push(Math.floor(1000*((worldTotal_Confirmed) - Math.floor(worldTotal_Confirmed))))
 
-            document.getElementById("totalConfirmed").innerHTML="Total Confirmed Cases: "+worldTotal_Confirmed
+                if (worldTotal_Confirmed<1000) {
+                    partsOfValue.push(Math.floor(1000*(worldTotal_Confirmed/1000)))
+                }
+                
+            }
+            partsOfValue.reverse()
+
+
+           let worldTotal_Confirmed_String="";
+           //console.log(partsOfValue.length)
+            function stringCreate() {
+               for (m=0; m<partsOfValue.length; m++){
+                worldTotal_Confirmed_String=worldTotal_Confirmed_String+" "+partsOfValue[m]
+                //console.log(worldTotal_Confirmed_String)
+           }
+           return worldTotal_Confirmed_String
+           }
+           stringCreate();
+          //console.log(worldTotal_Confirmed_String)
+
+
+           document.getElementById("totalConfirmed").innerHTML="Total Confirmed Cases: "+worldTotal_Confirmed_String
 
             //console.log(sortedConfirmedLabels)
             //console.log(sortedConfirmedValues)
@@ -1281,7 +1307,8 @@
                 },
                 series: [{
                     name: 'Confirmed Cases',
-                    data:sortedConfirmedValues
+                    data:sortedConfirmedValues,
+                    color: '#feb24c'
 
                 }]
             });
@@ -1375,9 +1402,34 @@
             return worldTotal_Deaths
             }
             totalGlobal_Deaths()
-            //console.log(worldTotal_Confirmed)
+            
+            //splitting the number visually from 1000's
+            partsOfValue=[]
+            while (worldTotal_Deaths>1000) {
+                worldTotal_Deaths=worldTotal_Deaths/1000
+                partsOfValue.push(Math.floor(1000*((worldTotal_Deaths) - Math.floor(worldTotal_Deaths))))
 
-            document.getElementById("totalDeath").innerHTML="Total Death: "+worldTotal_Deaths
+                if (worldTotal_Deaths<1000) {
+                    partsOfValue.push(Math.floor(1000*(worldTotal_Deaths/1000)))
+                }
+                
+            }
+            partsOfValue.reverse()
+
+            
+           let worldTotal_Deaths_String="";
+           //console.log(partsOfValue.length)
+            function stringCreate() {
+               for (m=0; m<partsOfValue.length; m++){
+                worldTotal_Deaths_String=worldTotal_Deaths_String+" "+partsOfValue[m]
+                
+           }
+           return worldTotal_Deaths_String
+           }
+
+           stringCreate()
+
+            document.getElementById("totalDeath").innerHTML="Total Death: "+worldTotal_Deaths_String
 
             //console.log(sortedConfirmedLabels)
             //console.log(sortedConfirmedValues)
@@ -1530,9 +1582,34 @@
             return worldTotal_Recovered
             }
             totalGlobal_Recovered()
-            //console.log(worldTotal_Confirmed)
+           
 
-            document.getElementById("totalRecovered").innerHTML="Total Recovered: "+worldTotal_Recovered
+            //splitting the number visually from 1000's
+            partsOfValue=[]
+            while (worldTotal_Recovered>1000) {
+                worldTotal_Recovered=worldTotal_Recovered/1000
+                partsOfValue.push(Math.floor(1000*((worldTotal_Recovered) - Math.floor(worldTotal_Recovered))))
+
+                if (worldTotal_Recovered<1000) {
+                    partsOfValue.push(Math.floor(1000*(worldTotal_Recovered/1000)))
+                }
+                
+            }
+            partsOfValue.reverse()
+
+
+           let worldTotal_Recovered_String="";
+           //console.log(partsOfValue.length)
+            function stringCreate() {
+               for (m=0; m<partsOfValue.length; m++){
+                worldTotal_Recovered_String=worldTotal_Recovered_String+" "+partsOfValue[m]
+                //console.log(worldTotal_Recovered_String)
+           }
+           return worldTotal_Recovered_String
+           }
+           stringCreate();
+
+            document.getElementById("totalRecovered").innerHTML="Total Recovered: "+worldTotal_Recovered_String
 
             //console.log(sortedConfirmedLabels)
             //console.log(sortedConfirmedValues)
