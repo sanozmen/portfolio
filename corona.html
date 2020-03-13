@@ -7,7 +7,7 @@
     <!--metda data-->
     <meta name="description" content="coronavirus, corona, COVID-19, china, wuhan, virus, novel, new, map, interactive map, death, infection, disease, outbreak, global map, spread, track, people, sick"/>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-         <!-- Global site tag (gtag.js) - Google Analytics -->
+        <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-57534785-2"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -284,7 +284,7 @@
 
             <p class="lorem" style="margin-top:20px">Click "X" on top left corner to hide the pane and see the map.</p>
 
-            <h4 style="margin-bottom:10px; font-family:'Ubuntu',sans-serif;">Global Coronavirus Map (Updated Daily)</h4>
+            <h4 style="margin-bottom:10px; font-family:'Ubuntu',sans-serif; font-weight: bold;">Global Coronavirus Map</br>(Updated Daily)</h4>
             <div class="upperInfo"> 
                 <h5 id="totalConfirmed"></h5>
                 <h5 id="totalDeath"></h5>
@@ -1249,7 +1249,7 @@
           //console.log(worldTotal_Confirmed_String)
 
 
-           document.getElementById("totalConfirmed").innerHTML="Total Confirmed Cases: "+worldTotal_Confirmed_String
+           document.getElementById("totalConfirmed").innerHTML="<b>Total Confirmed Cases:</b> "+worldTotal_Confirmed_String
 
             //console.log(sortedConfirmedLabels)
             //console.log(sortedConfirmedValues)
@@ -1429,7 +1429,7 @@
 
            stringCreate()
 
-            document.getElementById("totalDeath").innerHTML="Total Death: "+worldTotal_Deaths_String
+            document.getElementById("totalDeath").innerHTML="<b>Total Death:</b> "+worldTotal_Deaths_String
 
             //console.log(sortedConfirmedLabels)
             //console.log(sortedConfirmedValues)
@@ -1609,7 +1609,7 @@
            }
            stringCreate();
 
-            document.getElementById("totalRecovered").innerHTML="Total Recovered: "+worldTotal_Recovered_String
+            document.getElementById("totalRecovered").innerHTML="<b>Total Recovered: </b>"+worldTotal_Recovered_String
 
             //console.log(sortedConfirmedLabels)
             //console.log(sortedConfirmedValues)
