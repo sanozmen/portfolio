@@ -7,15 +7,15 @@
     <!--metda data-->
     <meta name="description" content="coronavirus, corona, COVID-19, china, wuhan, virus, novel, new, map, interactive map, death, infection, disease, outbreak, global map, spread, track, people, sick"/>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-57534785-2"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-57534785-2"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-        gtag('config', 'UA-57534785-2');
-    </script>
+      gtag('config', 'UA-57534785-2');
+  </script>
     <!--Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Spartan&display=swap" rel="stylesheet">
@@ -229,6 +229,50 @@
             
         }
 
+        .firstEverInfo{
+
+            background: rgb(241, 203, 159);
+            border-radius: 7px;
+
+        }
+
+        .firstDeathsInfo{
+
+            background: rgb(236, 135, 104);
+            border-radius: 7px;
+
+            }
+
+        h6 {
+            width:100%;
+            margin-top:10px;
+            font-family:'Ubuntu';
+            padding:0.4em;
+            
+        }
+
+        .percentConfirmed{
+
+            background: rgb(241, 203, 159);
+            border-radius: 7px;
+
+            }
+
+            .percentDeath{
+
+            background: rgb(236, 135, 104);
+            border-radius: 7px;
+
+            }
+
+        #sidebar > div.leaflet-sidebar-tabs > ul:nth-child(1) > li.active > a > span {
+            margin-top: 10px;
+        }
+        #sidebar > div.leaflet-sidebar-tabs > ul:nth-child(1) > li:nth-child(1) > a > span {
+            margin-top: 10px;
+        }
+
+        
         @media (max-width: 769px) {
             h6 {
                 font-size: 15px;
@@ -239,30 +283,6 @@
             h5 {
                 font-size: 18px;
             }
-        }
-
-
-        .lowerInfo{
-
-            background: rgb(241, 203, 159);
-            border-radius: 7px;
-
-        }
-
-        h6 {
-            width:100%;
-            margin-top:10px;
-            font-family:'Ubuntu';
-            padding:0.4em;
-            
-        }
-
-
-        #sidebar > div.leaflet-sidebar-tabs > ul:nth-child(1) > li.active > a > span {
-            margin-top: 10px;
-        }
-        #sidebar > div.leaflet-sidebar-tabs > ul:nth-child(1) > li:nth-child(1) > a > span {
-            margin-top: 10px;
         }
     </style>
 </head>
@@ -304,11 +324,37 @@
                 <h5 id="totalRecovered"></h5>
             </div>
             
-            <div class="lowerInfo"> 
+            <div class="firstEverInfo"> 
 
             <h6 id="firstCases"></h6>
-            <h6 id="topFive"></h6>
+            
             </div>
+
+            <div class="percentConfirmed">
+
+                <h6 id="topFive"></h6>
+
+            </div>
+
+            <div class="firstDeathsInfo">
+                <h6 id="firstDeath"></h6>
+            </div>
+            
+
+            <div class="percentDeath">
+
+                <h6 id="topFiveDeath"></h6>
+
+            </div>
+            
+            
+
+                
+    
+
+            
+
+            
 
             <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify >This interactive world map aims to track the global spread of 2019 Novel Coronavirus
                 (COVID-19) outbreak, inspired by <a href="https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6"
@@ -324,6 +370,7 @@
                 with more details such as name of location, date of data. </p>
 
             <div id="container" style="width:100%; height:3000px;"></div>
+            <div id="container2" style="width:100%; height:1000px;"></div>
             <p style="margin-top:130px; font-family:'Ubuntu' ,sans-serif; font-size:10px; line-height: 10px" align=justify >
                 tags: coronavirus, corona, COVID-19, china, novel, new, map, interactive map, infection, disease, outbreak, global map, spread, track, people, sick, death</p>
 
@@ -1061,7 +1108,7 @@
     let worldTotal_Confirmed=0
     let confirmedLabels=[];
     let confirmedValues=[];
-    let confirmedLabels_OneDayAgo=[];
+   
     let confirmedValues_OneDayAgo=[];
     //In order to find total cases in US,China,Canada and Australia
     let totalConfirmed_US=0;
@@ -1169,11 +1216,18 @@
                         newCases.push(zippedPercDailyChange[p][0])
 
                     }
+                    
 
                 }
 
+                
+
             }
             SelectNewCases()
+            //if there is no new country
+            if (newCases.length==0) {
+                    newCases.push("N/A for today")
+                }
 
             //slice countries with the top five % daily change from top
             let topFive=[]
@@ -1198,14 +1252,14 @@
             //push the values the document
             document.getElementById("firstCases").innerHTML="<b>Countries that most recently announced the first confirmed cases within their borders:</b> "+"</br>"+newCases
 
-            document.getElementById("topFive").innerHTML="<b>Countries with the Highest Daily Change % in Confirmed Cases: </b> "+"</br>"+topFiveString
+            document.getElementById("topFive").innerHTML="<b>Countries with the highest daily change % in confirmed cases: </b> "+"</br>"+topFiveString
 
 
             //zip values from both lists
             var c = confirmedLabels.map(function(e, i) {
                 return [e, confirmedValues[i]];
             });
-            //sort by country names
+            //sort descending
             c.sort(function(a,b){return b[1]-a[1];});
             //console.log(c)
 
@@ -1331,46 +1385,65 @@
 
     });
 
+    
+
     //GRAPH, DATA OPERATIONS for deaths
     let worldTotal_Deaths=0
     let deathsLabels=[];
     let deathsValues=[];
+    let deathsLabels_OneDayAgo=[];
+    let deathsValues_OneDayAgo=[];
     //In order to find total cases in US,China,Canada and Australia
     let totalDeaths_US=0;
     let totalDeaths_China=0;
     let totalDeaths_Canada=0;
     let totalDeaths_Aus=0;
-    //putting confirmed cases into array format, into the empty arrays defined above
+     //in order to find daily % change in deaths 
+    let totalDeaths_US_OneDayAgo=0;
+    let totalDeaths_China_OneDayAgo=0;
+    let totalDeaths_Canada_OneDayAgo=0;
+    let totalDeaths_Aus_OneDayAgo=0;
+    //putting death cases into array format, into the empty arrays defined above
     Papa.parse("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv", {
         download: true,
         complete: function(results) {
             //select the latest column
             let lastCol=results.data[1].length-1;
-
+            let last2Col=results.data[1].length-2;
             //find the row where country name is either "US","China","Canada" or "Australia"
             //and add the corresponding value to the total sum of that country
             for (i=1; i< results.data.length; i++) {
                 if (results.data[i][1]=="US"){
+                    var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
                     var nmbr=parseInt(results.data[i][lastCol]);
                     totalDeaths_US=totalDeaths_US + nmbr
+                    totalConfirmed_US_OneDayAgo+=nmbr_OneDayAgo
                 }
                 else if (results.data[i][1]=="China"){
+                    var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
                     var nmbr=parseInt(results.data[i][lastCol]);
                     totalDeaths_China=totalDeaths_China + nmbr
+                    totalDeaths_China_OneDayAgo+=nmbr_OneDayAgo
                 }
                 else if (results.data[i][1]=="Canada"){
+                    var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
                     var nmbr=parseInt(results.data[i][lastCol]);
                     totalDeaths_Canada=totalDeaths_Canada + nmbr
+                    totalConfirmed_Canada_OneDayAgo+=nmbr_OneDayAgo
                 }
                 else if (results.data[i][1]=="Australia"){
+                    var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
                     var nmbr=parseInt(results.data[i][lastCol]);
                     totalDeaths_Aus=totalDeaths_Aus + nmbr
+                    totalDeaths_Aus_OneDayAgo+=nmbr_OneDayAgo
                 }
                 //except US,China,Canada and Australia. Push the country name to the labels list
                 //and push the corresponding value to the values list
                 else if (results.data[i][1]!="US" || results.data[i][1]!="Mainland China"|| results.data[i][1]!="China"
                     || results.data[i][1]!="Canada" || results.data[i][1]!="Australia" ){
+                    var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
                     var nmbr=parseInt(results.data[i][lastCol]);
+                    deathsValues_OneDayAgo.push(nmbr_OneDayAgo);
                     deathsValues.push(nmbr);
                     deathsLabels.push(results.data[i][1])
                 }
@@ -1380,15 +1453,97 @@
             }
             deathsLabels.push("US","China","Canada","Australia");
             deathsValues.push(totalDeaths_US,totalDeaths_China, totalDeaths_Canada, totalDeaths_Aus);
-            //console.log(confirmedLabels+"\n"+confirmedValues)
+            deathsValues_OneDayAgo.push(totalDeaths_US_OneDayAgo,totalDeaths_China_OneDayAgo,totalDeaths_Canada_OneDayAgo,totalDeaths_Aus_OneDayAgo)
+         
+/////////////////////////////////////////////////////
+            let percentChangeDailyArray=[]
+            //calculate daily change compared to data from the day before
+            function DailyChange(){
+            for (n = 0; n < deathsValues.length; n++) {
+                    let perc= Math.round((deathsValues[n]-deathsValues_OneDayAgo[n])*100/deathsValues_OneDayAgo[n])
+                    if (perc==Infinity) {
+                        percentChangeDailyArray.push("First Death")
+                    }
+                    else if (Number.isNaN(perc)) {
+                        percentChangeDailyArray.push(0)
+                    } else {
+                        percentChangeDailyArray.push(perc)
+                    }
+                    }
+                }
+
+
+            DailyChange();
+
+
+            //console.log(percentChangeDailyArray)
+
+            //zip values from both lists
+            var zippedPercDailyChange = deathsLabels.map(function(e, i) {
+                return [e, percentChangeDailyArray[i]];
+            });
+            //sort descending percent change
+            zippedPercDailyChange.sort(function(a,b){return b[1]-a[1];});
+            //console.log(zippedPercDailyChange)
+
+             let firstDeath=[]
+            //finding countries with the first ever cases
+            function SelectNewDeath(){
+
+                for (p=0; p<zippedPercDailyChange.length; p++) {
+
+                    if (zippedPercDailyChange[p][1]=="First Death") {
+
+                        firstDeath.push(zippedPercDailyChange[p][0])
+
+                    }
+                    
+
+                }
+
+                
+
+            }
+            SelectNewDeath()
+            //if there is no new country
+            if (firstDeath.length==0) {
+                    firstDeath.push("N/A")
+                }
+
+            //slice countries with the top five % daily change from top
+            let topFive=[]
+            function selectTopFive() {
+                topFive=zippedPercDailyChange.slice(1,6)
+            }
+            selectTopFive()
+
+            //put them in a format that will be displayed properly to the user
+            var topFiveString="";
+            function createString(){
+                for (v=0;v<topFive.length;v++){
+                    topFiveString+=topFive[v][0]
+                    topFiveString+=" "
+                    topFiveString+=topFive[v][1]
+                    topFiveString+="%  -   "
+                }
+            }
+            createString()
+            //console.log(topFiveString)
+
+            //push the values the document
+            document.getElementById("firstDeath").innerHTML="<b>Countries that most recently announced the first case of death within their borders:</b> "+"</br>"+firstDeath
+
+            document.getElementById("topFiveDeath").innerHTML="<b>Countries with the highest daily change % in deaths: </b> "+"</br>"+topFiveString
+////////////////////////////////////////////////////////////////////////
+           
 
             //zip values from both lists
             var c = deathsLabels.map(function(e, i) {
                 return [e, deathsValues[i]];
             });
-            //sort by country names
-            c.sort();
-            //console.log(c)
+            //sort descending
+            c.sort(function(a,b){return b[1]-a[1];});
+            console.log(c)
 
             //create new lists to separate and store the sorted data
             sortedDeathLabels=[];
@@ -1396,11 +1551,15 @@
 
             function separateValues() {
                 for (n = 0; n < c.length; n++) {
+                   if (c[n][1]!=0){
                     sortedDeathLabels.push(c[n][0])
+                   }
                 }
 
                 for (n = 0; n < c.length; n++) {
+                    if (c[n][1]!=0){
                     sortedDeathValues.push(c[n][1])
+                    }
                 }
             }
 
@@ -1447,18 +1606,18 @@
             //console.log(sortedConfirmedLabels)
             //console.log(sortedConfirmedValues)
 
-           /* Highcharts.chart('container', {
+            Highcharts.chart('container2', {
                 chart: {
                     type: 'bar'
                 },
                 title: {
-                    text: 'Confirmed COVID-19 CASES'
+                    text: 'Deaths'
                 },
                 subtitle: {
-                    text: 'Total Confirmed by Countries'
+                    text: 'Deaths by Countries'
                 },
                 xAxis: {
-                    categories: sortedConfirmedLabels,
+                    categories: sortedDeathLabels,
                     title: {
                         text: null
                     }
@@ -1483,7 +1642,7 @@
                         }
                     }
                 },
-                legend: {
+                /*legend: {
                     layout: 'vertical',
                     align: 'right',
                     verticalAlign: 'top',
@@ -1494,17 +1653,18 @@
                     backgroundColor:
                         Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
                     shadow: true
-                },
+                },*/
                 credits: {
                     enabled: false
                 },
                 series: [{
-                    name: 'Confirmed Cases',
-                    data:sortedConfirmedValues
+                    name: 'Deaths',
+                    data:sortedDeathValues,
+                    color:"#fc4e2a"
 
                 }]
             });
-                */
+                
         },
 
 
