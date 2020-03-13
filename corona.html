@@ -1055,7 +1055,7 @@
     let totalConfirmed_China=0;
     let totalConfirmed_Canada=0;
     let totalConfirmed_Aus=0;
-
+    //in order to find daily change %
     let totalConfirmed_US_OneDayAgo=0;
     let totalConfirmed_China_OneDayAgo=0;
     let totalConfirmed_Canada_OneDayAgo=0;
@@ -1066,6 +1066,7 @@
         complete: function(results) {
             //select the latest column
             let lastCol=results.data[1].length-1;
+            //select the column before the latest to use its data in daily % change calc
             let last2Col=results.data[1].length-2;
             //find the row where country name is either "US","China","Canada" or "Australia"
             //and add the corresponding value to the total sum of that country
@@ -1117,7 +1118,7 @@
             //console.log(confirmedValues_OneDayAgo)
             //console.log(confirmedValues)
             let percentChangeDailyArray=[]
-
+            //calculate daily change compared to data from the day before
             function DailyChange(){
             for (n = 0; n < confirmedValues.length; n++) {
                     let perc= Math.round((confirmedValues[n]-confirmedValues_OneDayAgo[n])*100/confirmedValues_OneDayAgo[n])
@@ -1137,22 +1138,22 @@
             //console.log(percentChangeDailyArray)
 
             //zip values from both lists
-            var k = confirmedLabels.map(function(e, i) {
+            var zippedPercDailyChange = confirmedLabels.map(function(e, i) {
                 return [e, percentChangeDailyArray[i]];
             });
-            //sort by country names
-            k.sort(function(a,b){return b[1]-a[1];});
-            //console.log(k)
+            //sort descending percent change
+            zippedPercDailyChange.sort(function(a,b){return b[1]-a[1];});
+            //console.log(zipped)
 
              let newCases=[]
-
+            //finding countries with the first ever cases
             function SelectNewCases(){
 
-                for (p=0; p<k.length; p++) {
+                for (p=0; p<zippedPercDailyChange.length; p++) {
 
-                    if (k[p][1]=="First Case") {
+                    if (zippedPercDailyChange[p][1]=="First Case") {
 
-                        newCases.push(k[p][0])
+                        newCases.push(zippedPercDailyChange[p][0])
 
                     }
 
@@ -1160,12 +1161,15 @@
 
             }
             SelectNewCases()
+
+            //slice countries with the top five % daily change from top
             let topFive=[]
             function selectTopFive() {
-                topFive=k.slice(1,6)
+                topFive=zippedPercDailyChange.slice(1,6)
             }
             selectTopFive()
 
+            //put them in a format that will be displayed properly to the user
             var topFiveString="";
             function createString(){
                 for (v=0;v<topFive.length;v++){
@@ -1178,6 +1182,7 @@
             createString()
             //console.log(topFiveString)
 
+            //push the values the document
             document.getElementById("firstCases").innerHTML="<b>Countries that most recently announced the first confirmed cases within their borders:</b> "+"</br>"+newCases
 
             document.getElementById("topFive").innerHTML="<b>Countries with the Highest Daily Change %: </b> "+"</br>"+topFiveString
@@ -1188,7 +1193,7 @@
                 return [e, confirmedValues[i]];
             });
             //sort by country names
-            c.sort();
+            c.sort(function(a,b){return b[1]-a[1];});
             //console.log(c)
 
             //create new lists to separate and store the sorted data
