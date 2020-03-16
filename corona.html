@@ -7,7 +7,7 @@
     <!--metda data-->
     <meta name="description" content="coronavirus, corona, COVID-19, china, wuhan, virus, novel, new, map, interactive map, death, infection, disease, outbreak, global map, spread, track, people, sick"/>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-        <!-- Global site tag (gtag.js) - Google Analytics -->
+       <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-57534785-2"></script>
   <script>
       window.dataLayer = window.dataLayer || [];
@@ -1286,11 +1286,15 @@
 
                 function separateValues() {
                     for (n = 0; n < c.length; n++) {
+                        if (c [n][1]!=0) {
                         sortedConfirmedLabels.push(c[n][0])
                     }
+                }
 
                     for (n = 0; n < c.length; n++) {
+                        if (c[n][1]!=0) {
                         sortedConfirmedValues.push(c[n][1])
+                    }
                     }
                 }
 
