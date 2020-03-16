@@ -19,7 +19,7 @@
     <!--Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Spartan&display=swap" rel="stylesheet">
-
+    
     <!--leaflet style-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
           integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
@@ -356,7 +356,6 @@
             </div>
 
 
-
             <div class="firstDeathsInfo">
                 <h6 id="firstDeath"></h6>
             </div>
@@ -367,7 +366,6 @@
                 <h6 id="topFiveDeath"></h6>
 
             </div>
-
 
 
 
@@ -1370,6 +1368,84 @@
                 selectTopTen()
 
 
+            /*console.log(confirmedLabels)
+            console.log(confirmedValues)
+            console.log(confirmedValues_OneDayAgo)*/
+            
+            //zip values from both lists
+             var c = confirmedLabels.map(function(e, i) {
+                return [e, confirmedValues[i]];
+            });
+            //sort descending
+            c.sort(function(a,b){return b[1]-a[1];});
+
+            //zip values from both lists
+            var cYes = confirmedLabels.map(function(e, i) {
+                return [e, confirmedValues_OneDayAgo[i]];
+            });
+            //sort descending
+            cYes.sort(function(a,b){return b[1]-a[1];});
+            
+           
+            //create new lists to separate and store the sorted data
+            sortedConfirmedLabels=[];
+            sortedConfirmedValues=[];
+            
+            function separateValues() {
+                for (n = 0; n < c.length; n++) {
+                    sortedConfirmedLabels.push(c[n][0])
+                }
+
+                for (n = 0; n < c.length; n++) {
+                    sortedConfirmedValues.push(c[n][1])
+                }
+            }
+            
+            separateValues()
+           
+            //console.log(sortedConfirmedValues)
+
+            //all total confirmed regardless of country
+            
+            function totalGlobal_Confirmed() {
+               
+                for (n = 0; n < c.length; n++) {
+                    worldTotal_Confirmed+=c[n][1]
+            }
+                
+            return worldTotal_Confirmed
+            }
+            totalGlobal_Confirmed()
+            //console.log(worldTotal_Confirmed)
+            //splitting the number visually from 1000's
+            partsOfValue=[]
+            while (worldTotal_Confirmed>1000) {
+                worldTotal_Confirmed=worldTotal_Confirmed/1000
+                partsOfValue.push(Math.floor(1000*((worldTotal_Confirmed) - Math.floor(worldTotal_Confirmed))))
+
+                if (worldTotal_Confirmed<1000) {
+                    partsOfValue.push(Math.floor(1000*(worldTotal_Confirmed/1000)))
+                }
+                
+            }
+            partsOfValue.reverse()
+            
+
+           let worldTotal_Confirmed_String="";
+           //console.log(partsOfValue.length)
+            function stringCreate() {
+               for (m=0; m<partsOfValue.length; m++){
+                worldTotal_Confirmed_String=worldTotal_Confirmed_String+" "+partsOfValue[m]
+                //console.log(worldTotal_Confirmed_String)
+           }
+           return worldTotal_Confirmed_String
+           }
+           stringCreate();
+          //console.log(worldTotal_Confirmed_String)
+
+
+           document.getElementById("totalConfirmed").innerHTML="<b>Total Confirmed Cases:</b> "+worldTotal_Confirmed_String
+
 
                 let topTenDiffString="";
                 for (i=0;i<topTenDifference.length;i++){
@@ -1385,6 +1461,19 @@
                 //push the values the document
                 document.getElementById("caseIncrease").innerHTML="<b>Top 10 countries with the highest daily increase in number of persons infected:</b> "+"</br>"+topTenDiffString
 
+            let changeDailyArray=[]
+            //calculate daily change compared to data from the day before
+            function dailyChangeNumber(){
+            for (n = 0; n < confirmedValues.length; n++) {
+                    let difference= confirmedValues[n]-confirmedValues_OneDayAgo[n]
+                    
+                    changeDailyArray.push(difference)
+                    
+                     
+                }
+            }
+
+            dailyChangeNumber();
 
                 //zip values from both lists perc change and labels
                 var zippedPercDailyChange = confirmedLabels.map(function(e, i) {
@@ -2193,9 +2282,7 @@
         });
 
 
-
     };
-
 
 
 </script>
