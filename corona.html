@@ -1494,7 +1494,7 @@
      
                      separateValues()
      
-                     //console.log(sortedConfirmedValues)
+                  
      
                      //all total confirmed regardless of country
      
@@ -1507,7 +1507,7 @@
                          return worldTotal_Confirmed
                      }
                      totalGlobal_Confirmed()
-                     //console.log(worldTotal_Confirmed)
+                    
      
                      //number to string with comma separation
                      function numberWithCommas(x) {
@@ -1623,7 +1623,7 @@
                          newCases.push("N/A for today")
                      }
      
-                     //console.log(newCases)
+                   
                      let newCasesString="";
                      function newCasesToString(){
                          for (i=0; i<newCases.length;i++){
@@ -1637,7 +1637,7 @@
                          }
                      }
                      newCasesToString()
-                     //console.log(newCasesString)
+                    
                      //slice countries with the top five % daily change from top
                      let topFive=[]
                      function selectTopFive() {
@@ -2208,8 +2208,7 @@
      
              separateValues()
      
-             //console.log(sortedDeathsValues)
-     
+             
              //all total deaths regardless of country
      
              function totalGlobal_Deaths() {
@@ -2221,7 +2220,7 @@
                  return worldTotal_Deaths
              }
              totalGlobal_Deaths()
-             //console.log(worldTotal_Deaths)
+   
      
              //number to string with comma separation
              function numberWithCommas(x) {
@@ -2237,19 +2236,23 @@
              let percentChangeDailyArray=[]
              //calculate daily change compared to data from the day before
              function DailyChange(){
-                 for (n = 0; n < deathsValues.length; n++) {
-                     let perc= Math.round((deathsValues[n]-deathsValues_OneDayAgo[n])*100/deathsValues_OneDayAgo[n])
-                     if (perc==Infinity) {
-                         percentChangeDailyArray.push("First Case")
-                     }
-                     else {
-                         percentChangeDailyArray.push(perc)
-                     }
-                 }
-             }
+                      for (n = 0; n < deathsValues.length; n++) {
+                          let perc= Math.round((deathsValues[n]-deathsValues_OneDayAgo[n])*100/deathsValues_OneDayAgo[n])
+                          if (perc==Infinity) {
+                              percentChangeDailyArray.push("First Death")
+                          }
+                          else if (Number.isNaN(perc)) {
+                              percentChangeDailyArray.push(0)
+                          } else {
+                              percentChangeDailyArray.push(perc)
+                          }
+                      }
+                  }
+
      
      
              DailyChange();
+          
      
              let changeDailyArray=[]
              //calculate daily change compared to data from the day before
@@ -2332,12 +2335,13 @@
      
              }
              SelectNewCases()
+         
              //if there is no new country
              if (newCases.length==0) {
                  newCases.push("N/A for today")
              }
      
-             //console.log(newCases)
+           
              let newCasesString="";
              function newCasesToString(){
                  for (i=0; i<newCases.length;i++){
@@ -2351,7 +2355,7 @@
                  }
              }
              newCasesToString()
-             //console.log(newCasesString)
+           
              //slice countries with the top five % daily change from top
              let topFive=[]
              function selectTopFive() {
@@ -2363,7 +2367,7 @@
      
              let toDeaths=[]
              for (i=0;i<topFive.length;i++){
-                 if (topFive[i][0]!="Denmark" && topFive[i][0]!="France" && topFive[i][0]!="United Kingdom") {
+                 if (topFive[i][0]!="Denmark" && topFive[i][0]!="France" && topFive[i][0]!="United Kingdom" && topFive[i][0]!="Netherlands") {
                      for(n=0;n<c.length;n++){
                          if(topFive[i][0]==c[n][0]){
                              toDeaths.push(c[n][1])
@@ -2385,7 +2389,7 @@
              //find the yesterday's deaths for corresponding country from the topFive list
              let fromDeaths=[]
              for (i=0;i<topFive.length;i++){
-                 if (topFive[i][0]!="Denmark" && topFive[i][0]!="France" && topFive[i][0]!="United Kingdom") {
+                 if (topFive[i][0]!="Denmark" && topFive[i][0]!="France" && topFive[i][0]!="United Kingdom" && topFive[i][0]!="Netherlands") {
                      for(n=0;n<cYes.length;n++){
                          if(topFive[i][0]==cYes[n][0]){
                              fromDeaths.push(cYes[n][1])
@@ -2421,7 +2425,7 @@
              //push the values the document
              document.getElementById("firstDeath").innerHTML="<b>Countries that most recently announced the first deaths cases within their borders:</b> "+"</br>"+newCasesString
      
-             document.getElementById("topFiveDeath").innerHTML="<b>Countries with the highest daily % change in deaths cases: </b> "+"</br>"+topFiveString
+             document.getElementById("topFiveDeath").innerHTML="<b>Countries with the highest daily % change in deaths: </b> "+"</br>"+topFiveString
      
      
              Highcharts.chart('containerBarDeaths', {
@@ -2778,8 +2782,7 @@
      
                      separateValues()
      
-                     //console.log(sortedRecoveredValues)
-     
+                    
                      //all total recovered regardless of country
      
                      function totalGlobal_Recovered() {
@@ -2791,7 +2794,7 @@
                          return worldTotal_Recovered
                      }
                      totalGlobal_Recovered()
-                     //console.log(worldTotal_Recovered)
+                     
      
                      //number to string with comma separation
                      function numberWithCommas(x) {
@@ -2907,7 +2910,7 @@
                          newCases.push("N/A for today")
                      }
      
-                     //console.log(newCases)
+                
                      let newCasesString="";
                      function newCasesToString(){
                          for (i=0; i<newCases.length;i++){
@@ -2921,7 +2924,7 @@
                          }
                      }
                      newCasesToString()
-                     //console.log(newCasesString)
+                 
                      //slice countries with the top five % daily change from top
                      let topFive=[]
                      function selectTopFive() {
