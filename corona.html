@@ -1335,6 +1335,19 @@
                           confirmedValues.push(nmbr);
                           confirmedValues_OneDayAgo.push(nmbr_OneDayAgo)
                       }
+                      else if (results.data[i][1]=="Denmark" ){
+                          confirmedLabels_StatesAndOverseas.push(results.data[i][0])
+                          
+                          var nmbr=parseInt(results.data[i][lastCol]);
+                          var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
+  
+                          confirmedValues_StatesAndOverseas.push(nmbr)
+                          confirmedValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
+  
+                          confirmedLabels.push(results.data[i][0])
+                          confirmedValues.push(nmbr);
+                          confirmedValues_OneDayAgo.push(nmbr_OneDayAgo)
+                      }
                           //except US,China,Canada and Australia. Push the country name to the labels list
                       //and push the corresponding value to the values list
                       else if (results.data[i][1]!="US" || results.data[i][1]!="Mainland China"|| results.data[i][1]!="China"
@@ -1605,7 +1618,9 @@
                               (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="Canada") &&
                               (zippedPercDailyChange[p][1]=="First Case"  && zippedPercDailyChange[p][0]!="Australia")
                               && (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="France")
-                              && (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="United Kingdom" )) {
+                              && (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="United Kingdom" )
+                              && (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="Netherlands" )
+                              && (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="Denmark" )) {
   
                               newCases.push(zippedPercDailyChange[p][0])
   
@@ -1649,7 +1664,7 @@
   
                   let toConfirmed=[]
                   for (i=0;i<topFive.length;i++){
-                      if (topFive[i][0]!="Denmark" && topFive[i][0]!="France" && topFive[i][0]!="United Kingdom") {
+                      if (topFive[i][0]!="Denmark" && topFive[i][0]!="France" && topFive[i][0]!="United Kingdom" && topFive[i][0]!="Netherlands") {
                           for(n=0;n<c.length;n++){
                               if(topFive[i][0]==c[n][0]){
                                   toConfirmed.push(c[n][1])
@@ -1671,7 +1686,7 @@
                   //find the yesterday's deaths for corresponding country from the topFive list
                   let fromConfirmed=[]
                   for (i=0;i<topFive.length;i++){
-                      if (topFive[i][0]!="Denmark" && topFive[i][0]!="France" && topFive[i][0]!="United Kingdom") {
+                      if (topFive[i][0]!="Denmark" && topFive[i][0]!="France" && topFive[i][0]!="United Kingdom" && topFive[i][0]!="Netherlands") {
                           for(n=0;n<cYes.length;n++){
                               if(topFive[i][0]==cYes[n][0]){
                                   fromConfirmed.push(cYes[n][1])
@@ -2050,6 +2065,19 @@
                   deathsValues.push(nmbr);
                   deathsValues_OneDayAgo.push(nmbr_OneDayAgo)
               }
+              else if (results.data[i][1]=="Denmark" ){
+                  deathsLabels_StatesAndOverseas.push(results.data[i][0])
+             
+                  var nmbr=parseInt(results.data[i][lastCol]);
+                  var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
+  
+                  deathsValues_StatesAndOverseas.push(nmbr)
+                  deathsValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
+  
+                  deathsLabels.push(results.data[i][0])
+                  deathsValues.push(nmbr);
+                  deathsValues_OneDayAgo.push(nmbr_OneDayAgo)
+              }
                   //except US,China,Canada and Australia. Push the country name to the labels list
               //and push the corresponding value to the values list
               else if (results.data[i][1]!="US" || results.data[i][1]!="Mainland China"|| results.data[i][1]!="China"
@@ -2322,7 +2350,9 @@
                       (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="Canada") &&
                       (zippedPercDailyChange[p][1]=="First Case"  && zippedPercDailyChange[p][0]!="Australia")
                       && (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="France")
-                      && (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="United Kingdom" )) {
+                      && (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="United Kingdom" )
+                      && (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="Netherlands" )
+                      && (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="Denmark" )) {
   
                       newCases.push(zippedPercDailyChange[p][0])
   
@@ -2708,6 +2738,31 @@
                           recoveredLabels.push(results.data[i][0])
                           recoveredValues.push(nmbr);
                           recoveredValues_OneDayAgo.push(nmbr_OneDayAgo)
+                      } else if (results.data[i][1]=="Netherlands" ){
+                          recoveredLabels_StatesAndOverseas.push(results.data[i][0])
+  
+                          var nmbr=parseInt(results.data[i][lastCol]);
+                          var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
+  
+                          recoveredValues_StatesAndOverseas.push(nmbr)
+                          recoveredValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
+  
+                          recoveredLabels.push(results.data[i][0])
+                          recoveredValues.push(nmbr);
+                          recoveredValues_OneDayAgo.push(nmbr_OneDayAgo)
+                      }
+                      else if (results.data[i][1]=="Denmark" ){
+                          recoveredLabels_StatesAndOverseas.push(results.data[i][0])
+  
+                          var nmbr=parseInt(results.data[i][lastCol]);
+                          var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
+  
+                          recoveredValues_StatesAndOverseas.push(nmbr)
+                          recoveredValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
+  
+                          recoveredLabels.push(results.data[i][0])
+                          recoveredValues.push(nmbr);
+                          recoveredValues_OneDayAgo.push(nmbr_OneDayAgo)
                       }
                           //except US,China,Canada and Australia. Push the country name to the labels list
                       //and push the corresponding value to the values list
@@ -2892,7 +2947,9 @@
                               (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="Canada") &&
                               (zippedPercDailyChange[p][1]=="First Case"  && zippedPercDailyChange[p][0]!="Australia")
                               && (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="France")
-                              && (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="United Kingdom" )) {
+                              && (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="United Kingdom" )
+                              && (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="Netherlands" )
+                              && (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="Denmark" )) {
   
                               newCases.push(zippedPercDailyChange[p][0])
   
@@ -2936,7 +2993,7 @@
   
                   let toRecovered=[]
                   for (i=0;i<topFive.length;i++){
-                      if (topFive[i][0]!="Denmark" && topFive[i][0]!="France" && topFive[i][0]!="United Kingdom") {
+                      if (topFive[i][0]!="Denmark" && topFive[i][0]!="France" && topFive[i][0]!="United Kingdom" && topFive[i][0]!="Netherlands") {
                           for(n=0;n<c.length;n++){
                               if(topFive[i][0]==c[n][0]){
                                   toRecovered.push(c[n][1])
@@ -2958,7 +3015,7 @@
                   //find the yesterday's recovered for corresponding country from the topFive list
                   let fromRecovered=[]
                   for (i=0;i<topFive.length;i++){
-                      if (topFive[i][0]!="Denmark" && topFive[i][0]!="France" && topFive[i][0]!="United Kingdom") {
+                      if (topFive[i][0]!="Denmark" && topFive[i][0]!="France" && topFive[i][0]!="United Kingdom" && topFive[i][0]!="Netherlands") {
                           for(n=0;n<cYes.length;n++){
                               if(topFive[i][0]==cYes[n][0]){
                                   fromRecovered.push(cYes[n][1])
