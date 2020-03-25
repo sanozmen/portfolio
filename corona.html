@@ -349,7 +349,11 @@
               </h1>
   
               <p class="lorem" style="margin-top:20px">Click either "X" on top left corner or  <i class="fas fa-caret-right"></i> symbol on top right corner to hide the pane and see the map.</p>
-  
+              
+
+              <p class="lorem" style="margin-top:20px">Recovered dataset is not being updated by the source. Whenever they upload a new dataset, it is going to be incorporated into the site.</p>
+
+
               <h4 style="margin-bottom:10px; font-family:'Ubuntu', sans-serif; font-weight: bold;">Global Coronavirus Map</br>(Updated Daily)</h4>
               <div class="upperInfo">
                   <h5 id="totalConfirmed"></h5>
@@ -1008,8 +1012,8 @@
           });
   
           /*csv resources called and assigned to a variable*/
-          let confirmed= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv',null,confirmedLayer);
-          let deaths= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv',null,deathsLayer);
+          let confirmed= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv',null,confirmedLayer);
+          let deaths= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv',null,deathsLayer);
           let recovered= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv',null,recoveredLayer);
   
           confirmed.addTo(map);
@@ -1211,7 +1215,7 @@
           let totalConfirmed_Canada_OneDayAgo=0;
           let totalConfirmed_Aus_OneDayAgo=0;
           //putting confirmed cases into array format, into the empty arrays defined above
-          Papa.parse("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv", {
+          Papa.parse("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv", {
               download: true,
               dynamicTyping: true,
               complete: function(results) {
@@ -1229,10 +1233,10 @@
                           confirmedLabels_StatesAndOverseas.push(results.data[i][0])
                           timeSeriesConfirmed_US.push((results.data[i]))
                       
-  
-                          var nmbr=parseInt(results.data[i][lastCol]);
-                          var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
-  
+                        
+                          var nmbr=results.data[i][lastCol];
+                          var nmbr_OneDayAgo=results.data[i][last2Col];
+                        
                           confirmedValues_StatesAndOverseas.push(nmbr)
                           confirmedValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
   
@@ -1244,8 +1248,8 @@
   
                           timeSeriesConfirmed_China.push((results.data[i]))
   
-                          var nmbr=parseInt(results.data[i][lastCol]);
-                          var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
+                          var nmbr=results.data[i][lastCol];
+                          var nmbr_OneDayAgo=results.data[i][last2Col];
   
                           confirmedValues_StatesAndOverseas.push(nmbr)
                           confirmedValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
@@ -1257,8 +1261,8 @@
                           confirmedLabels_StatesAndOverseas.push(results.data[i][0])
                           timeSeriesConfirmed_Canada.push((results.data[i]))
   
-                          var nmbr=parseInt(results.data[i][lastCol]);
-                          var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
+                          var nmbr=results.data[i][lastCol];
+                          var nmbr_OneDayAgo=results.data[i][last2Col];
   
                           confirmedValues_StatesAndOverseas.push(nmbr)
                           confirmedValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
@@ -1270,8 +1274,8 @@
                           confirmedLabels_StatesAndOverseas.push(results.data[i][0])
                           timeSeriesConfirmed_Australia.push((results.data[i]))
   
-                          var nmbr=parseInt(results.data[i][lastCol]);
-                          var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
+                          var nmbr=results.data[i][lastCol];
+                          var nmbr_OneDayAgo=results.data[i][last2Col];
   
                           confirmedValues_StatesAndOverseas.push(nmbr)
                           confirmedValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
@@ -1279,82 +1283,102 @@
                           totalConfirmed_Aus=totalConfirmed_Aus + nmbr
                           totalConfirmed_Aus_OneDayAgo+=nmbr_OneDayAgo
                       }
-                      else if (results.data[i][1]=="France"){
-                          confirmedLabels_StatesAndOverseas.push(results.data[i][0])
-                          //if first column is also france push all columns to time series array
-                          if (results.data[i][0]=="France") {
+                      else if (results.data[i][1]==="France"){
+                        var nmbr=results.data[i][lastCol];
+                       var nmbr_OneDayAgo=results.data[i][last2Col];
+
+                        if (results.data[i][0]===null) {
+                          confirmedLabels_StatesAndOverseas.push(results.data[i][1])
+                          confirmedLabels.push(results.data[i][1])
                           timeSeriesConfirmed_France.push(results.data[i].slice(4,lastCol+1))
-                          
-                          }
-                         
-                          var nmbr=parseInt(results.data[i][lastCol]);
-                          var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
-  
-                          confirmedValues_StatesAndOverseas.push(nmbr)
-                          confirmedValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
-  
-                          confirmedLabels.push(results.data[i][0])
-                          confirmedValues.push(nmbr);
-                          confirmedValues_OneDayAgo.push(nmbr_OneDayAgo)
-                      }
-                      else if (results.data[i][1]=="Netherlands"){
-                          confirmedLabels_StatesAndOverseas.push(results.data[i][0])
-                          //if first column is also france push all columns to time series array
-                          if (results.data[i][0]=="Netherlands") {
+                          } else {
+                            confirmedLabels.push(results.data[i][0])
+                            confirmedLabels_StatesAndOverseas.push(results.data[i][0])
+                          }              
+                      
+                       
+
+                       confirmedValues_StatesAndOverseas.push(nmbr)
+                       confirmedValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
+
+                       
+                       confirmedValues.push(nmbr);
+                       confirmedValues_OneDayAgo.push(nmbr_OneDayAgo)
+                   }
+                     else if (results.data[i][1]==="Netherlands"){
+                        var nmbr=results.data[i][lastCol];
+                       var nmbr_OneDayAgo=results.data[i][last2Col];
+                       
+                        if (results.data[i][0]===null) {
+                          confirmedLabels_StatesAndOverseas.push(results.data[i][1])
+                          confirmedLabels.push(results.data[i][1])
                           timeSeriesConfirmed_NL.push(results.data[i].slice(4,lastCol+1))
-                          
-                          }
-                         
-                          var nmbr=parseInt(results.data[i][lastCol]);
-                          var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
-  
-                          confirmedValues_StatesAndOverseas.push(nmbr)
-                          confirmedValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
-  
-                          confirmedLabels.push(results.data[i][0])
-                          confirmedValues.push(nmbr);
-                          confirmedValues_OneDayAgo.push(nmbr_OneDayAgo)
-                      }
-                      else if (results.data[i][1]=="United Kingdom" ){
-                          confirmedLabels_StatesAndOverseas.push(results.data[i][0])
-  
-                          //if first column is also uk push all columns to time series array
-                          if (results.data[i][0]=="United Kingdom") {
-                          timeSeriesConfirmed_UK.push((results.data[i].slice(4,lastCol+1)))
-                          
-                          }
-  
-                          
-                          var nmbr=parseInt(results.data[i][lastCol]);
-                          var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
-  
-                          confirmedValues_StatesAndOverseas.push(nmbr)
-                          confirmedValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
-  
-                          confirmedLabels.push(results.data[i][0])
-                          confirmedValues.push(nmbr);
-                          confirmedValues_OneDayAgo.push(nmbr_OneDayAgo)
-                      }
-                      else if (results.data[i][1]=="Denmark" ){
-                          confirmedLabels_StatesAndOverseas.push(results.data[i][0])
-                          
-                          var nmbr=parseInt(results.data[i][lastCol]);
-                          var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
-  
-                          confirmedValues_StatesAndOverseas.push(nmbr)
-                          confirmedValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
-  
-                          confirmedLabels.push(results.data[i][0])
-                          confirmedValues.push(nmbr);
-                          confirmedValues_OneDayAgo.push(nmbr_OneDayAgo)
-                      }
+                          } else {
+                            confirmedLabels.push(results.data[i][0])
+                            confirmedLabels_StatesAndOverseas.push(results.data[i][0])
+                          }              
+                      
+                       
+
+                       confirmedValues_StatesAndOverseas.push(nmbr)
+                       confirmedValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
+
+                       
+                       confirmedValues.push(nmbr);
+                       confirmedValues_OneDayAgo.push(nmbr_OneDayAgo)
+                   }
+                   else if (results.data[i][1]==="United Kingdom"){
+                        var nmbr=results.data[i][lastCol];
+                       var nmbr_OneDayAgo=results.data[i][last2Col];
+                       
+                        if (results.data[i][0]===null) {
+                          confirmedLabels_StatesAndOverseas.push(results.data[i][1])
+                          confirmedLabels.push(results.data[i][1])
+                          timeSeriesConfirmed_UK.push(results.data[i].slice(4,lastCol+1))
+                          } else {
+                            confirmedLabels.push(results.data[i][0])
+                            confirmedLabels_StatesAndOverseas.push(results.data[i][0])
+                          }              
+                      
+                       
+
+                       confirmedValues_StatesAndOverseas.push(nmbr)
+                       confirmedValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
+
+                       
+                       confirmedValues.push(nmbr);
+                       confirmedValues_OneDayAgo.push(nmbr_OneDayAgo)
+                   }
+                   else if (results.data[i][1]==="Denmark"){
+                        var nmbr=results.data[i][lastCol];
+                       var nmbr_OneDayAgo=results.data[i][last2Col];
+                       
+                        if (results.data[i][0]===null) {
+                          confirmedLabels_StatesAndOverseas.push(results.data[i][1])
+                          confirmedLabels.push(results.data[i][1])
+                       
+                          } else {
+                            confirmedLabels.push(results.data[i][0])
+                            confirmedLabels_StatesAndOverseas.push(results.data[i][0])
+                          }              
+                      
+                       
+
+                       confirmedValues_StatesAndOverseas.push(nmbr)
+                       confirmedValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
+
+                       
+                       confirmedValues.push(nmbr);
+                       confirmedValues_OneDayAgo.push(nmbr_OneDayAgo)
+                   }
                           //except US,China,Canada and Australia. Push the country name to the labels list
                       //and push the corresponding value to the values list
                       else if (results.data[i][1]!="US" || results.data[i][1]!="Mainland China"|| results.data[i][1]!="China"
-                          || results.data[i][1]!="Canada" || results.data[i][1]!="Australia" || results.data[i][1]!="France" || results.data[i][1]!="United Kingdom"  ){
-                          confirmedLabels_StatesAndOverseas.push(results.data[i][0])
-                          var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
-                          var nmbr=parseInt(results.data[i][lastCol]);
+                          || results.data[i][1]!="Canada" || results.data[i][1]!="Australia" || results.data[i][1]!="Denmark" || results.data[i][1]!="France" || results.data[i][1]!="United Kingdom" || 
+                          results.data[i][1]!="Netherlands" ){
+                          confirmedLabels_StatesAndOverseas.push(results.data[i][1])
+                          var nmbr_OneDayAgo=results.data[i][last2Col];
+                          var nmbr=results.data[i][lastCol];
                           confirmedValues_StatesAndOverseas.push(nmbr)
                           confirmedValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
   
@@ -1406,7 +1430,7 @@
                   confirmedValues.push(totalConfirmed_US,totalConfirmed_China, totalConfirmed_Canada, totalConfirmed_Aus);
                   confirmedValues_OneDayAgo.push(totalConfirmed_US_OneDayAgo,totalConfirmed_China_OneDayAgo,totalConfirmed_Canada_OneDayAgo,totalConfirmed_Aus_OneDayAgo)
                    
-  
+                console.log(timeSeriesConfirmed_France)
                   timeSeriesConfirmed_US_Total=[]
                   
                   for (i=4;i<timeSeriesConfirmed_US[0].length;i++){
@@ -1457,28 +1481,33 @@
                       
                   }
                   
-  
+                 
+                  
                   //zip values from both lists
-                  var cStatesOverSeas = confirmedLabels.map(function(e, i) {
+                  var cStatesOverSeas = confirmedLabels_StatesAndOverseas.map(function(e, i) {
                       return [e, confirmedValues_StatesAndOverseas[i]];
                   });
+                  console.log(cStatesOverSeas)
                   //sort descending
-                  cStatesOverSeas.sort(function(a,b){return b[1]-a[1];});
+                  cStatesOverSeas.sort(function(a,b){return b[1]-a[1]})
+                  
+                 
   
                   //zip values from both lists
-                  var cStatesOverSeas_OneDayAgo = confirmedLabels.map(function(e, i) {
+                  var cStatesOverSeas_OneDayAgo = confirmedLabels_StatesAndOverseas.map(function(e, i) {
                       return [e, confirmedValues_StatesAndOverseas_OneDayAgo[i]];
                   });
                   //sort descending
                   cStatesOverSeas_OneDayAgo.sort(function(a,b){return b[1]-a[1];});
   
-  
+                  console.log(confirmedLabels)
                   var c = confirmedLabels.map(function(e, i) {
                       return [e, confirmedValues[i]];
                   });
                   //sort descending
                   c.sort(function(a,b){return b[1]-a[1];});
-  
+
+                  
                   //zip values from both lists
                   var cYes = confirmedLabels.map(function(e, i) {
                       return [e, confirmedValues_OneDayAgo[i]];
@@ -1507,19 +1536,21 @@
   
                   separateValues()
   
-               
-  
                   //all total confirmed regardless of country
   
                   function totalGlobal_Confirmed() {
   
                       for (n = 0; n < c.length; n++) {
+                
                           worldTotal_Confirmed+=c[n][1]
+                          
                       }
   
                       return worldTotal_Confirmed
                   }
                   totalGlobal_Confirmed()
+
+                  
                  
   
                   //number to string with comma separation
@@ -1941,7 +1972,7 @@
   let totalDeaths_Canada_OneDayAgo=0;
   let totalDeaths_Aus_OneDayAgo=0;
   //putting deaths cases into array format, into the empty arrays defined above
-  Papa.parse("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv", {
+  Papa.parse("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv", {
       download: true,
       dynamicTyping: true,
       complete: function(results) {
@@ -2009,79 +2040,99 @@
                   totalDeaths_Aus=totalDeaths_Aus + nmbr
                   totalDeaths_Aus_OneDayAgo+=nmbr_OneDayAgo
               }
-              else if (results.data[i][1]=="France"){
-                  deathsLabels_StatesAndOverseas.push(results.data[i][0])
-                  //if first column is also france push all columns to time series array
-                  if (results.data[i][0]=="France") {
-                  timeSeriesDeaths_France.push(results.data[i].slice(4,lastCol+1))
-                  
-                  }
-                 
-                  var nmbr=parseInt(results.data[i][lastCol]);
-                  var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
-  
-                  deathsValues_StatesAndOverseas.push(nmbr)
-                  deathsValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
-  
-                  deathsLabels.push(results.data[i][0])
-                  deathsValues.push(nmbr);
-                  deathsValues_OneDayAgo.push(nmbr_OneDayAgo)
-              }
-              else if (results.data[i][1]=="Netherlands"){
-                  deathsLabels_StatesAndOverseas.push(results.data[i][0])
-                  //if first column is also france push all columns to time series array
-                  if (results.data[i][0]=="Netherlands") {
-                  timeSeriesDeaths_NL.push(results.data[i].slice(4,lastCol+1))
-                  
-                  }
-                 
-                  var nmbr=parseInt(results.data[i][lastCol]);
-                  var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
-  
-                  deathsValues_StatesAndOverseas.push(nmbr)
-                  deathsValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
-  
-                  deathsLabels.push(results.data[i][0])
-                  deathsValues.push(nmbr);
-                  deathsValues_OneDayAgo.push(nmbr_OneDayAgo)
-              }
-              else if (results.data[i][1]=="United Kingdom" ){
-                  deathsLabels_StatesAndOverseas.push(results.data[i][0])
-  
-                  //if first column is also uk push all columns to time series array
-                  if (results.data[i][0]=="United Kingdom") {
-                  timeSeriesDeaths_UK.push((results.data[i].slice(4,lastCol+1)))
-                  
-                  }
-  
-                  
-                  var nmbr=parseInt(results.data[i][lastCol]);
-                  var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
-  
-                  deathsValues_StatesAndOverseas.push(nmbr)
-                  deathsValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
-  
-                  deathsLabels.push(results.data[i][0])
-                  deathsValues.push(nmbr);
-                  deathsValues_OneDayAgo.push(nmbr_OneDayAgo)
-              }
-              else if (results.data[i][1]=="Denmark" ){
-                  deathsLabels_StatesAndOverseas.push(results.data[i][0])
-             
-                  var nmbr=parseInt(results.data[i][lastCol]);
-                  var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
-  
-                  deathsValues_StatesAndOverseas.push(nmbr)
-                  deathsValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
-  
-                  deathsLabels.push(results.data[i][0])
-                  deathsValues.push(nmbr);
-                  deathsValues_OneDayAgo.push(nmbr_OneDayAgo)
-              }
+              else if (results.data[i][1]==="France"){
+                        var nmbr=results.data[i][lastCol];
+                       var nmbr_OneDayAgo=results.data[i][last2Col];
+                       
+                        if (results.data[i][0]===null) {
+                          deathsLabels_StatesAndOverseas.push(results.data[i][1])
+                          deathsLabels.push(results.data[i][1])
+                          timeSeriesDeaths_France.push(results.data[i].slice(4,lastCol+1))
+                          } else {
+                            deathsLabels.push(results.data[i][0])
+                            deathsLabels_StatesAndOverseas.push(results.data[i][0])
+                          }              
+                      
+                       
+
+                       deathsValues_StatesAndOverseas.push(nmbr)
+                       deathsValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
+
+                       
+                       deathsValues.push(nmbr);
+                       deathsValues_OneDayAgo.push(nmbr_OneDayAgo)
+                   }
+                   else if (results.data[i][1]==="Netherlands"){
+                        var nmbr=results.data[i][lastCol];
+                       var nmbr_OneDayAgo=results.data[i][last2Col];
+                       
+                        if (results.data[i][0]===null) {
+                          deathsLabels_StatesAndOverseas.push(results.data[i][1])
+                          deathsLabels.push(results.data[i][1])
+                          timeSeriesDeaths_NL.push(results.data[i].slice(4,lastCol+1))
+                          } else {
+                            deathsLabels.push(results.data[i][0])
+                            deathsLabels_StatesAndOverseas.push(results.data[i][0])
+                          }              
+                      
+                       
+
+                       deathsValues_StatesAndOverseas.push(nmbr)
+                       deathsValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
+
+                       
+                       deathsValues.push(nmbr);
+                       deathsValues_OneDayAgo.push(nmbr_OneDayAgo)
+                   }
+                   else if (results.data[i][1]==="United Kingdom"){
+                        var nmbr=results.data[i][lastCol];
+                       var nmbr_OneDayAgo=results.data[i][last2Col];
+                       
+                        if (results.data[i][0]===null) {
+                          deathsLabels_StatesAndOverseas.push(results.data[i][1])
+                          deathsLabels.push(results.data[i][1])
+                          timeSeriesDeaths_UK.push(results.data[i].slice(4,lastCol+1))
+                          } else {
+                            deathsLabels.push(results.data[i][0])
+                            deathsLabels_StatesAndOverseas.push(results.data[i][0])
+                          }              
+                      
+                       
+
+                       deathsValues_StatesAndOverseas.push(nmbr)
+                       deathsValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
+
+                       
+                       deathsValues.push(nmbr);
+                       deathsValues_OneDayAgo.push(nmbr_OneDayAgo)
+                   }
+                   else if (results.data[i][1]==="Denmark"){
+                        var nmbr=results.data[i][lastCol];
+                       var nmbr_OneDayAgo=results.data[i][last2Col];
+                       
+                        if (results.data[i][0]===null) {
+                          deathsLabels_StatesAndOverseas.push(results.data[i][1])
+                          deathsLabels.push(results.data[i][1])
+                         
+                          } else {
+                            deathsLabels.push(results.data[i][0])
+                            deathsLabels_StatesAndOverseas.push(results.data[i][0])
+                          }              
+                      
+                       
+
+                       deathsValues_StatesAndOverseas.push(nmbr)
+                       deathsValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
+
+                       
+                       deathsValues.push(nmbr);
+                       deathsValues_OneDayAgo.push(nmbr_OneDayAgo)
+                   }
                   //except US,China,Canada and Australia. Push the country name to the labels list
               //and push the corresponding value to the values list
               else if (results.data[i][1]!="US" || results.data[i][1]!="Mainland China"|| results.data[i][1]!="China"
-                  || results.data[i][1]!="Canada" || results.data[i][1]!="Australia" || results.data[i][1]!="France" || results.data[i][1]!="United Kingdom"  ){
+                  || results.data[i][1]!="Canada" || results.data[i][1]!="Australia" || results.data[i][1]!="France" || results.data[i][1]!="United Kingdom"
+                  || results.data[i][1]!="Denmark" || results.data[i][1]!="Netherlands"){
                   deathsLabels_StatesAndOverseas.push(results.data[i][0])
                   var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
                   var nmbr=parseInt(results.data[i][lastCol]);
