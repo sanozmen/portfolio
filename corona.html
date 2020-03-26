@@ -633,6 +633,7 @@
           in order to autmatically update data*/
           let d = new Date();
           let year=d.getFullYear();
+          year2000=year
           year=year-2000;
           let month=d.getMonth();
           month=month+1;
@@ -712,11 +713,14 @@
           /* string arguments to be used in geojson templates before using them as arguments for
           csv omnivore plugin*/
           let todayString=month+"/"+day+"/"+year;
+          let todayString2000=month+"/"+day+"/"+year2000;
           let yesterdayString=month+"/"+yesterday+"/"+year;
+          let yesterdayString2000=month+"/"+yesterday+"/"+year2000;
           let tDb_yesterdayString=month+"/"+tDb_Yesterday+"/"+year;
+          let tDb_yesterdayString2000=month+"/"+tDb_Yesterday+"/"+year2000;
   
           let country="Country/Region";
-  
+          console.log(todayString,todayString2000)
           /* first one, confirmed cases geojson custom layer*/
           let confirmedLayer = L.geoJson(null, {
               filter: function() {
@@ -916,101 +920,103 @@
               },
   
           });
+
+          console.log(todayString,yesterdayString,tDb_yesterdayString)
   
-          /*recovered, custom geojson layer*/
-          let recoveredLayer= L.geoJson(null, {
-              filter: function() {
-                  // no custom filter function but still keeping it
-                  return true;
-              },
-  
-              pointToLayer (feature, layer) {
-                  /*points to the layer with the latest day's data from the csv*/
-                  if (feature.properties[todayString]&&feature.properties[country]!="Iran (Islamic Republic of)" && feature.properties[country]!="Mainland China"&&feature.properties[country]!="Republic of Korea"&&feature.properties[country]!="Czech Republic"){
-                      if (feature.properties[todayString]<1000 && feature.properties[todayString]!=0){
-                          return L.circleMarker(layer, small_icon_r)
-                      }
-                      else if (feature.properties[todayString]>=1000 && feature.properties[todayString]<2000){
-                          return L.circleMarker(layer,medium_icon_r)
-                      }
-                      else if (feature.properties[todayString]>=2000){
-                          return L.circleMarker(layer,large_icon_r)
-                      }
-                  } else if (feature.properties[yesterdayString]&&feature.properties[country]!="Iran (Islamic Republic of)" && feature.properties[country]!="Mainland China"&&feature.properties[country]!="Republic of Korea"&&feature.properties[country]!="Czech Republic") {
-                      if (feature.properties[yesterdayString]<1000 && feature.properties[yesterdayString]!=0){
-                          return L.circleMarker(layer, small_icon_r)
-                      }
-                      else if (feature.properties[yesterdayString]>=1000 && feature.properties[yesterdayString]<2000){
-                          return L.circleMarker(layer,medium_icon_r)
-                      }
-                      else if (feature.properties[yesterdayString]>=2000){
-                          return L.circleMarker(layer,large_icon_r)
-                      }
-                  }
-                  else if (feature.properties[tDb_yesterdayString]&&feature.properties[country]!="Iran (Islamic Republic of)" && feature.properties[country]!="Mainland China"&&feature.properties[country]!="Republic of Korea"&&feature.properties[country]!="Czech Republic") {
-                      if (feature.properties[tDb_yesterdayString]<1000 && feature.properties[tDb_yesterdayString]!=0){
-                          return L.circleMarker(layer, small_icon_r)
-                      }
-                      else if (feature.properties[tDb_yesterdayString]>=1000 && feature.properties[tDb_yesterdayString]<2000){
-                          return L.circleMarker(layer,medium_icon_r)
-                      }
-                      else if (feature.properties[tDb_yesterdayString]>=2000){
-                          return L.circleMarker(layer,large_icon_r)
-                      }
-  
-                  }
-              },
-              onEachFeature (feature, layer) {
-                  /*popup content*/
-                  if (feature.properties[todayString]){
-                      var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
-                      layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
-                      /* for labels inside circles*/
-                      var text = L.tooltip({
-                          permanent: true,
-                          direction: 'center',
-                          className: 'text'
-                      })
-                          .setContent(feature.properties[todayString])
-                          .setLatLng(layer.getLatLng());
-                      layer.bindTooltip(text)
-  
-                  }
-                  else if (feature.properties[yesterdayString]){
-                      /*popup content*/
-                      var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
-                      layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
-                      /* for labels inside circles*/
-                      var text = L.tooltip({
-                          permanent: true,
-                          direction: 'center',
-                          className: 'text'
-                      })
-                          .setContent(feature.properties[yesterdayString])
-                          .setLatLng(layer.getLatLng());
-                      layer.bindTooltip(text)
-  
-                  }
-                  else {
-                      /*popup content*/
-                      var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered: </b>"+feature.properties[tDb_yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[tDb_yesterdayString];
-                      layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
-                      /* for labels inside circles*/
-                      var text = L.tooltip({
-                          permanent: true,
-                          direction: 'center',
-                          className: 'text'
-                      })
-                          .setContent(feature.properties[tDb_yesterdayString])
-                          .setLatLng(layer.getLatLng());
-                      layer.bindTooltip(text)
-                  }
-  
-  
-              },
-  
-          });
-  
+         /*recovered, custom geojson layer*/
+let recoveredLayer= L.geoJson(null, {
+    filter: function() {
+        // no custom filter function but still keeping it
+        return true;
+    },
+
+    pointToLayer (feature, layer) {
+        /*points to the layer with the latest day's data from the csv*/
+        if (feature.properties[todayString2000]&&feature.properties[country]!="Iran (Islamic Republic of)" && feature.properties[country]!="Mainland China"&&feature.properties[country]!="Republic of Korea"&&feature.properties[country]!="Czech Republic"){
+            if (feature.properties[todayString2000]<1000 && feature.properties[todayString2000]!=0){
+                return L.circleMarker(layer, small_icon_r)
+            }
+            else if (feature.properties[todayString2000]>=1000 && feature.properties[todayString2000]<2000){
+                return L.circleMarker(layer,medium_icon_r)
+            }
+            else if (feature.properties[todayString2000]>=2000){
+                return L.circleMarker(layer,large_icon_r)
+            }
+        } else if (feature.properties[yesterdayString2000]&&feature.properties[country]!="Iran (Islamic Republic of)" && feature.properties[country]!="Mainland China"&&feature.properties[country]!="Republic of Korea"&&feature.properties[country]!="Czech Republic") {
+            if (feature.properties[yesterdayString2000]<1000 && feature.properties[yesterdayString2000]!=0){
+                return L.circleMarker(layer, small_icon_r)
+            }
+            else if (feature.properties[yesterdayString2000]>=1000 && feature.properties[yesterdayString2000]<2000){
+                return L.circleMarker(layer,medium_icon_r)
+            }
+            else if (feature.properties[yesterdayString2000]>=2000){
+                return L.circleMarker(layer,large_icon_r)
+            }
+        }
+        else if (feature.properties[tDb_yesterdayString2000]&&feature.properties[country]!="Iran (Islamic Republic of)" && feature.properties[country]!="Mainland China"&&feature.properties[country]!="Republic of Korea"&&feature.properties[country]!="Czech Republic") {
+            if (feature.properties[tDb_yesterdayString2000]<1000 && feature.properties[tDb_yesterdayString2000]!=0){
+                return L.circleMarker(layer, small_icon_r)
+            }
+            else if (feature.properties[tDb_yesterdayString2000]>=1000 && feature.properties[tDb_yesterdayString2000]<2000){
+                return L.circleMarker(layer,medium_icon_r)
+            }
+            else if (feature.properties[tDb_yesterdayString2000]>=2000){
+                return L.circleMarker(layer,large_icon_r)
+            }
+
+        }
+    },
+    onEachFeature (feature, layer) {
+        /*popup content*/
+        if (feature.properties[todayString2000]){
+            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered: </b>"+feature.properties[todayString2000]+"<br>"+ "<b>Data Date: </b>"+[todayString2000];
+            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            /* for labels inside circles*/
+            var text = L.tooltip({
+                permanent: true,
+                direction: 'center',
+                className: 'text'
+            })
+                .setContent(feature.properties[todayString2000])
+                .setLatLng(layer.getLatLng());
+            layer.bindTooltip(text)
+
+        }
+        else if (feature.properties[yesterdayString2000]){
+            /*popup content*/
+            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered: </b>"+feature.properties[yesterdayString2000]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString2000];
+            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            /* for labels inside circles*/
+            var text = L.tooltip({
+                permanent: true,
+                direction: 'center',
+                className: 'text'
+            })
+                .setContent(feature.properties[yesterdayString2000])
+                .setLatLng(layer.getLatLng());
+            layer.bindTooltip(text)
+
+        }
+        else {
+            /*popup content*/
+            var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered: </b>"+feature.properties[tDb_yesterdayString2000]+"<br>"+ "<b>Data Date: </b>"+[tDb_yesterdayString2000];
+            layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
+            /* for labels inside circles*/
+            var text = L.tooltip({
+                permanent: true,
+                direction: 'center',
+                className: 'text'
+            })
+                .setContent(feature.properties[tDb_yesterdayString2000])
+                .setLatLng(layer.getLatLng());
+            layer.bindTooltip(text)
+        }
+
+
+    },
+
+});
+
           /*csv resources called and assigned to a variable*/
           let confirmed= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv',null,confirmedLayer);
           let deaths= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv',null,deathsLayer);
