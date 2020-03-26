@@ -1228,7 +1228,7 @@
                  
                   //find the row where country name is either "US","China","Canada" or "Australia"
                   //and add the corresponding value to the total sum of that country
-                  for (i=1; i< results.data.length; i++) {
+                  for (i=1; i< results.data.length-1; i++) {
                       if (results.data[i][1]=="US"){
                           confirmedLabels_StatesAndOverseas.push(results.data[i][0])
                           timeSeriesConfirmed_US.push((results.data[i]))
@@ -1985,7 +1985,7 @@
          
           //find the row where country name is either "US","China","Canada" or "Australia"
           //and add the corresponding value to the total sum of that country
-          for (i=1; i< results.data.length; i++) {
+          for (i=1; i< results.data.length-1; i++) {
               if (results.data[i][1]=="US"){
                   deathsLabels_StatesAndOverseas.push(results.data[i][0])
                   timeSeriesDeaths_US.push((results.data[i]))
