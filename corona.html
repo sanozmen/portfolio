@@ -922,7 +922,6 @@
   
           });
 
-          console.log(todayString,yesterdayString,tDb_yesterdayString)
   
          /*recovered, custom geojson layer*/
 let recoveredLayer= L.geoJson(null, {
@@ -1437,7 +1436,7 @@ let recoveredLayer= L.geoJson(null, {
                   confirmedValues.push(totalConfirmed_US,totalConfirmed_China, totalConfirmed_Canada, totalConfirmed_Aus);
                   confirmedValues_OneDayAgo.push(totalConfirmed_US_OneDayAgo,totalConfirmed_China_OneDayAgo,totalConfirmed_Canada_OneDayAgo,totalConfirmed_Aus_OneDayAgo)
                    
-                console.log(timeSeriesConfirmed_France)
+               
                   timeSeriesConfirmed_US_Total=[]
                   
                   for (i=4;i<timeSeriesConfirmed_US[0].length;i++){
@@ -1494,7 +1493,7 @@ let recoveredLayer= L.geoJson(null, {
                   var cStatesOverSeas = confirmedLabels_StatesAndOverseas.map(function(e, i) {
                       return [e, confirmedValues_StatesAndOverseas[i]];
                   });
-                  console.log(cStatesOverSeas)
+              
                   //sort descending
                   cStatesOverSeas.sort(function(a,b){return b[1]-a[1]})
                   
@@ -1507,7 +1506,6 @@ let recoveredLayer= L.geoJson(null, {
                   //sort descending
                   cStatesOverSeas_OneDayAgo.sort(function(a,b){return b[1]-a[1];});
   
-                  console.log(confirmedLabels)
                   var c = confirmedLabels.map(function(e, i) {
                       return [e, confirmedValues[i]];
                   });
@@ -1572,15 +1570,21 @@ let recoveredLayer= L.geoJson(null, {
   
   
                   let percentChangeDailyArray=[]
+                  let selectedConfirmedLabels=[]
+                  let newCasesArray=[]
+                  let newCasesLabelsArray=[]
                   //calculate daily change compared to data from the day before
                   function DailyChange(){
                       for (n = 0; n < confirmedValues.length; n++) {
+                          let diff=confirmedValues[n]-confirmedValues_OneDayAgo[n]
                           let perc= Math.round((confirmedValues[n]-confirmedValues_OneDayAgo[n])*100/confirmedValues_OneDayAgo[n])
                           if (perc==Infinity) {
-                              percentChangeDailyArray.push("First Case")
+                              newCasesArray.push("First Case")
+                              newCasesLabelsArray.push(confirmedLabels[n])
                           }
-                          else {
+                          else if (diff>100){
                               percentChangeDailyArray.push(perc)
+                              selectedConfirmedLabels.push(confirmedLabels[n])
                           }
                       }
                   }
@@ -1636,31 +1640,35 @@ let recoveredLayer= L.geoJson(null, {
   
   
                   //zip values from both lists perc change and labels
-                  var zippedPercDailyChange = confirmedLabels.map(function(e, i) {
+                  var zippedPercDailyChange = selectedConfirmedLabels.map(function(e, i) {
                       return [e, percentChangeDailyArray[i]];
                   });
                   //sort descending percent change
                   zippedPercDailyChange.sort(function(a,b){return b[1]-a[1];});
-  
-  
+                  console.log(zippedPercDailyChange)
+                  
+                  var zippedNewCasesAndLabels = newCasesLabelsArray.map(function(e, i) {
+                      return [e, newCasesArray[i]];
+                  });
+                  
   
                   let newCases=[]
                   //finding countries with the first ever cases
                   function SelectNewCases(){
   
-                      for (p=0; p<zippedPercDailyChange.length; p++) {
+                      for (p=0; p<zippedNewCasesAndLabels.length; p++) {
   
-                          if ((zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="US") &&
-                              (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="Mainland China")
-                              && (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="China") &&
-                              (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="Canada") &&
-                              (zippedPercDailyChange[p][1]=="First Case"  && zippedPercDailyChange[p][0]!="Australia")
-                              && (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="France")
-                              && (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="United Kingdom" )
-                              && (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="Netherlands" )
-                              && (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="Denmark" )) {
+                          if ((zippedNewCasesAndLabels[p][1]=="First Case" && zippedNewCasesAndLabels[p][0]!="US") &&
+                              (zippedNewCasesAndLabels[p][1]=="First Case" && zippedNewCasesAndLabels[p][0]!="Mainland China")
+                              && (zippedNewCasesAndLabels[p][1]=="First Case" && zippedNewCasesAndLabels[p][0]!="China") &&
+                              (zippedNewCasesAndLabels[p][1]=="First Case" && zippedNewCasesAndLabels[p][0]!="Canada") &&
+                              (zippedNewCasesAndLabels[p][1]=="First Case"  && zippedNewCasesAndLabels[p][0]!="Australia")
+                              && (zippedNewCasesAndLabels[p][1]=="First Case" && zippedNewCasesAndLabels[p][0]!="France")
+                              && (zippedNewCasesAndLabels[p][1]=="First Case" && zippedNewCasesAndLabels[p][0]!="United Kingdom" )
+                              && (zippedNewCasesAndLabels[p][1]=="First Case" && zippedNewCasesAndLabels[p][0]!="Netherlands" )
+                              && (zippedNewCasesAndLabels[p][1]=="First Case" && zippedNewCasesAndLabels[p][0]!="Denmark" )) {
   
-                              newCases.push(zippedPercDailyChange[p][0])
+                              newCases.push(zippedNewCasesAndLabels[p][0])
   
                           }
   
@@ -1760,7 +1768,7 @@ let recoveredLayer= L.geoJson(null, {
                   //push the values the document
                   document.getElementById("firstCases").innerHTML="<b>Countries that most recently announced the first confirmed cases within their borders:</b> "+"</br>"+newCasesString
   
-                  document.getElementById("topFive").innerHTML="<b>Countries with the highest daily % change in confirmed cases: </b> "+"</br>"+topFiveString
+                  document.getElementById("topFive").innerHTML="<b>Countries with the highest daily % change in confirmed cases (over 100 cases): </b> "+"</br>"+topFiveString
   
   
                   Highcharts.chart('containerBarConfirmed', {
@@ -2318,19 +2326,23 @@ let recoveredLayer= L.geoJson(null, {
   
           document.getElementById("totalDeaths").innerHTML="<b>Total Deaths:</b> "+worldTotal_Deaths_String
   
-  
+          
           let percentChangeDailyArray=[]
+          let selectedDeathLabels=[]
+          newCasesArray=[]
+          newCasesLabelsArray=[]
           //calculate daily change compared to data from the day before
           function DailyChange(){
                    for (n = 0; n < deathsValues.length; n++) {
+                       let diff=deathsValues[n]-deathsValues_OneDayAgo[n]
                        let perc= Math.round((deathsValues[n]-deathsValues_OneDayAgo[n])*100/deathsValues_OneDayAgo[n])
                        if (perc==Infinity) {
-                           percentChangeDailyArray.push("First Case")
-                       }
-                       else if (Number.isNaN(perc)) {
-                           percentChangeDailyArray.push(0)
-                       } else {
+                        newCasesArray.push("First Case")
+                        newCasesLabelsArray.push(confirmedLabels[n])
+                       
+                       } else if (diff>10){
                            percentChangeDailyArray.push(perc)
+                           selectedDeathLabels.push(deathsLabels[n])
                        }
                    }
                }
@@ -2339,7 +2351,7 @@ let recoveredLayer= L.geoJson(null, {
   
           DailyChange();
        
-  
+               console.log(selectedDeathLabels,percentChangeDailyArray)
           let changeDailyArray=[]
           //calculate daily change compared to data from the day before
           function dailyChangeNumber(){
@@ -2388,31 +2400,33 @@ let recoveredLayer= L.geoJson(null, {
   
   
           //zip values from both lists perc change and labels
-          var zippedPercDailyChange = deathsLabels.map(function(e, i) {
+          let zippedPercDailyChange = selectedDeathLabels.map(function(e, i) {
               return [e, percentChangeDailyArray[i]];
           });
           //sort descending percent change
           zippedPercDailyChange.sort(function(a,b){return b[1]-a[1];});
   
-  
+          let zippedNewCasesAndLabels = newCasesLabelsArray.map(function(e, i) {
+              return [e, newCasesArray[i]];
+          });
   
           let newCases=[]
           //finding countries with the first ever cases
           function SelectNewCases(){
   
-              for (p=0; p<zippedPercDailyChange.length; p++) {
+              for (p=0; p<zippedNewCasesAndLabels.length; p++) {
   
-                  if ((zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="US") &&
-                      (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="Mainland China")
-                      && (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="China") &&
-                      (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="Canada") &&
-                      (zippedPercDailyChange[p][1]=="First Case"  && zippedPercDailyChange[p][0]!="Australia")
-                      && (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="France")
-                      && (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="United Kingdom" )
-                      && (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="Netherlands" )
-                      && (zippedPercDailyChange[p][1]=="First Case" && zippedPercDailyChange[p][0]!="Denmark" )) {
+                  if ((zippedNewCasesAndLabels[p][1]=="First Case" && zippedNewCasesAndLabels[p][0]!="US") &&
+                      (zippedNewCasesAndLabels[p][1]=="First Case" && zippedNewCasesAndLabels[p][0]!="Mainland China")
+                      && (zippedNewCasesAndLabels[p][1]=="First Case" && zippedNewCasesAndLabels[p][0]!="China") &&
+                      (zippedNewCasesAndLabels[p][1]=="First Case" && zippedNewCasesAndLabels[p][0]!="Canada") &&
+                      (zippedNewCasesAndLabels[p][1]=="First Case"  && zippedNewCasesAndLabels[p][0]!="Australia")
+                      && (zippedNewCasesAndLabels[p][1]=="First Case" && zippedNewCasesAndLabels[p][0]!="France")
+                      && (zippedNewCasesAndLabels[p][1]=="First Case" && zippedNewCasesAndLabels[p][0]!="United Kingdom" )
+                      && (zippedNewCasesAndLabels[p][1]=="First Case" && zippedNewCasesAndLabels[p][0]!="Netherlands" )
+                      && (zippedNewCasesAndLabels[p][1]=="First Case" && zippedNewCasesAndLabels[p][0]!="Denmark" )) {
   
-                      newCases.push(zippedPercDailyChange[p][0])
+                      newCases.push(zippedNewCasesAndLabels[p][0])
   
                   }
   
@@ -2513,7 +2527,7 @@ let recoveredLayer= L.geoJson(null, {
           //push the values the document
           document.getElementById("firstDeath").innerHTML="<b>Countries that most recently announced the first deaths within their borders:</b> "+"</br>"+newCasesString
   
-          document.getElementById("topFiveDeath").innerHTML="<b>Countries with the highest daily % change in deaths: </b> "+"</br>"+topFiveString
+          document.getElementById("topFiveDeath").innerHTML="<b>Countries with the highest daily % change in deaths (over 10 deaths): </b> "+"</br>"+topFiveString
   
   
           Highcharts.chart('containerBarDeaths', {
