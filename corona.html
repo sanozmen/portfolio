@@ -5,7 +5,7 @@
       <meta charset=utf-8 />
       <title>Coronavirus Map </title>
       <!--metda data-->
-      <meta name="description" content="coronavirus, corona, COVID-19, china, wuhan, virus, novel, new, map, interactive map, open source, death, infection, disease, outbreak, global map, spread, track, tracking, leaflet.js, dashboard, mapbox, arcgis, qgis, graph, data "/>
+      <meta name="description" content="coronavirus, corona, COVID-19, china, wuhan, virus, novel, new, map, interactive map, open source, death, infection, disease, outbreak, global map, spread, track, tracking, leaflet.js, dashboard, mapbox, arcgis, qgis, web map, GIS, graph, data "/>
       <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
              <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-57534785-2"></script>
@@ -359,6 +359,7 @@
   
               <h4 style="margin-bottom:10px; font-family:'Ubuntu', sans-serif; font-weight: bold;">Global Coronavirus Map</br>(Updated Daily)</h4>
               <div class="upperInfo">
+                <h6 id="dataDate"></h6>
                   <h5 id="totalConfirmed"></h5>
                   <h5 id="totalDeaths"></h5>
                   <h5 id="totalRecovered"></h5>
@@ -1239,7 +1240,11 @@
               dynamicTyping: true,
               complete: function(results) {
                   //select the latest column
+                  
                   let lastCol=results.data[1].length-1;
+                  let lastColHeader=results.data[0][lastCol]
+
+                  document.getElementById("dataDate").innerHTML="<b>Latest Data Upate:</b> "+lastColHeader
                   //select the column before the latest to use its data in daily % change calc
                   let last2Col=results.data[1].length-2;
   
