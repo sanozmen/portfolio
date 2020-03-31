@@ -416,34 +416,34 @@
 <script>
     window.onload= function () {
         /*various options for the basemap*/
-        var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        let grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
             subdomains: 'abcd',
             maxZoom: 19
         });
-        var CartoDB_DarkMatter = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        let CartoDB_DarkMatter = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
             subdomains: 'abcd',
             maxZoom: 19
         });
-        var Stadia_AlidadeSmoothDark = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
+        let Stadia_AlidadeSmoothDark = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
             maxZoom: 20,
             attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
         });
-        var CartoDB_Voyager = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        let CartoDB_Voyager = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
             subdomains: 'abcd',
             maxZoom: 19
         });
-        var map = L.map('map', {
+        let map = L.map('map', {
             zoom: 4,
             center: [39.92,25.85],
             layers: [grayscale]
         });
 
-        var myRenderer = L.canvas({ padding: 0.1 });
+        let myRenderer = L.canvas({ padding: 0.1 });
         /* Defining icons in different shapes and colors for different layers*/
-        var smallMedium_icon = {
+        let smallMedium_icon = {
             radius: 8,
             fillColor: "#feb24c",
             color: "#000",
@@ -453,7 +453,7 @@
             renderer: myRenderer
         };
 
-        var medium_icon = {
+        let medium_icon = {
             radius: 10,
             fillColor: "#fc4e2a",
             color: "#000",
@@ -462,7 +462,7 @@
             fillOpacity: 0.8,
             renderer: myRenderer
         };
-        var mediumLarge_icon = {
+        let mediumLarge_icon = {
             radius: 14,
             fillColor: "#e31a1c",
             color: "#000",
@@ -471,7 +471,7 @@
             fillOpacity: 0.8,
             renderer: myRenderer
         };
-        var large_icon = {
+        let large_icon = {
             radius: 18,
             fillColor: "#bd0026",
             color: "#000",
@@ -481,7 +481,7 @@
             renderer: myRenderer
         };
 
-        var small_icon_d = {
+        let small_icon_d = {
             radius: 10,
             fillColor: "#fcc5c0",
             color: "#000",
@@ -490,7 +490,7 @@
             fillOpacity: 0.8,
             renderer: myRenderer
         };
-        var medium_icon_d = {
+        let medium_icon_d = {
             radius: 14,
             fillColor: "#f768a1",
             color: "#000",
@@ -499,7 +499,7 @@
             fillOpacity: 0.8,
             renderer: myRenderer
         };
-        var large_icon_d = {
+        let large_icon_d = {
             radius: 18,
             fillColor: "#ae017e",
             color: "#000",
@@ -509,7 +509,7 @@
             renderer: myRenderer
         };
 
-        var small_icon_r = {
+        let small_icon_r = {
             radius: 10,
             fillColor: "#7fcdbb",
             color: "000",
@@ -519,7 +519,7 @@
             renderer: myRenderer
         };
 
-        var medium_icon_r = {
+        let medium_icon_r = {
             radius: 14,
             fillColor: "#1d91c0",
             color: "#000",
@@ -528,7 +528,7 @@
             fillOpacity: 0.8,
             renderer: myRenderer
         };
-        var large_icon_r = {
+        let large_icon_r = {
             radius: 18,
             fillColor: "#225ea8",
             color: "#000",
@@ -678,10 +678,10 @@
             onEachFeature (feature, layer) {
                 /*popup content*/
                 if (feature.properties[todayString]){
-                    var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
+                    let content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
                     layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
                     /* for labels inside circles*/
-                    var text = L.tooltip({
+                    let text = L.tooltip({
                         permanent: true,
                         direction: 'center',
                         className: 'text'
@@ -692,10 +692,10 @@
                 }
                 else if (feature.properties[yesterdayString]){
                     /*popup content*/
-                    var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
+                    let content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
                     layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
                     /* for labels inside circles*/
-                    var text = L.tooltip({
+                    let text = L.tooltip({
                         permanent: true,
                         direction: 'center',
                         className: 'text'
@@ -706,10 +706,10 @@
                 }
                 else {
                     /*popup content*/
-                    var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[tDb_yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[tDb_yesterdayString];
+                    let content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Confirmed Cases: </b>"+feature.properties[tDb_yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[tDb_yesterdayString];
                     layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
                     /* for labels inside circles*/
-                    var text = L.tooltip({
+                    let text = L.tooltip({
                         permanent: true,
                         direction: 'center',
                         className: 'text'
@@ -767,10 +767,10 @@
                 /*popup content*/
                 if (feature.properties[todayString]){
                     /*popup content*/
-                    var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Deaths: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
+                    let content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Deaths: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
                     layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
                     /* for labels inside circles*/
-                    var text = L.tooltip({
+                    let text = L.tooltip({
                         permanent: true,
                         direction: 'center',
                         className: 'text'
@@ -781,10 +781,10 @@
                 }
                 else if (feature.properties[yesterdayString]){
                     /*popup content*/
-                    var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Deaths: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
+                    let content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Deaths: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
                     layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
                     /* for labels inside circles*/
-                    var text = L.tooltip({
+                    let text = L.tooltip({
                         permanent: true,
                         direction: 'center',
                         className: 'text'
@@ -795,10 +795,10 @@
                 }
                 else {
                     /*popup content*/
-                    var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Deaths: </b>"+feature.properties[tDb_yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[tDb_yesterdayString];
+                    let content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Deaths: </b>"+feature.properties[tDb_yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[tDb_yesterdayString];
                     layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
                     /* for labels inside circles*/
-                    var text = L.tooltip({
+                    let text = L.tooltip({
                         permanent: true,
                         direction: 'center',
                         className: 'text'
@@ -855,10 +855,10 @@
             onEachFeature (feature, layer) {
                 /*popup content*/
                 if (feature.properties[todayString]){
-                    var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
+                    let content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered: </b>"+feature.properties[todayString]+"<br>"+ "<b>Data Date: </b>"+[todayString];
                     layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
                     /* for labels inside circles*/
-                    var text = L.tooltip({
+                    let text = L.tooltip({
                         permanent: true,
                         direction: 'center',
                         className: 'text'
@@ -869,10 +869,10 @@
                 }
                 else if (feature.properties[yesterdayString]){
                     /*popup content*/
-                    var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
+                    let content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered: </b>"+feature.properties[yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[yesterdayString];
                     layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
                     /* for labels inside circles*/
-                    var text = L.tooltip({
+                    let text = L.tooltip({
                         permanent: true,
                         direction: 'center',
                         className: 'text'
@@ -883,10 +883,10 @@
                 }
                 else {
                     /*popup content*/
-                    var content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered: </b>"+feature.properties[tDb_yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[tDb_yesterdayString];
+                    let content =  "<b>Country/Region: </b>"+feature.properties[country]+"<br>"+"<b>Province/State: </b>"+feature.properties["Province/State"]+"<br>"+ "<b>Recovered: </b>"+feature.properties[tDb_yesterdayString]+"<br>"+ "<b>Data Date: </b>"+[tDb_yesterdayString];
                     layer.bindPopup(content,{closeButton: false, offset:L.point(0,-5) });
                     /* for labels inside circles*/
-                    var text = L.tooltip({
+                    let text = L.tooltip({
                         permanent: true,
                         direction: 'center',
                         className: 'text'
@@ -903,18 +903,18 @@
         let deaths= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv',null,deathsLayer);
         let recovered= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv',null,recoveredLayer);
         confirmed.addTo(map);
-        var baseLayers = {
+        let baseLayers = {
             //not any baselayers
         };
         //grouping overlaying features
-        var overlayElements = {
+        let overlayElements = {
             "Coronavirus": {
                 "Confirmed Cases": confirmed,
                 "Deaths": deaths,
                 "Recovered": recovered
             }
         };
-        var options = {
+        let options = {
             // Make the "Coronavirus" group exclusive (to use radio inputs)
             exclusiveGroups: ["Coronavirus"],
             // Show a checkbox next to non-exclusive group labels for toggling all
@@ -951,18 +951,18 @@
             return r;
         }
         //defining legends
-        var confirmedLegend= L.control({position: 'bottomleft'});
-        var deathsLegend= L.control({position: 'bottomleft'});
-        var recoveredLegend= L.control({position: 'bottomleft'});
+        let confirmedLegend= L.control({position: 'bottomleft'});
+        let deathsLegend= L.control({position: 'bottomleft'});
+        let recoveredLegend= L.control({position: 'bottomleft'});
         //creating all legends
         confirmedLegend.onAdd = function (map) {
-            var div = L.DomUtil.create('div', 'info legend'),
+            let div = L.DomUtil.create('div', 'info legend'),
                 grades = [200, 300,400,500],
                 labels2=[0,1000,5000,10000],
                 labels = ['<strong>Legend</strong>', "Confirmed Cases"],
                 from, to;
             //iterate through grades and create a color field and label for each
-            for (var i = 0; i < grades.length; i++) {
+            for (let i = 0; i < grades.length; i++) {
                 from = grades[i];
                 to = grades[i + 1];
                 labels.push( '<i class="circlepadding" style="width: '+Math.max(0,(40-1.8*getRadius(from)))+'px;"></i> <i style="background:'+ getColorConfirmed(from)+'; width: '+getRadius(from)*2+'px; height: '+getRadius(from)*2+'px; border-radius: 50%; margin-top: '+Math.max(0,(9-getRadius(from)))+'px;"></i> ' + labels2[i]+(labels2[i+1] ? '&ndash;' + labels2[i+1] : '+'));
@@ -972,13 +972,13 @@
         };
 
         deathsLegend.onAdd = function (map) {
-            var div = L.DomUtil.create('div', 'info legend'),
+            let div = L.DomUtil.create('div', 'info legend'),
                 grades = [100, 200, 300],
                 labels2=[0,50,500],
                 labels = ['<strong>Legend</strong>', "Deaths"],
                 from, to;
             //iterate through grades and create a color field and label for each
-            for (var i = 0; i < grades.length; i++) {
+            for (let i = 0; i < grades.length; i++) {
                 from = grades[i];
                 to = grades[i + 1];
                 labels.push( '<i class="circlepadding" style="width: '+Math.max(0,(40-1.8*getRadius(from)))+'px;"></i> <i style="background:'+ getColorDeaths(from)+'; width: '+getRadius(from)*2+'px; height: '+getRadius(from)*2+'px; border-radius: 50%; margin-top: '+Math.max(0,(9-getRadius(from)))+'px;"></i> ' + labels2[i]+(labels2[i+1] ? '&ndash;' + labels2[i+1] : '+'));
@@ -989,13 +989,13 @@
         };
         recoveredLegend.onAdd = function (map) {
 
-            var div = L.DomUtil.create('div', 'info legend'),
+            let div = L.DomUtil.create('div', 'info legend'),
                 grades = [100, 200, 300],
                 labels2=[0,1000,2000],
                 labels = ['<strong>Legend</strong>', "Recovered"],
                 from, to;
             //iterate through grades and create a color field and label for each
-            for (var i = 0; i < grades.length; i++) {
+            for (let i = 0; i < grades.length; i++) {
                 from = grades[i];
                 to = grades[i + 1];
                 labels.push( '<i class="circlepadding" style="width: '+Math.max(0,(40-1.8*getRadius(from)))+'px;"></i> <i style="background:'+ getColorRecovered(from)+'; width: '+getRadius(from)*2+'px; height: '+getRadius(from)*2+'px; border-radius: 50%; margin-top: '+Math.max(0,(9-getRadius(from)))+'px;"></i> ' + labels2[i]+(labels2[i+1] ? '&ndash;' + labels2[i+1] : '+'));
@@ -1004,7 +1004,7 @@
             return div;
 
         };
-        //initally add first layer's legend on the main page
+        //initally add first layer's legend on the main page as default
         confirmedLegend.addTo(map);
         //conditional add/remove of legends
         confirmed.beforeAdd = function (map) {
@@ -1022,20 +1022,22 @@
             confirmedLegend.remove(map);
             recoveredLegend.addTo(map);
         };
-        //adding the side bar
-        var sidebar = L.control.sidebar({ container: 'sidebar', position: 'right' })
+        //adding the side bar to the window
+        let sidebar = L.control.sidebar({ container: 'sidebar', position: 'right' })
             .addTo(map)
             .open("home");
+
         //GRAPH, DATA OPERATIONS for Confirmed
         let timeSeriesConfirmedLabels=[]
         let worldTotal_Confirmed=0;
         let confirmedLabels=[];
         let confirmedValues=[];
+        //states and overseas variable is mainly required to avoid calculation mistakes for countries like UK,NL,FR
         let confirmedLabels_StatesAndOverseas=[];
         let confirmedValues_StatesAndOverseas=[];
         let confirmedValues_StatesAndOverseas_OneDayAgo=[];
         let confirmedValues_OneDayAgo=[];
-        //In order to find total cases in US,China,Canada and Australia
+        //time series to be used in line graph visualisation
         let timeSeriesConfirmed_US=[]
         let timeSeriesConfirmed_Australia=[]
         let timeSeriesConfirmed_Canada=[]
@@ -1052,6 +1054,7 @@
         let timeSeriesConfirmed_Japan=[]
         let timeSeriesConfirmed_Czechia=[]
         let timeSeriesConfirmed_NL=[]
+        //In order to find total cases in US,China,Canada and Australia, whose data is presented separately for states
         let totalConfirmed_US=0;
         let totalConfirmed_China=0;
         let totalConfirmed_Canada=0;
@@ -1068,6 +1071,7 @@
             complete: function(results) {
                 //select the latest column
                 let lastCol=results.data[1].length-1;
+                //getting the header of the last column to use as date info in the app
                 let lastColHeader=results.data[0][lastCol]
 
                 document.getElementById("dataDate").innerHTML="<b>Latest Data Date:</b> "+lastColHeader
@@ -1080,8 +1084,8 @@
                     if (results.data[i][1]=="US"){
                         confirmedLabels_StatesAndOverseas.push(results.data[i][0])
                         timeSeriesConfirmed_US.push((results.data[i]))
-                        var nmbr=results.data[i][lastCol];
-                        var nmbr_OneDayAgo=results.data[i][last2Col];
+                        let nmbr=results.data[i][lastCol];
+                        let nmbr_OneDayAgo=results.data[i][last2Col];
                         confirmedValues_StatesAndOverseas.push(nmbr)
                         confirmedValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
                         totalConfirmed_US=totalConfirmed_US + nmbr
@@ -1090,8 +1094,8 @@
                     else if (results.data[i][1]=="China"){
                         confirmedLabels_StatesAndOverseas.push(results.data[i][0])
                         timeSeriesConfirmed_China.push((results.data[i]))
-                        var nmbr=results.data[i][lastCol];
-                        var nmbr_OneDayAgo=results.data[i][last2Col];
+                        let nmbr=results.data[i][lastCol];
+                        let nmbr_OneDayAgo=results.data[i][last2Col];
                         confirmedValues_StatesAndOverseas.push(nmbr)
                         confirmedValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
                         totalConfirmed_China=totalConfirmed_China + nmbr
@@ -1100,8 +1104,8 @@
                     else if (results.data[i][1]=="Canada"){
                         confirmedLabels_StatesAndOverseas.push(results.data[i][0])
                         timeSeriesConfirmed_Canada.push((results.data[i]))
-                        var nmbr=results.data[i][lastCol];
-                        var nmbr_OneDayAgo=results.data[i][last2Col];
+                        let nmbr=results.data[i][lastCol];
+                        let nmbr_OneDayAgo=results.data[i][last2Col];
                         confirmedValues_StatesAndOverseas.push(nmbr)
                         confirmedValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
                         totalConfirmed_Canada=totalConfirmed_Canada + nmbr
@@ -1110,16 +1114,16 @@
                     else if (results.data[i][1]=="Australia"){
                         confirmedLabels_StatesAndOverseas.push(results.data[i][0])
                         timeSeriesConfirmed_Australia.push((results.data[i]))
-                        var nmbr=results.data[i][lastCol];
-                        var nmbr_OneDayAgo=results.data[i][last2Col];
+                        let nmbr=results.data[i][lastCol];
+                        let nmbr_OneDayAgo=results.data[i][last2Col];
                         confirmedValues_StatesAndOverseas.push(nmbr)
                         confirmedValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
                         totalConfirmed_Aus=totalConfirmed_Aus + nmbr
                         totalConfirmed_Aus_OneDayAgo+=nmbr_OneDayAgo
                     }
                     else if (results.data[i][1]==="France"){
-                        var nmbr=results.data[i][lastCol];
-                        var nmbr_OneDayAgo=results.data[i][last2Col];
+                        let nmbr=results.data[i][lastCol];
+                        let nmbr_OneDayAgo=results.data[i][last2Col];
                         if (results.data[i][0]===null) {
                             confirmedLabels_StatesAndOverseas.push(results.data[i][1])
                             confirmedLabels.push(results.data[i][1])
@@ -1134,8 +1138,8 @@
                         confirmedValues_OneDayAgo.push(nmbr_OneDayAgo)
                     }
                     else if (results.data[i][1]==="Netherlands"){
-                        var nmbr=results.data[i][lastCol];
-                        var nmbr_OneDayAgo=results.data[i][last2Col];
+                        let nmbr=results.data[i][lastCol];
+                        let nmbr_OneDayAgo=results.data[i][last2Col];
                         if (results.data[i][0]===null) {
                             confirmedLabels_StatesAndOverseas.push(results.data[i][1])
                             confirmedLabels.push(results.data[i][1])
@@ -1150,8 +1154,8 @@
                         confirmedValues_OneDayAgo.push(nmbr_OneDayAgo)
                     }
                     else if (results.data[i][1]==="United Kingdom"){
-                        var nmbr=results.data[i][lastCol];
-                        var nmbr_OneDayAgo=results.data[i][last2Col];
+                        let nmbr=results.data[i][lastCol];
+                        let nmbr_OneDayAgo=results.data[i][last2Col];
                         if (results.data[i][0]===null) {
                             confirmedLabels_StatesAndOverseas.push(results.data[i][1])
                             confirmedLabels.push(results.data[i][1])
@@ -1166,8 +1170,8 @@
                         confirmedValues_OneDayAgo.push(nmbr_OneDayAgo)
                     }
                     else if (results.data[i][1]==="Denmark"){
-                        var nmbr=results.data[i][lastCol];
-                        var nmbr_OneDayAgo=results.data[i][last2Col];
+                        let nmbr=results.data[i][lastCol];
+                        let nmbr_OneDayAgo=results.data[i][last2Col];
                         if (results.data[i][0]===null) {
                             confirmedLabels_StatesAndOverseas.push(results.data[i][1])
                             confirmedLabels.push(results.data[i][1])
@@ -1186,8 +1190,8 @@
                         || results.data[i][1]!="Canada" || results.data[i][1]!="Australia" || results.data[i][1]!="Denmark" || results.data[i][1]!="France" || results.data[i][1]!="United Kingdom" ||
                         results.data[i][1]!="Netherlands" ){
                         confirmedLabels_StatesAndOverseas.push(results.data[i][1])
-                        var nmbr_OneDayAgo=results.data[i][last2Col];
-                        var nmbr=results.data[i][lastCol];
+                        let nmbr_OneDayAgo=results.data[i][last2Col];
+                        let nmbr=results.data[i][lastCol];
                         confirmedValues_StatesAndOverseas.push(nmbr)
                         confirmedValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
                         confirmedValues.push(nmbr);
@@ -1261,25 +1265,25 @@
                     timeSeriesConfirmed_China_Total.push(column)
                 }
                 //zip values from both lists
-                var cStatesOverSeas = confirmedLabels_StatesAndOverseas.map(function(e, i) {
+                let cStatesOverSeas = confirmedLabels_StatesAndOverseas.map(function(e, i) {
                     return [e, confirmedValues_StatesAndOverseas[i]];
                 });
                 //sort descending
                 cStatesOverSeas.sort(function(a,b){return b[1]-a[1]})
 
                 //zip values from both lists
-                var cStatesOverSeas_OneDayAgo = confirmedLabels_StatesAndOverseas.map(function(e, i) {
+                let cStatesOverSeas_OneDayAgo = confirmedLabels_StatesAndOverseas.map(function(e, i) {
                     return [e, confirmedValues_StatesAndOverseas_OneDayAgo[i]];
                 });
                 //sort descending
                 cStatesOverSeas_OneDayAgo.sort(function(a,b){return b[1]-a[1];});
-                var c = confirmedLabels.map(function(e, i) {
+                let c = confirmedLabels.map(function(e, i) {
                     return [e, confirmedValues[i]];
                 });
                 //sort descending
                 c.sort(function(a,b){return b[1]-a[1];});
                 //zip values from both lists
-                var cYes = confirmedLabels.map(function(e, i) {
+                let cYes = confirmedLabels.map(function(e, i) {
                     return [e, confirmedValues_OneDayAgo[i]];
                 });
                 //sort descending
@@ -1351,7 +1355,7 @@
                 dailyChangeNumber();
 
                 //zip values from both lists difference change and labels NUMBER OF PERSONS
-                var zippedChangeDaily = confirmedLabels.map(function(e, i) {
+                let zippedChangeDaily = confirmedLabels.map(function(e, i) {
                     return [e, changeDailyArray[i]];
                 });
                 //sort descending percent change
@@ -1377,13 +1381,13 @@
                 document.getElementById("caseIncrease").innerHTML="<b>Top 10 countries with the highest daily increase in number of persons infected:</b> "+"</br>"+topTenDiffString
 
                 //zip values from both lists perc change and labels
-                var zippedPercDailyChange = selectedConfirmedLabels.map(function(e, i) {
+                let zippedPercDailyChange = selectedConfirmedLabels.map(function(e, i) {
                     return [e, percentChangeDailyArray[i]];
                 });
                 //sort descending percent change
                 zippedPercDailyChange.sort(function(a,b){return b[1]-a[1];});
                 console.log(zippedPercDailyChange)
-                var zippedNewCasesAndLabels = newCasesLabelsArray.map(function(e, i) {
+                let zippedNewCasesAndLabels = newCasesLabelsArray.map(function(e, i) {
                     return [e, newCasesArray[i]];
                 });
 
@@ -1468,7 +1472,7 @@
                 }
 
                 //put them in a format that will be displayed properly to the user
-                var topFiveString="";
+                let topFiveString="";
                 function createString(){
                     for (v=0;v<topFive.length;v++){
                         topFiveString+=topFive[v][0]
@@ -1485,8 +1489,8 @@
                 //push the values the document
                 document.getElementById("firstCases").innerHTML="<b>Countries that most recently announced the first confirmed cases within their borders:</b> "+"</br>"+newCasesString
                 document.getElementById("topFive").innerHTML="<b>Countries with the highest daily % change in confirmed cases (over 100 cases): </b> "+"</br>"+topFiveString
-                //////// Speed in reaching 1000 cases
 
+                //////// Speed in reaching cases
                 function findFastest(x){
                     dateOfFirstCase=0;
                     dateOf_x_Case=0;
@@ -1611,6 +1615,8 @@
                     }]
                 });
 
+
+                //Line chart
                 Highcharts.chart('containerLineConfirmed', {
                     title: {
                         text: 'Growth of Confirmed Cases by Country'
@@ -1641,7 +1647,7 @@
                         style:{
 
 
-                            fontSize:"8px",
+                            fontSize:"9px",
                         },
                         split: true,
                         distance: 5,
@@ -1778,8 +1784,8 @@
                         deathsLabels_StatesAndOverseas.push(results.data[i][0])
                         timeSeriesDeaths_US.push((results.data[i]))
 
-                        var nmbr=parseInt(results.data[i][lastCol]);
-                        var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
+                        let nmbr=parseInt(results.data[i][lastCol]);
+                        let nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
                         deathsValues_StatesAndOverseas.push(nmbr)
                         deathsValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
                         totalDeaths_US=totalDeaths_US + nmbr
@@ -1788,8 +1794,8 @@
                     else if (results.data[i][1]=="China"){
                         deathsLabels_StatesAndOverseas.push(results.data[i][0])
                         timeSeriesDeaths_China.push((results.data[i]))
-                        var nmbr=parseInt(results.data[i][lastCol]);
-                        var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
+                        let nmbr=parseInt(results.data[i][lastCol]);
+                        let nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
                         deathsValues_StatesAndOverseas.push(nmbr)
                         deathsValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
                         totalDeaths_China=totalDeaths_China + nmbr
@@ -1798,8 +1804,8 @@
                     else if (results.data[i][1]=="Canada"){
                         deathsLabels_StatesAndOverseas.push(results.data[i][0])
                         timeSeriesDeaths_Canada.push((results.data[i]))
-                        var nmbr=parseInt(results.data[i][lastCol]);
-                        var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
+                        let nmbr=parseInt(results.data[i][lastCol]);
+                        let nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
                         deathsValues_StatesAndOverseas.push(nmbr)
                         deathsValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
                         totalDeaths_Canada=totalDeaths_Canada + nmbr
@@ -1808,16 +1814,16 @@
                     else if (results.data[i][1]=="Australia"){
                         deathsLabels_StatesAndOverseas.push(results.data[i][0])
                         timeSeriesDeaths_Australia.push((results.data[i]))
-                        var nmbr=parseInt(results.data[i][lastCol]);
-                        var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
+                        let nmbr=parseInt(results.data[i][lastCol]);
+                        let nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
                         deathsValues_StatesAndOverseas.push(nmbr)
                         deathsValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
                         totalDeaths_Aus=totalDeaths_Aus + nmbr
                         totalDeaths_Aus_OneDayAgo+=nmbr_OneDayAgo
                     }
                     else if (results.data[i][1]==="France"){
-                        var nmbr=results.data[i][lastCol];
-                        var nmbr_OneDayAgo=results.data[i][last2Col];
+                        let nmbr=results.data[i][lastCol];
+                        let nmbr_OneDayAgo=results.data[i][last2Col];
                         if (results.data[i][0]===null) {
                             deathsLabels_StatesAndOverseas.push(results.data[i][1])
                             deathsLabels.push(results.data[i][1])
@@ -1832,8 +1838,8 @@
                         deathsValues_OneDayAgo.push(nmbr_OneDayAgo)
                     }
                     else if (results.data[i][1]==="Netherlands"){
-                        var nmbr=results.data[i][lastCol];
-                        var nmbr_OneDayAgo=results.data[i][last2Col];
+                        let nmbr=results.data[i][lastCol];
+                        let nmbr_OneDayAgo=results.data[i][last2Col];
                         if (results.data[i][0]===null) {
                             deathsLabels_StatesAndOverseas.push(results.data[i][1])
                             deathsLabels.push(results.data[i][1])
@@ -1848,8 +1854,8 @@
                         deathsValues_OneDayAgo.push(nmbr_OneDayAgo)
                     }
                     else if (results.data[i][1]==="United Kingdom"){
-                        var nmbr=results.data[i][lastCol];
-                        var nmbr_OneDayAgo=results.data[i][last2Col];
+                        let nmbr=results.data[i][lastCol];
+                        let nmbr_OneDayAgo=results.data[i][last2Col];
                         if (results.data[i][0]===null) {
                             deathsLabels_StatesAndOverseas.push(results.data[i][1])
                             deathsLabels.push(results.data[i][1])
@@ -1864,8 +1870,8 @@
                         deathsValues_OneDayAgo.push(nmbr_OneDayAgo)
                     }
                     else if (results.data[i][1]==="Denmark"){
-                        var nmbr=results.data[i][lastCol];
-                        var nmbr_OneDayAgo=results.data[i][last2Col];
+                        let nmbr=results.data[i][lastCol];
+                        let nmbr_OneDayAgo=results.data[i][last2Col];
                         if (results.data[i][0]===null) {
                             deathsLabels_StatesAndOverseas.push(results.data[i][1])
                             deathsLabels.push(results.data[i][1])
@@ -1885,8 +1891,8 @@
                         results.data[i][1]!="United Kingdom"
                         || results.data[i][1]!="Denmark" || results.data[i][1]!="Netherlands"){
                         deathsLabels_StatesAndOverseas.push(results.data[i][1])
-                        var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
-                        var nmbr=parseInt(results.data[i][lastCol]);
+                        let nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
+                        let nmbr=parseInt(results.data[i][lastCol]);
                         deathsValues_StatesAndOverseas.push(nmbr)
                         deathsValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
                         deathsValues.push(nmbr);
@@ -1961,25 +1967,25 @@
                 }
 
                 //zip values from both lists
-                var cStatesOverSeas = deathsLabels_StatesAndOverseas.map(function(e, i) {
+                let cStatesOverSeas = deathsLabels_StatesAndOverseas.map(function(e, i) {
                     return [e, deathsValues_StatesAndOverseas[i]];
                 });
                 //sort descending
                 cStatesOverSeas.sort(function(a,b){return b[1]-a[1];});
                 //zip values from both lists
-                var cStatesOverSeas_OneDayAgo = deathsLabels_StatesAndOverseas.map(function(e, i) {
+                let cStatesOverSeas_OneDayAgo = deathsLabels_StatesAndOverseas.map(function(e, i) {
                     return [e, deathsValues_StatesAndOverseas_OneDayAgo[i]];
                 });
                 //sort descending
                 cStatesOverSeas_OneDayAgo.sort(function(a,b){return b[1]-a[1];});
 
-                var c = deathsLabels.map(function(e, i) {
+                let c = deathsLabels.map(function(e, i) {
                     return [e, deathsValues[i]];
                 });
                 //sort descending
                 c.sort(function(a,b){return b[1]-a[1];});
                 //zip values from both lists
-                var cYes = deathsLabels.map(function(e, i) {
+                let cYes = deathsLabels.map(function(e, i) {
                     return [e, deathsValues_OneDayAgo[i]];
                 });
                 //sort descending
@@ -2049,7 +2055,7 @@
                 dailyChangeNumber();
 
                 //zip values from both lists difference change and labels NUMBER OF PERSONS
-                var zippedChangeDaily = deathsLabels.map(function(e, i) {
+                let zippedChangeDaily = deathsLabels.map(function(e, i) {
                     return [e, changeDailyArray[i]];
                 });
                 //sort descending percent change
@@ -2165,7 +2171,7 @@
                 }
 
                 //put them in a format that will be displayed properly to the user
-                var topFiveString="";
+                let topFiveString="";
                 function createString(){
                     for (v=0;v<topFive.length;v++){
                         topFiveString+=topFive[v][0]
@@ -2183,6 +2189,7 @@
                 document.getElementById("firstDeath").innerHTML="<b>Countries that most recently announced the first deaths within their borders:</b> "+"</br>"+newCasesString
                 document.getElementById("topFiveDeath").innerHTML="<b>Countries with the highest daily % change in deaths (over 10 deaths): </b> "+"</br>"+topFiveString
 
+                //function to find the countries with fastest increase in confirmed/deaths starting from the announcement of first case
                 function findFastest(x){
                     dateOfFirstCase=0;
                     dateOf_x_Case=0;
@@ -2248,7 +2255,8 @@
                 fastestDeath10000=fastestCountry
                 //push the values the document
                 document.getElementById("fastestDeaths").innerHTML="<b>Country (except China) fastest reaching to:</b> "+"</br>"+fastestDeath50+"</br>"+fastestDeath100+"</br>"+fastestDeath200+"</br>"+fastestDeath500+"</br>"+fastestDeath1000+"</br>"+fastestDeath2000+"</br>"+fastestDeath5000+"</br>"+fastestDeath10000
-
+                
+                //the graph showing all countries in desc-sort
                 Highcharts.chart('containerBarDeaths', {
                     chart: {
                         type: 'bar'
@@ -2306,7 +2314,8 @@
                         color: "rgb(252, 78, 42)"
                     }]
                 });
-
+                
+                //the line graph showing all countries together whose x-axis represents days while y axis represents Confirmed cases/Deaths
                 Highcharts.chart('containerLineDeaths', {
                     title: {
                         text: 'Growth of Deaths by Country'
@@ -2426,7 +2435,8 @@
 
         });
 
-        //GRAPH, DATA OPERATIONS for recovered
+        //GRAPH, DATA OPERATIONS for RECOVERED////////////////////////////
+        //////////////////////////////////////////////////////////////////
         let timeSeriesRecoveredLabels=[]
         let worldTotal_Recovered=0;
         let recoveredLabels=[];
@@ -2435,7 +2445,7 @@
         let recoveredValues_StatesAndOverseas=[];
         let recoveredValues_StatesAndOverseas_OneDayAgo=[];
         let recoveredValues_OneDayAgo=[];
-        //In order to find total cases in US,China,Canada and Australia
+        // Time series arrays are used in line graph
         let timeSeriesRecovered_US=[]
         let timeSeriesRecovered_Australia=[]
         let timeSeriesRecovered_Canada=[]
@@ -2452,12 +2462,13 @@
         let timeSeriesRecovered_Japan=[]
         let timeSeriesRecovered_Czechia=[]
         let timeSeriesRecovered_NL=[]
-
+        //initially data for us, china, canada, australia was not in cumulative format. It was required to sum all the states
+        //those variables are defined to get the sum of states
         let totalRecovered_US=0;
         let totalRecovered_China=0;
         let totalRecovered_Canada=0;
         let totalRecovered_Aus=0;
-        //in order to find daily change %
+        //initialisation of arrays in order to find daily change for those countries whose data is presented in states scale
         let totalRecovered_US_OneDayAgo=0;
         let totalRecovered_China_OneDayAgo=0;
         let totalRecovered_Canada_OneDayAgo=0;
@@ -2479,8 +2490,8 @@
                         recoveredLabels_StatesAndOverseas.push(results.data[i][0])
                         timeSeriesRecovered_US.push((results.data[i]))
 
-                        var nmbr=parseInt(results.data[i][lastCol]);
-                        var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
+                        let nmbr=parseInt(results.data[i][lastCol]);
+                        let nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
                         recoveredValues_StatesAndOverseas.push(nmbr)
                         recoveredValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
                         totalRecovered_US=totalRecovered_US + nmbr
@@ -2489,8 +2500,8 @@
                     else if (results.data[i][1]=="China"){
                         recoveredLabels_StatesAndOverseas.push(results.data[i][0])
                         timeSeriesRecovered_China.push((results.data[i]))
-                        var nmbr=parseInt(results.data[i][lastCol]);
-                        var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
+                        let nmbr=parseInt(results.data[i][lastCol]);
+                        let nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
                         recoveredValues_StatesAndOverseas.push(nmbr)
                         recoveredValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
                         totalRecovered_China=totalRecovered_China + nmbr
@@ -2499,8 +2510,8 @@
                     else if (results.data[i][1]=="Canada"){
                         recoveredLabels_StatesAndOverseas.push(results.data[i][0])
                         timeSeriesRecovered_Canada.push((results.data[i]))
-                        var nmbr=parseInt(results.data[i][lastCol]);
-                        var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
+                        let nmbr=parseInt(results.data[i][lastCol]);
+                        let nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
                         recoveredValues_StatesAndOverseas.push(nmbr)
                         recoveredValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
                         totalRecovered_Canada=totalRecovered_Canada + nmbr
@@ -2509,16 +2520,16 @@
                     else if (results.data[i][1]=="Australia"){
                         recoveredLabels_StatesAndOverseas.push(results.data[i][0])
                         timeSeriesRecovered_Australia.push((results.data[i]))
-                        var nmbr=parseInt(results.data[i][lastCol]);
-                        var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
+                        let nmbr=parseInt(results.data[i][lastCol]);
+                        let nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
                         recoveredValues_StatesAndOverseas.push(nmbr)
                         recoveredValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
                         totalRecovered_Aus=totalRecovered_Aus + nmbr
                         totalRecovered_Aus_OneDayAgo+=nmbr_OneDayAgo
                     }
                     else if (results.data[i][1]==="France"){
-                        var nmbr=results.data[i][lastCol];
-                        var nmbr_OneDayAgo=results.data[i][last2Col];
+                        let nmbr=results.data[i][lastCol];
+                        let nmbr_OneDayAgo=results.data[i][last2Col];
                         if (results.data[i][0]===null) {
                             recoveredLabels_StatesAndOverseas.push(results.data[i][1])
                             recoveredLabels.push(results.data[i][1])
@@ -2533,8 +2544,8 @@
                         recoveredValues_OneDayAgo.push(nmbr_OneDayAgo)
                     }
                     else if (results.data[i][1]==="Netherlands"){
-                        var nmbr=results.data[i][lastCol];
-                        var nmbr_OneDayAgo=results.data[i][last2Col];
+                        let nmbr=results.data[i][lastCol];
+                        let nmbr_OneDayAgo=results.data[i][last2Col];
                         if (results.data[i][0]===null) {
                             recoveredLabels_StatesAndOverseas.push(results.data[i][1])
                             recoveredLabels.push(results.data[i][1])
@@ -2549,8 +2560,8 @@
                         recoveredValues_OneDayAgo.push(nmbr_OneDayAgo)
                     }
                     else if (results.data[i][1]==="United Kingdom"){
-                        var nmbr=results.data[i][lastCol];
-                        var nmbr_OneDayAgo=results.data[i][last2Col];
+                        let nmbr=results.data[i][lastCol];
+                        let nmbr_OneDayAgo=results.data[i][last2Col];
                         if (results.data[i][0]===null) {
                             recoveredLabels_StatesAndOverseas.push(results.data[i][1])
                             recoveredLabels.push(results.data[i][1])
@@ -2565,8 +2576,8 @@
                         recoveredValues_OneDayAgo.push(nmbr_OneDayAgo)
                     }
                     else if (results.data[i][1]==="Denmark"){
-                        var nmbr=results.data[i][lastCol];
-                        var nmbr_OneDayAgo=results.data[i][last2Col];
+                        let nmbr=results.data[i][lastCol];
+                        let nmbr_OneDayAgo=results.data[i][last2Col];
                         if (results.data[i][0]===null) {
                             recoveredLabels_StatesAndOverseas.push(results.data[i][1])
                             recoveredLabels.push(results.data[i][1])
@@ -2585,8 +2596,8 @@
                         || results.data[i][1]!="Canada" || results.data[i][1]!="Australia" || results.data[i][1]!="France" || results.data[i][1]!="United Kingdom"
                         || results.data[i][1]!="Denmark" || results.data[i][1]!="Netherlands"){
                         recoveredLabels_StatesAndOverseas.push(results.data[i][0])
-                        var nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
-                        var nmbr=parseInt(results.data[i][lastCol]);
+                        let nmbr_OneDayAgo=parseInt(results.data[i][last2Col]);
+                        let nmbr=parseInt(results.data[i][lastCol]);
                         recoveredValues_StatesAndOverseas.push(nmbr)
                         recoveredValues_StatesAndOverseas_OneDayAgo.push(nmbr_OneDayAgo)
                         recoveredValues.push(nmbr);
@@ -2661,25 +2672,25 @@
                 }
 
                 //zip values from both lists
-                var cStatesOverSeas = recoveredLabels.map(function(e, i) {
+                let cStatesOverSeas = recoveredLabels.map(function(e, i) {
                     return [e, recoveredValues_StatesAndOverseas[i]];
                 });
                 //sort descending
                 cStatesOverSeas.sort(function(a,b){return b[1]-a[1];});
                 //zip values from both lists
-                var cStatesOverSeas_OneDayAgo = recoveredLabels.map(function(e, i) {
+                let cStatesOverSeas_OneDayAgo = recoveredLabels.map(function(e, i) {
                     return [e, recoveredValues_StatesAndOverseas_OneDayAgo[i]];
                 });
                 //sort descending
                 cStatesOverSeas_OneDayAgo.sort(function(a,b){return b[1]-a[1];});
 
-                var c = recoveredLabels.map(function(e, i) {
+                let c = recoveredLabels.map(function(e, i) {
                     return [e, recoveredValues[i]];
                 });
                 //sort descending
                 c.sort(function(a,b){return b[1]-a[1];});
                 //zip values from both lists
-                var cYes = recoveredLabels.map(function(e, i) {
+                let cYes = recoveredLabels.map(function(e, i) {
                     return [e, recoveredValues_OneDayAgo[i]];
                 });
                 //sort descending
@@ -2748,7 +2759,7 @@
                 dailyChangeNumber();
 
                 //zip values from both lists difference change and labels NUMBER OF PERSONS
-                var zippedChangeDaily = recoveredLabels.map(function(e, i) {
+                let zippedChangeDaily = recoveredLabels.map(function(e, i) {
                     return [e, changeDailyArray[i]];
                 });
                 //sort descending percent change
@@ -2774,7 +2785,7 @@
                 document.getElementById("recoveryIncrease").innerHTML="<b>Top 10 countries with the highest daily increase in number of recovered:</b> "+"</br>"+topTenDiffString
 
                 //zip values from both lists perc change and labels
-                var zippedPercDailyChange = recoveredLabels.map(function(e, i) {
+                let zippedPercDailyChange = recoveredLabels.map(function(e, i) {
                     return [e, percentChangeDailyArray[i]];
                 });
                 //sort descending percent change
@@ -2861,7 +2872,7 @@
                 }
 
                 //put them in a format that will be displayed properly to the user
-                var topFiveString="";
+                let topFiveString="";
                 function createString(){
                     for (v=0;v<topFive.length;v++){
                         topFiveString+=topFive[v][0]
