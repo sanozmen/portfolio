@@ -395,6 +395,7 @@
 <script src="assets/js/leaflet-sidebar.js"></script>
 <!--Highcharts-->
 <script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/annotations.js"></script>
 <script src="https://code.highcharts.com/modules/series-label.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
@@ -571,6 +572,7 @@
             }
             else if (day==1 && month==4){
                 tDb_Yesterday=30;
+                day=NaN;
                 yesterday=31;
                 month=3
             }
@@ -615,8 +617,11 @@
                 month=11
             }
         }
+        
         /*call the function*/
         firstDayOfTheMonth();
+
+        
         /* string arguments to be used in geojson templates before using them as arguments for
        csv omnivore plugin*/
         let todayString=month+"/"+day+"/"+year;
@@ -1556,11 +1561,15 @@
                 //push the values the document
                 document.getElementById("fastestConfirmed").innerHTML="<b>Country (except China) fastest reaching to:</b> "+"</br>"+fastestConfirmed1000+"</br>"+fastestConfirmed5000+"</br>"+fastestConfirmed10000+"</br>"+fastestConfirmed20000+"</br>"+fastestConfirmed30000+"</br>"+fastestConfirmed50000+"</br>"+fastestConfirmed70000+"</br>"+fastestConfirmed100000
 
+
                 ////Graphs for confirmed cases
                 Highcharts.chart('containerBarConfirmed', {
                     chart: {
                         type: 'bar'
                     },
+                    
+   
+                    
                     title: {
                         text: 'Confirmed COVID-19 CASES'
                     },
@@ -1615,7 +1624,6 @@
                     }]
                 });
 
-
                 //Line chart
                 Highcharts.chart('containerLineConfirmed', {
                     title: {
@@ -1627,6 +1635,7 @@
                     credits: {
                         enabled: false
                     },
+        
                     yAxis: {
                         title: {
                             text: 'Persons'
@@ -1709,6 +1718,7 @@
                             name: 'Netherlands',
                             data: timeSeriesConfirmed_NL[0]
                         }],
+                        
 
                     responsive: {
                         rules: [{
@@ -1723,7 +1733,23 @@
                                 }
                             }
                         }]
-                    }
+                    },
+
+                    /*annotations: [{
+        labelOptions: {
+           backgroundColor: 'rgba(255,255,255,0.5)',
+            verticalAlign: 'top',
+            y: 15
+        },
+        labels: [{
+            point: {
+                xAxis: 0,
+                yAxis: 0,
+                x: '5',
+                y: 25000
+            },
+            text: 'Arbois'
+        }] }],*/
                 });
 
             },
