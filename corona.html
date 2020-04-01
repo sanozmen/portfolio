@@ -1391,7 +1391,7 @@
                 });
                 //sort descending percent change
                 zippedPercDailyChange.sort(function(a,b){return b[1]-a[1];});
-                console.log(zippedPercDailyChange)
+                
                 let zippedNewCasesAndLabels = newCasesLabelsArray.map(function(e, i) {
                     return [e, newCasesArray[i]];
                 });
@@ -1956,7 +1956,7 @@
                 deathsLabels.push("US","China","Canada","Australia");
                 deathsValues.push(totalDeaths_US,totalDeaths_China, totalDeaths_Canada, totalDeaths_Aus);
                 deathsValues_OneDayAgo.push(totalDeaths_US_OneDayAgo,totalDeaths_China_OneDayAgo,totalDeaths_Canada_OneDayAgo,totalDeaths_Aus_OneDayAgo)
-                console.log(deathsLabels_StatesAndOverseas,deathsValues_StatesAndOverseas)
+                
                 timeSeriesDeaths_US_Total=[]
                 for (i=4;i<timeSeriesDeaths_US[0].length;i++){
                     column=0
@@ -2175,8 +2175,7 @@
                         }
                     }
                 }
-                console.log(cStatesOverSeas)
-
+              
 
                 //find the yesterday's deaths for corresponding country from the topFive list
                 let fromDeaths=[]
