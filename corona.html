@@ -6,7 +6,7 @@
     <!--metda data-->
     <meta name="description" content="coronavirus, corona, COVID-19, china, wuhan, virus, novel, new, map, interactive map, open source, death, dashboard, infection, disease, outbreak, global map, spread, track, tracking, leaflet.js, dashboard, mapbox, arcgis, qgis, web map, GIS, graph, data "/>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-        <!-- Global site tag (gtag.js) - Google Analytics -->
+            <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-57534785-2"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -38,6 +38,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!--marker cluster javascript-->
     <script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js"></script>
+    <!--Jquery-->
+<script
+src="https://code.jquery.com/jquery-3.4.1.js"
+integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+crossorigin="anonymous"></script>
     <style>
         body { margin:0; padding:0; }
         #map { position:absolute; top:0; bottom:0; width:100%; }
@@ -276,9 +281,32 @@
                 font-size: 18px;
             }
         }
+        #loading {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  display: block;
+  opacity: 0.7;
+  background-color: #fff;
+  z-index: 99;
+  text-align: center;
+}
+
+#loading-image {
+    position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  
+}
     </style>
 </head>
 <body>
+    <div id="loading">
+        <img id="loading-image" src="images/6.gif" alt="Loading..." />
+      </div>
 <!-- SIDEBAR STARTS HERE-->
 <div id="sidebar" class="leaflet-sidebar collapsed">
     <!-- Nav tabs -->
@@ -416,11 +444,7 @@
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-<!--Jquery-->
-<script
-        src="https://code.jquery.com/jquery-3.4.1.js"
-        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-        crossorigin="anonymous"></script>
+
 <!-- below is for bootstrap -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -431,7 +455,7 @@
 <!--CSV parser Papa parse-->
 <script src="assets/js/papaparse.min.js"></script>
 <script>
-    window.onload= function () {
+   
         /*various options for the basemap*/
         let grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -1070,7 +1094,7 @@
         let timeSeriesConfirmed_UK=[]
         let timeSeriesConfirmed_Germany=[]
         let timeSeriesConfirmed_France=[]
-        let timeSeriesConfirmed_Switzerland=[]
+        let timeSeriesConfirmed_Russia=[]
         let timeSeriesConfirmed_SouthKorea=[]
         let timeSeriesConfirmed_Japan=[]
         let timeSeriesConfirmed_Czechia=[]
@@ -1236,8 +1260,8 @@
                         else if (results.data[i][1]=="Iran") {
                             timeSeriesConfirmed_Iran.push(results.data[i].slice(4,lastCol+1))
                         }
-                        else if (results.data[i][1]=="Switzerland") {
-                            timeSeriesConfirmed_Switzerland.push(results.data[i].slice(4,lastCol+1))
+                        else if (results.data[i][1]=="Russia") {
+                            timeSeriesConfirmed_Russia.push(results.data[i].slice(4,lastCol+1))
                         }
                         else if (results.data[i][1]=="Czechia") {
                             timeSeriesConfirmed_Czechia.push(results.data[i].slice(4,lastCol+1))
@@ -1711,8 +1735,8 @@
                         name: 'Iran',
                         data: timeSeriesConfirmed_Iran[0]
                     },{
-                        name: 'Switzerland',
-                        data: timeSeriesConfirmed_Switzerland[0]
+                        name: 'Russia',
+                        data: timeSeriesConfirmed_Russia[0]
                     }
                         ,{
                             name: 'US',
@@ -1794,7 +1818,7 @@
         let timeSeriesDeaths_UK=[]
         let timeSeriesDeaths_Germany=[]
         let timeSeriesDeaths_France=[]
-        let timeSeriesDeaths_Switzerland=[]
+        let timeSeriesDeaths_Russia=[]
         let timeSeriesDeaths_SouthKorea=[]
         let timeSeriesDeaths_Japan=[]
         let timeSeriesDeaths_Czechia=[]
@@ -1958,8 +1982,8 @@
                         else if (results.data[i][1]=="Iran") {
                             timeSeriesDeaths_Iran.push(results.data[i].slice(4,lastCol+1))
                         }
-                        else if (results.data[i][1]=="Switzerland") {
-                            timeSeriesDeaths_Switzerland.push(results.data[i].slice(4,lastCol+1))
+                        else if (results.data[i][1]=="Russia") {
+                            timeSeriesDeaths_Russia.push(results.data[i].slice(4,lastCol+1))
                         }
                         else if (results.data[i][1]=="Czechia") {
                             timeSeriesDeaths_Czechia.push(results.data[i].slice(4,lastCol+1))
@@ -2430,8 +2454,8 @@
                         name: 'Iran',
                         data: timeSeriesDeaths_Iran[0]
                     },{
-                        name: 'Switzerland',
-                        data: timeSeriesDeaths_Switzerland[0]
+                        name: 'Russia',
+                        data: timeSeriesDeaths_Russia[0]
                     }
                         ,{
                             name: 'US',
@@ -2498,7 +2522,7 @@ let timeSeriesRecovered_Turkey=[]
 let timeSeriesRecovered_UK=[]
 let timeSeriesRecovered_Germany=[]
 let timeSeriesRecovered_France=[]
-let timeSeriesRecovered_Switzerland=[]
+let timeSeriesRecovered_Russia=[]
 let timeSeriesRecovered_SouthKorea=[]
 let timeSeriesRecovered_Japan=[]
 let timeSeriesRecovered_Czechia=[]
@@ -2662,8 +2686,8 @@ Papa.parse("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/css
                 else if (results.data[i][1]=="Iran") {
                     timeSeriesRecovered_Iran.push(results.data[i].slice(4,lastCol+1))
                 }
-                else if (results.data[i][1]=="Switzerland") {
-                    timeSeriesRecovered_Switzerland.push(results.data[i].slice(4,lastCol+1))
+                else if (results.data[i][1]=="Russia") {
+                    timeSeriesRecovered_Russia.push(results.data[i].slice(4,lastCol+1))
                 }
                 else if (results.data[i][1]=="Czechia") {
                     timeSeriesRecovered_Czechia.push(results.data[i].slice(4,lastCol+1))
@@ -3068,8 +3092,8 @@ Papa.parse("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/css
                 name: 'Iran',
                 data: timeSeriesRecovered_Iran[0]
             },{
-                name: 'Switzerland',
-                data: timeSeriesRecovered_Switzerland[0]
+                name: 'Russia',
+                data: timeSeriesRecovered_Russia[0]
             }
                 ,{
                     name: 'US',
@@ -3115,9 +3139,15 @@ Papa.parse("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/css
 });
 
 
-    };
+
 
 </script>
+
+<script>
+    $(window).load(function() {
+      $('#loading').hide();
+    });
+  </script>
 
 </body>
 </html>
