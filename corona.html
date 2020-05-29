@@ -6,15 +6,15 @@
     <!--metda data-->
     <meta name="description" content="coronavirus, corona, COVID-19, china, wuhan, virus, novel, new, map, interactive map, open source, death, dashboard, infection, disease, outbreak, global map, spread, track, tracking, leaflet.js, dashboard, mapbox, arcgis, qgis, web map, GIS, graph, data "/>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-            <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-57534785-2"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'UA-57534785-2');
-    </script>
+             <!-- Global site tag (gtag.js) - Google Analytics -->
+             <script async src="https://www.googletagmanager.com/gtag/js?id=UA-57534785-2"></script>
+             <script>
+                 window.dataLayer = window.dataLayer || [];
+                 function gtag(){dataLayer.push(arguments);}
+                 gtag('js', new Date());
+         
+                 gtag('config', 'UA-57534785-2');
+             </script>
     <!--Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Spartan&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700&display=swap" rel="stylesheet">
@@ -1099,6 +1099,7 @@ crossorigin="anonymous"></script>
         let timeSeriesConfirmed_Japan=[]
         let timeSeriesConfirmed_Czechia=[]
         let timeSeriesConfirmed_NL=[]
+        let timeSeriesConfirmed_Brazil=[]
         //In order to find total cases in US,China,Canada and Australia, whose data is presented separately for states
         let totalConfirmed_US=0;
         let totalConfirmed_China=0;
@@ -1265,6 +1266,9 @@ crossorigin="anonymous"></script>
                         }
                         else if (results.data[i][1]=="Czechia") {
                             timeSeriesConfirmed_Czechia.push(results.data[i].slice(4,lastCol+1))
+                        }
+                        else if (results.data[i][1]=="Brazil") {
+                            timeSeriesConfirmed_Brazil.push(results.data[i].slice(4,lastCol+1))
                         }
 
                     }
@@ -1757,6 +1761,9 @@ crossorigin="anonymous"></script>
                         },{
                             name: 'Netherlands',
                             data: timeSeriesConfirmed_NL[0]
+                        },{
+                            name: 'Brazil',
+                            data: timeSeriesConfirmed_Brazil[0]
                         }],
                         
 
@@ -1823,6 +1830,7 @@ crossorigin="anonymous"></script>
         let timeSeriesDeaths_Japan=[]
         let timeSeriesDeaths_Czechia=[]
         let timeSeriesDeaths_NL=[]
+        let timeSeriesDeaths_Brazil=[]
 
         let totalDeaths_US=0;
         let totalDeaths_China=0;
@@ -1987,6 +1995,9 @@ crossorigin="anonymous"></script>
                         }
                         else if (results.data[i][1]=="Czechia") {
                             timeSeriesDeaths_Czechia.push(results.data[i].slice(4,lastCol+1))
+                        }
+                        else if (results.data[i][1]=="Brazil") {
+                            timeSeriesDeaths_Brazil.push(results.data[i].slice(4,lastCol+1))
                         }
                     }
                     else {
@@ -2478,6 +2489,9 @@ crossorigin="anonymous"></script>
                         ,{
                             name: 'Czechia',
                             data: timeSeriesDeaths_Czechia[0]
+                        },{
+                            name: 'Brazil',
+                            data: timeSeriesDeaths_Brazil[0]
                         }],
 
                     responsive: {
@@ -2527,6 +2541,8 @@ let timeSeriesRecovered_SouthKorea=[]
 let timeSeriesRecovered_Japan=[]
 let timeSeriesRecovered_Czechia=[]
 let timeSeriesRecovered_NL=[]
+let timeSeriesRecovered_Brazil=[]
+
 
 let totalRecovered_US=0;
 let totalRecovered_China=0;
@@ -2691,6 +2707,9 @@ Papa.parse("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/css
                 }
                 else if (results.data[i][1]=="Czechia") {
                     timeSeriesRecovered_Czechia.push(results.data[i].slice(4,lastCol+1))
+                }
+                else if (results.data[i][1]=="Brazil") {
+                    timeSeriesRecovered_Brazil.push(results.data[i].slice(4,lastCol+1))
                 }
             }
             else {
@@ -3116,6 +3135,9 @@ Papa.parse("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/css
                 ,{
                     name: 'Czechia',
                     data: timeSeriesRecovered_Czechia[0]
+                },{
+                    name: 'Brazil',
+                    data: timeSeriesRecovered_Brazil[0]
                 }],
 
             responsive: {
