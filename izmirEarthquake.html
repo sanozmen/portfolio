@@ -248,7 +248,8 @@
 
         $.getJSON("assets/js/binalar.geojson", function (data) {
 
-            binalar.addData(data)
+            binalar.addData(data);
+            binalarCluster.addLayer(binalar);
             
 
         });
@@ -267,15 +268,15 @@
         }
 
         var map = L.map('map', {
-            zoom: 13,
+            zoom: 11,
             center: [38.44, 27.17],
-            layers:[grayscale,binalar]
+            layers:[grayscale,binalarCluster]
 
 
         });
 
          //setting the basic attributes of the map
-        //map.setMaxBounds(map.getBounds());
+        map.setMaxBounds(map.getBounds());
         map.setMinZoom(7);
         map.setMaxZoom(18);
 
