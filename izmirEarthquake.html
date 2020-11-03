@@ -39,6 +39,10 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 
     <link rel="stylesheet" href="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.css" />
+      <!-- marker cluster styles-->
+  <link rel="stylesheet" type="text/css"
+  href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.Default.css">
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.css">
 
     <style>
         body {
@@ -269,7 +273,7 @@
 
         var map = L.map('map', {
             zoom: 11,
-            center: [38.44, 27.17],
+            center: [38.45, 27.17],
             layers:[grayscale,binalarCluster]
 
 
