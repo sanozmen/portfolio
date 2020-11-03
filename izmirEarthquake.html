@@ -234,7 +234,7 @@
             iconUrl: 'assets/markers/house-damage-solid-yikilan.png'
         });
         let hasarliBinalarIcon = new binalarIcon({
-            iconUrl: 'assets/markers/house-damage-hasarli.png'
+            iconUrl: 'assets/markers/house-damage-solid-hasarli.png'
         });
         let muhtemelHasarliBinalarIcon = new binalarIcon({
             iconUrl: 'assets/markers/house-damage-muhtemel-hasarli.png'
@@ -335,7 +335,7 @@
         var map = L.map('map', {
             zoom: 12,
             center: [38.45, 27.17],
-            layers: [Esri_WorldImagery, binalarCluster, kamplarCluster]
+            layers: [grayscale, binalarCluster, kamplarCluster]
 
 
         });
