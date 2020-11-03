@@ -243,15 +243,15 @@
 
         let binalar = new L.geoJson(null, {
             pointToLayer: function (feature, latlng) {
-                if (feature.properties.Name == "Destroyed") {
+                if (feature.properties.Name == "Yıkılmış") {
                     var marker = L.marker(latlng, {
                         icon: yikilanBinalarIcon
                     });
-                } else if (feature.properties.Name == "Damaged") {
+                } else if (feature.properties.Name == "Hasarlı") {
                     var marker = L.marker(latlng, {
                         icon: hasarliBinalarIcon
                     });
-                } else if (feature.properties.Name == "Possibly damaged") {
+                } else if (feature.properties.Name == "Muhtemel Hasarlı") {
                     var marker = L.marker(latlng, {
                         icon: muhtemelHasarliBinalarIcon
                     });
@@ -260,16 +260,7 @@
             },
             onEachFeature: function (feature, layer) {
                 if (feature.properties) {
-                    let content = function (){
-                        if(feature.properties.Name=="Destroyed") {
-                            "Durum:" + "Yıkılmış";
-                        } else if (feature.properties.Name=="Damaged") {
-                            "Durum:" + "Hasarlı";
-                        } else if (feature.properties.Name=="Possibly damaged") {
-                            "Durum:" + "Muhtemel hasarlı";
-                        } }
-                        return content
-                    }
+                    let content = "Hasar Durumu:" + feature.properties.Name;
                     layer.bindPopup(content, {
                         closeButton: true,
                         offset: L.point(0, -1)
@@ -280,7 +271,7 @@
 
                 }
             }
-        );
+        });
 
 
         let kamplar = new L.geoJson(null, {
