@@ -39,12 +39,12 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 
     <link rel="stylesheet" href="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.css" />
-      <!-- marker cluster styles-->
-  <link rel="stylesheet" type="text/css"
-  href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.Default.css">
-<link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.css">
-<!--font awesome -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- marker cluster styles-->
+    <link rel="stylesheet" type="text/css"
+        href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.Default.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.css">
+    <!--font awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
         body {
@@ -95,24 +95,20 @@
             <div class="leaflet-sidebar-pane" id="home">
                 <h1 class="leaflet-sidebar-header">
                     <!-- in case of necessity write a title here such as "Minimize the bar" -->
-                    <p style="font-size: 15px">Minimize the Bar</p>
+                    <p style="font-size: 15px">Paneli Küçült</p>
                     <span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span>
                 </h1>
 
 
 
-                <p class="lorem" style="margin-top:20px">Click logo on the right to get back to the home page.</p>
+                <h4 style="margin-top:30px;">İzmir Depreminde Yıkılan ve Hasar Gören Yapılar</h4>
 
-                <h4>Geological Map of Istanbul</h4>
-
-                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify>This map
-                    is inspired by <a href="https://twitter.com/Paleosismolog/status/1183796422300311552"
-                        target="_blank">this post</a> on Twitter. The original data has been created by the Greater
-                    Municipality of Istanbul. The main aim is to inform the Istanbul residents about the geological
-                    structure at the location where their homes/workplaces are located, prior to expected Istanbul
-                    earthquake. A basic geolocator helps users to locate themselves in the city. Those who are not
-                    within city borders can search for an adress of interest by clicking geocoder shown on upper left
-                    part of the map with a magnifier symbol or select satellite imagery from layer control.</p>
+                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify>Bu harita
+                    30 Ekim 2020 Tarihinde İzmir'de
+                    meydana gelen deprem sonrasında yıkılan ve hasar gören yapıların konumlarını kamuoyu ile paylaşmayı
+                    amaçlar. Harita verisi Copernicus Emergency Management Service (EMS) websitesinden
+                    elde edilmiştir.
+                </p>
 
                 <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify>
                     In order to create this app, first the dataset has been downloaded and georeferenced. Then, tilesets
@@ -153,7 +149,7 @@
 
 
     <div id="map"></div>
-  
+
 
     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
         integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
@@ -164,8 +160,8 @@
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.66.1/dist/L.Control.Locate.min.js"
         charset="utf-8"></script>
     <!-- below is for bootstrap -->
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-    crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
     </script>
@@ -181,15 +177,15 @@
     </script>
 
 
-  <!--for marker clustering-->
-  <script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js"></script>
+    <!--for marker clustering-->
+    <script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js"></script>
 
-  <script src="assets/js/leaflet.awesome-markers.js"></script>
-  <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
-    integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous">
-  </script>
-     
-    
+    <script src="assets/js/leaflet.awesome-markers.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+        integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous">
+    </script>
+
+
 
 
     <script>
@@ -201,12 +197,12 @@
           attribution: 'Map data &copy; OpenStreetMap contributors'
         });*/
         //initiating the map variable
-        
+
         var osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: 'Map data &copy; OpenStreetMap contributors'
         });
 
-       
+
         var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
             subdomains: 'abcd',
@@ -214,13 +210,14 @@
         });
 
 
-        var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-  attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-});
+        var Esri_WorldImagery = L.tileLayer(
+            'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+            });
 
 
-     
-       
+
+
 
         var binalar = new L.geoJson(null, {
             pointToLayer: function (feature, latlng) {
@@ -241,59 +238,49 @@
                     layer.on("click", function () {
                         layer.openPopup();
                     });
-                  
+
                 }
             }
         });
 
 
         binalarCluster = new L.MarkerClusterGroup({
-      spiderfyOnMaxZoom: true,
-      showCoverageOnHover: true,
-      zoomToBoundsOnClick: true,
-      disableClusteringAtZoom: 16
-    });
+            spiderfyOnMaxZoom: true,
+            showCoverageOnHover: true,
+            zoomToBoundsOnClick: true,
+            disableClusteringAtZoom: 16
+        });
 
         $.getJSON("assets/js/binalar.geojson", function (data) {
 
             binalar.addData(data);
             binalarCluster.addLayer(binalar);
-            
+
 
         });
 
 
-        //grouping base layers defined above and assigning them to a var
-        var baseLayers = {
 
-
-
-        };
-
-        var tileLayers = {
-
-
-        }
 
         var map = L.map('map', {
             zoom: 12,
             center: [38.45, 27.17],
-            layers:[grayscale,binalarCluster]
+            layers: [Esri_WorldImagery, binalarCluster]
 
 
         });
 
-        var baseLayers={ 
+        var baseLayers = {
             "Uydu Görüntüsü": Esri_WorldImagery,
-            "Gri Harita":grayscale
+            "Gri Harita": grayscale
         }
 
-        var tileLayers={
-           
-         }
+        var tileLayers = {
 
-         //setting the basic attributes of the map
-       
+        }
+
+        //setting the basic attributes of the map
+
         map.setMinZoom(7);
         map.setMaxZoom(18);
 
@@ -307,7 +294,7 @@
         // add geolocator
         L.control.locate({
             strings: {
-                title: "Find me",
+                title: "Beni Bul",
             }
         }).addTo(map);
 
@@ -321,7 +308,6 @@
         L.control.layers(baseLayers, tileLayers, {
             position: "topleft"
         }).addTo(map);
-     
     </script>
 </body>
 
