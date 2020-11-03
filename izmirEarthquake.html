@@ -223,27 +223,21 @@
             }
         });
 
-        let campIcon = L.Icon.extend({
-            options: {
-                iconSize: [36, 36],
-                iconAnchor: [18, 18],
-                popupAnchor: [0, -6]
-            }
-        });
+      
         
-        let campIconIcon = new binalarIcon({
-            iconUrl: '/assets/markers/campground-solid.png'
+        let campIcon = new binalarIcon({
+            iconUrl: 'assets/markers/campground-solid.png'
         });
 
         // Create specific icons
         let yikilanBinalarIcon = new binalarIcon({
-            iconUrl: '/assets/markers/house-damage-solid-yikilan.png'
+            iconUrl: 'assets/markers/house-damage-solid-yikilan.png'
         });
         let hasarliBinalarIcon = new binalarIcon({
-            iconUrl: '/assets/markers/house-damage-hasarli.png'
+            iconUrl: 'assets/markers/house-damage-hasarli.png'
         });
         let muhtemelHasarliBinalarIcon = new binalarIcon({
-            iconUrl: '/assets/markers/house-damage-muhtemel-hasarli.png'
+            iconUrl: 'assets/markers/house-damage-muhtemel-hasarli.png'
         });
 
 
@@ -284,7 +278,7 @@
             pointToLayer: function (feature, latlng) {
                 return L.marker(latlng, {
 
-                    icon: campIconIcon
+                    icon: campIcon
 
 
                 });
