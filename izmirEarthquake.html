@@ -239,6 +239,13 @@
         });
 
 
+        binalarCluster = new L.MarkerClusterGroup({
+      spiderfyOnMaxZoom: true,
+      showCoverageOnHover: true,
+      zoomToBoundsOnClick: true,
+      disableClusteringAtZoom: 16
+    });
+
         $.getJSON("assets/js/binalar.geojson", function (data) {
 
             binalar.addData(data)
