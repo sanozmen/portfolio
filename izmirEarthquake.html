@@ -105,12 +105,15 @@
 
                 <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify>Harita
                     30 Ekim 2020 Tarihinde İzmir'de
-                    meydana gelen deprem sonrasında yıkılan ve hasar gören yapıların ve kurulan geçici kamp alanlarının konumlarını kamuoyu ile paylaşmayı
-                    amaçlar. Harita verisi <a href="https://emergency.copernicus.eu/mapping/ems-product-component/EMSR476_AOI01_GRA_PRODUCT_r1_RTP01/1" target="_blank">Copernicus Emergency Management Service (EMS)</a> websitesinden
+                    meydana gelen deprem sonrasında yıkılan/hasar gören yapıların ve kurulan geçici kamp alanlarının
+                    konumlarını kamuoyu ile paylaşmayı
+                    amaçlar. Harita verisi <a
+                        href="https://emergency.copernicus.eu/mapping/ems-product-component/EMSR476_AOI01_GRA_PRODUCT_r1_RTP01/1"
+                        target="_blank">Copernicus Emergency Management Service (EMS)</a> websitesinden
                     elde edilmiştir.
                 </p>
 
-          
+
 
 
                 <!--<p style="margin-top:120px;  font-family:'Ubuntu', sans-serif; line-height: 5px; font-size: 0.75em" align=justify ><i> References</i></p>
@@ -272,10 +275,25 @@
             disableClusteringAtZoom: 16
         });
 
+        kamplarCluster = new L.MarkerClusterGroup({
+            spiderfyOnMaxZoom: true,
+            showCoverageOnHover: true,
+            zoomToBoundsOnClick: true,
+            disableClusteringAtZoom: 16
+        });
+
         $.getJSON("assets/js/binalar.geojson", function (data) {
 
             binalar.addData(data);
             binalarCluster.addLayer(binalar);
+
+
+        });
+
+        $.getJSON("assets/js/kamplar.geojson", function (data) {
+
+            kamplar.addData(data);
+            kamplarCluster.addLayer(binalar);
 
 
         });
@@ -286,7 +304,7 @@
         var map = L.map('map', {
             zoom: 12,
             center: [38.45, 27.17],
-            layers: [Esri_WorldImagery, binalarCluster]
+            layers: [Esri_WorldImagery, binalarCluster, kamplarCluster]
 
 
         });
