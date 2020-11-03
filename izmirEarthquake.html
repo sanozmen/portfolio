@@ -299,7 +299,7 @@
         });
 
 
-        binalarCluster = new L.MarkerClusterGroup({
+     /*    binalarCluster = new L.MarkerClusterGroup({
             spiderfyOnMaxZoom: true,
             showCoverageOnHover: true,
             zoomToBoundsOnClick: true,
@@ -311,12 +311,12 @@
             showCoverageOnHover: true,
             zoomToBoundsOnClick: true,
             disableClusteringAtZoom: 16
-        });
+        }); */
 
         $.getJSON("assets/js/binalar.geojson", function (data) {
 
             binalar.addData(data);
-            binalarCluster.addLayer(binalar);
+            //binalarCluster.addLayer(binalar);
 
 
         });
@@ -324,7 +324,7 @@
         $.getJSON("assets/js/kamplar.geojson", function (data) {
 
             kamplar.addData(data);
-            kamplarCluster.addLayer(kamplar);
+            //kamplarCluster.addLayer(kamplar);
 
 
         });
@@ -335,7 +335,7 @@
         var map = L.map('map', {
             zoom: 12,
             center: [38.45, 27.17],
-            layers: [grayscale, binalarCluster, kamplarCluster]
+            layers: [grayscale, binalar, kamplar]
 
 
         });
@@ -347,8 +347,8 @@
 
         var infoLayers = {
 
-            "Binalar": binalarCluster,
-            "Kamplar": kamplarCluster
+            "Binalar": binalar,
+            "Kamplar": kamplar
 
         }
 
