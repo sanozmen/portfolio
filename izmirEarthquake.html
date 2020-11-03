@@ -254,7 +254,7 @@
             },
             onEachFeature: function (feature, layer) {
                 if (feature.properties) {
-                    var content = "Hasar Durumu:" + feature.properties.description;
+                    var content = "Açıklama:" + feature.properties.obj_desc;
                     layer.bindPopup(content, {
                         closeButton: true,
                         offset: L.point(0, -1)
