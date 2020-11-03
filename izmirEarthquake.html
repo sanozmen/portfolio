@@ -240,6 +240,31 @@
         });
 
 
+        var kamplar = new L.geoJson(null, {
+            pointToLayer: function (feature, latlng) {
+                return L.marker(latlng, {
+
+                    //icon: amenitycon
+
+
+                });
+            },
+            onEachFeature: function (feature, layer) {
+                if (feature.properties) {
+                    var content = "Hasar Durumu:" + feature.properties.description;
+                    layer.bindPopup(content, {
+                        closeButton: true,
+                        offset: L.point(0, -1)
+                    });
+                    layer.on("click", function () {
+                        layer.openPopup();
+                    });
+
+                }
+            }
+        });
+
+
         binalarCluster = new L.MarkerClusterGroup({
             spiderfyOnMaxZoom: true,
             showCoverageOnHover: true,
