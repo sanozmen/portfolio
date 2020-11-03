@@ -260,7 +260,14 @@
             },
             onEachFeature: function (feature, layer) {
                 if (feature.properties) {
-                    let content = "Hasar Durumu:" + feature.properties.Name;
+                    let content = function (){
+                        if(feature.properties.Name=="Destroyed") {
+                            "Durum:" + "Yıkılmış";
+                        } else if (feature.properties.Name=="Damaged") {
+                            "Durum:" + "Hasarlı";
+                        } else if (feature.properties.Name=="Possibly damaged") {
+                            "Durum:" + "Muhtemel hasarlı";
+                        } }
                     layer.bindPopup(content, {
                         closeButton: true,
                         offset: L.point(0, -1)
