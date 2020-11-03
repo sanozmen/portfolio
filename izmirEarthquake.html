@@ -197,61 +197,76 @@
         });*/
         //initiating the map variable
 
-        var osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        let osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: 'Map data &copy; OpenStreetMap contributors'
         });
 
 
-        var grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        let grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
             subdomains: 'abcd',
             maxZoom: 19
         });
 
 
-        var Esri_WorldImagery = L.tileLayer(
+        let Esri_WorldImagery = L.tileLayer(
             'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
                 attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
             });
 
 
+        let binalarIcon = L.Icon.extend({
+            options: {
+                iconSize: [36, 36],
+                iconAnchor: [18, 18],
+                popupAnchor: [0, -6]
+            }
+        });
+
+        let campIcon = L.Icon.extend({
+            options: {
+                iconSize: [36, 36],
+                iconAnchor: [18, 18],
+                popupAnchor: [0, -6]
+            }
+        });
+        
+        let campIconIcon = new binalarIcon({
+            iconUrl: '/assets/markers/campground-solid.svg'
+        });
+
+        // Create specific icons
+        let yikilanBinalarIcon = new binalarIcon({
+            iconUrl: '/assets/markers/house-damage-solid-yikilan.svg'
+        });
+        let hasarliBinalarIcon = new binalarIcon({
+            iconUrl: '/assets/markers/house-damage-hasarli.svg'
+        });
+        let muhtemelHasarliBinalarIcon = new binalarIcon({
+            iconUrl: '/assets/markers/house-damage-muhtemel-hasarli.svg'
+        });
 
 
-
-        var binalar = new L.geoJson(null, {
+        let binalar = new L.geoJson(null, {
             pointToLayer: function (feature, latlng) {
-                return L.marker(latlng, {
-
-                    'paint': {
-                    // make circles larger as the user zooms from z12 to z22
-                    'circle-radius': {
-                        'base': 7.75,
-                        'stops': [
-                            [13, 5],
-                            [15, 30]
-                        ]
-                    },
-                    "circle-stroke-width": 1,
-                    "circle-stroke-color": "#000",
-                    // color circles by amenity, using a match expression
-                    'circle-color': [
-                        'match',
-                        ['get', 'Name'],
-                        'Destroyed', '#d73027',
-                        'Damaged', '#4393c3',
-                        'Possibly Damaged', '#8073ac',
-                
-                        /* other */
-                        '#fee090'
-                    ]
-                }
-
-
-                });
+                if (feature.properties.Name == "Destroyed") {
+                    let marker = L.marker(latlng, {
+                        icon: yikilanBinalarIcon
+                    });
+                } else if (feature.properties.Name == "Damaged") {
+                    let marker = L.marker(latlng, {
+                        icon: hasarliBinalarIcon
+                    });
+                } else if (feature.properties.Name == "Possibly damaged") {
+                    let marker = L.marker(latlng, {
+                        icon: muhtemelHasarliBinalarIcon
+                    });
+                };
+                return marker;
             },
             onEachFeature: function (feature, layer) {
                 if (feature.properties) {
-                    var content = "Hasar Durumu:" + feature.properties.Name;
+                    let content = "Hasar Durumu:" + feature.properties.Name;
                     layer.bindPopup(content, {
                         closeButton: true,
                         offset: L.point(0, -1)
@@ -265,11 +280,11 @@
         });
 
 
-        var kamplar = new L.geoJson(null, {
+        let kamplar = new L.geoJson(null, {
             pointToLayer: function (feature, latlng) {
                 return L.marker(latlng, {
 
-                    //icon: amenitycon
+                    icon: campIconIcon
 
 
                 });
@@ -338,8 +353,8 @@
 
         var infoLayers = {
 
-            "Binalar":binalarCluster, 
-            "Kamplar":kamplarCluster
+            "Binalar": binalarCluster,
+            "Kamplar": kamplarCluster
 
         }
 
