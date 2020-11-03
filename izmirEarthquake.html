@@ -229,7 +229,7 @@
             },
             onEachFeature: function (feature, layer) {
                 if (feature.properties) {
-                    var content = "Hasar Durumu:" + feature.properties.Name;
+                    var content = "Hasar Durumu:" + feature.properties.description;
                     layer.bindPopup(content, {
                         closeButton: true,
                         offset: L.point(0, -1)
@@ -314,7 +314,10 @@
             "Gri Harita": grayscale
         }
 
-        var tileLayers = {
+        var infoLayers = {
+
+            "Binalar":binalarCluster, 
+            "Kamplar":kamplarCluster
 
         }
 
@@ -344,7 +347,7 @@
         }).addTo(map);
 
         //Adding all layers and feautes to map
-        L.control.layers(baseLayers, tileLayers, {
+        L.control.layers(baseLayers, infoLayers, {
             position: "topleft"
         }).addTo(map);
     </script>
