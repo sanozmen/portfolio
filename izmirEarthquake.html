@@ -173,8 +173,15 @@
     <!-- for titling the layer groups-->
     <script src="https://rawgithub.com/ismyrnow/Leaflet.groupedlayercontrol/master/src/leaflet.groupedlayercontrol.js">
     </script>
-    <!-- animated marker-->
-    <script src="assets/js/MovingMarker.js"></script>
+
+
+  <!--for marker clustering-->
+  <script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js"></script>
+
+  <script src="assets/js/leaflet.awesome-markers.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+    integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous">
+  </script>
      
     
 
@@ -220,15 +227,13 @@
                 if (feature.properties) {
                     var content = "Hasar Durumu:" + feature.properties.Name;
                     layer.bindPopup(content, {
-                        closeButton: false,
+                        closeButton: true,
                         offset: L.point(0, -1)
                     });
                     layer.on("click", function () {
                         layer.openPopup();
                     });
-                    layer.on("mouseout", function () {
-                        layer.openPopup();
-                    });
+                  
                 }
             }
         });
