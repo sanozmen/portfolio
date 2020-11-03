@@ -222,7 +222,29 @@
             pointToLayer: function (feature, latlng) {
                 return L.marker(latlng, {
 
-                    //icon: amenitycon
+                    'paint': {
+                    // make circles larger as the user zooms from z12 to z22
+                    'circle-radius': {
+                        'base': 7.75,
+                        'stops': [
+                            [13, 5],
+                            [15, 30]
+                        ]
+                    },
+                    "circle-stroke-width": 1,
+                    "circle-stroke-color": "#000",
+                    // color circles by amenity, using a match expression
+                    'circle-color': [
+                        'match',
+                        ['get', 'Name'],
+                        'Destroyed', '#d73027',
+                        'Damaged', '#4393c3',
+                        'Possibly Damaged', '#8073ac',
+                
+                        /* other */
+                        '#fee090'
+                    ]
+                }
 
 
                 });
