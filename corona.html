@@ -43,6 +43,8 @@
 src="https://code.jquery.com/jquery-3.4.1.js"
 integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
 crossorigin="anonymous"></script>
+
+
     <style>
         body { margin:0; padding:0; }
         #map { position:absolute; top:0; bottom:0; width:100%; }
@@ -444,6 +446,7 @@ crossorigin="anonymous"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="https://d3js.org/d3.v6.min.js"></script>
 
 <!-- below is for bootstrap -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -947,7 +950,7 @@ crossorigin="anonymous"></script>
         let confirmed= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv',null,confirmedLayer);
         let deaths= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv',null,deathsLayer);
         let recovered= omnivore.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv',null,recoveredLayer);
-        confirmed.addTo(map);
+        //confirmed.addTo(map);
         let baseLayers = {
             //not any baselayers
         };
@@ -3161,12 +3164,26 @@ Papa.parse("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/css
 });
 
 
+function addMarkers() {
+  data.forEach(function(d) {
+    var marker = L.circleMarker([+d.Lat, +d.Long]);
+    marker.addTo(map);
+  })
+}
+d3.csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv')
+  .then(function(csv) {
+    data = csv;
+    addMarkers();
+    
+});
+
+
 
 
 </script>
 
 <script>
-    $(window).load(function() {
+    $(window).on('load',function() {
       $('#loading').hide();
     });
   </script>
