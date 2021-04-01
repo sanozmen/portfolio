@@ -947,38 +947,38 @@
                     "Iran (Islamic Republic of)" && feature.properties[country] != "Mainland China" && feature
                     .properties[country] != "Republic of Korea" && feature.properties[country] !=
                     "Czech Republic") {
-                    if (feature.properties[todayString] < 1000 && feature.properties[todayString] != 0) {
+                    if (feature.properties[todayString] < 20000 && feature.properties[todayString] != 0) {
                         return L.circleMarker(layer, small_icon_r)
-                    } else if (feature.properties[todayString] >= 1000 && feature.properties[todayString] <
-                        2000) {
+                    } else if (feature.properties[todayString] >= 20000 && feature.properties[todayString] <
+                        100000) {
                         return L.circleMarker(layer, medium_icon_r)
-                    } else if (feature.properties[todayString] >= 2000) {
+                    } else if (feature.properties[todayString] >= 100000) {
                         return L.circleMarker(layer, large_icon_r)
                     }
                 } else if (feature.properties[yesterdayString] && feature.properties[country] !=
                     "Iran (Islamic Republic of)" && feature.properties[country] != "Mainland China" && feature
                     .properties[country] != "Republic of Korea" && feature.properties[country] !=
                     "Czech Republic") {
-                    if (feature.properties[yesterdayString] < 1000 && feature.properties[yesterdayString] !=
+                    if (feature.properties[yesterdayString] < 20000 && feature.properties[yesterdayString] !=
                         0) {
                         return L.circleMarker(layer, small_icon_r)
-                    } else if (feature.properties[yesterdayString] >= 1000 && feature.properties[
-                            yesterdayString] < 2000) {
+                    } else if (feature.properties[yesterdayString] >= 20000 && feature.properties[
+                            yesterdayString] < 100000) {
                         return L.circleMarker(layer, medium_icon_r)
-                    } else if (feature.properties[yesterdayString] >= 2000) {
+                    } else if (feature.properties[yesterdayString] >= 100000) {
                         return L.circleMarker(layer, large_icon_r)
                     }
                 } else if (feature.properties[tDb_yesterdayString] && feature.properties[country] !=
                     "Iran (Islamic Republic of)" && feature.properties[country] != "Mainland China" && feature
                     .properties[country] != "Republic of Korea" && feature.properties[country] !=
                     "Czech Republic") {
-                    if (feature.properties[tDb_yesterdayString] < 1000 && feature.properties[
+                    if (feature.properties[tDb_yesterdayString] < 20000 && feature.properties[
                             tDb_yesterdayString] != 0) {
                         return L.circleMarker(layer, small_icon_r)
-                    } else if (feature.properties[tDb_yesterdayString] >= 1000 && feature.properties[
-                            tDb_yesterdayString] < 2000) {
+                    } else if (feature.properties[tDb_yesterdayString] >= 20000 && feature.properties[
+                            tDb_yesterdayString] < 100000) {
                         return L.circleMarker(layer, medium_icon_r)
-                    } else if (feature.properties[tDb_yesterdayString] >= 2000) {
+                    } else if (feature.properties[tDb_yesterdayString] >= 100000) {
                         return L.circleMarker(layer, large_icon_r)
                     }
                 }
@@ -1049,31 +1049,137 @@
         let confirmed = omnivore.csv(
             'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv',
             null, confirmedLayer);
-
-
+        var tag;
         var deathsLayer = new L.layerGroup();
-        /*deaths custom geojson layer*/
+
+    
+
         function addDeathMarkers() {
             data.forEach(function (d) {
-                let deaths = L.circleMarker([+d.Lat, +d.Long], {
+                let marker = L.circleMarker([+d.Lat, +d.Long]);
 
 
-                })
-                deaths.bindPopup("my tooltip text")
-                deaths.addTo(deathsLayer)
+                if (d[todayString]) {
+                    if (d[todayString] < 10000 && d[todayString] >= 0) {
+                        marker.setStyle({
+                            radius: 10,
+                            fillColor: "#fcc5c0",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+
+                        })
+                    } else if (d[todayString] >= 10000 && d[todayString] < 20000) {
+                        marker.setStyle({
+                            radius: 14,
+                            fillColor: "#f768a1",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        })
+
+                    } else if (d[todayString] >= 20000) {
+                        marker.setStyle({
+                            radius: 18,
+                            fillColor: "#ae017e",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        })
+
+                    };
+                } else if (d[yesterdayString]) {
+                    if (d[yesterdayString] < 10000 && d[yesterdayString] >= 0) {
+                        marker.setStyle({
+                            radius: 10,
+                            fillColor: "#fcc5c0",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        })
+                    } else if (d[yesterdayString] >= 10000 && d[yesterdayString] < 20000) {
+                        marker.setStyle({
+                            fillColor: "#f768a1",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+
+                        })
+
+                    } else if (d[yesterdayString] >= 20000) {
+                        marker.setStyle({
+                            radius: 18,
+                            fillColor: "#ae017e",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        })
+
+                    };
+                } else if (d[tDb_Yesterday]) {
+                    if (d[tDb_Yesterday] < 10000 && d[tDb_Yesterday] >= 0) {
+                        marker.setStyle({
+                            radius: 10,
+                            fillColor: "#fcc5c0",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        })
+                    } else if (d[tDb_Yesterday] >= 10000 && d[tDb_Yesterday] < 20000) {
+                        marker.setStyle({
+
+                            fillColor: "#f768a1",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        })
+
+                    } else if (d[tDb_Yesterday] >= 20000) {
+                        marker.setStyle({
+                            radius: 18,
+                            fillColor: "#ae017e",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        })
+
+                    };
+
+                }
+
+                let content = "<b>Country/Region: </b>" + d[country] + "<br>" +
+                    "<b>Province/State: </b>" + d["Province/State"] + "<br>" +
+                    "<b>Death: </b>" + d[yesterdayString] + "<br>" +
+                    "<b>Data Date: </b>" + [yesterdayString];
+
+                let text = L.tooltip({
+                        permanent: true,
+                        direction: 'center',
+                        className: 'text'
+                    })
+                    .setContent(d[yesterdayString])
+                    .setLatLng(d["Lat"] + "," + d["Long"]);
 
 
-            })
 
-
+                marker.addTo(deathsLayer).bindPopup(content).bindTooltip(text);
+            });
         }
-
 
 
 
         d3.csv(
                 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv'
-                )
+            )
             .then(function (csv) {
                 data = csv;
 
