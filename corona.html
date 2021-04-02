@@ -3596,6 +3596,25 @@
                 },
 
             });
+
+
+            //02.04.2021 the most recent code to toggle the arrow left and write
+            
+            const sidebarStatus=document.querySelector("#sidebar")
+            sidebarStatus.addEventListener('click', function change ()
+             {if (sidebarStatus.classList=="leaflet-sidebar leaflet-control leaflet-sidebar-right") {
+                let arrowLeft=document.querySelector("#sidebar > div.leaflet-sidebar-tabs > ul:nth-child(1) > li.active > a > svg")
+                
+                arrowLeft.classList.replace("fa-caret-left","fa-caret-right")
+            }
+                else {
+                    let arrowRight=document.querySelector("#sidebar > div.leaflet-sidebar-tabs > ul:nth-child(1) > li:nth-child(1) > a > svg")
+                    arrowRight.classList.replace("fa-caret-right","fa-caret-left")
+                 
+                }
+            })
+
+
     </script>
 
     <script>
