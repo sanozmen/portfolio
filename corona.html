@@ -458,8 +458,7 @@
 
                 <h4 style="margin-bottom:10px; font-family:'Ubuntu', sans-serif; font-weight: bold;">Global Coronavirus
                     Map</br>(Updated Daily)</h4>
-                <a class="btn btn-warning" href="index_march1st.html" style="width: 100%;" role="button">Click to see
-                    the Situation on March,1 2020</a>
+                
 
                 <div class="upperInfo">
                     <h6 id="dataDate"></h6>
@@ -808,122 +807,6 @@
         let tDb_yesterdayString = month + "/" + tDb_Yesterday + "/" + year;
 
         let country = "Country/Region";
-        /* first one, confirmed cases geojson custom layer*/
-
-
-
-
-        /*recovered, custom geojson layer*/
-        let recoveredLayer = L.geoJson(null, {
-            filter: function () {
-                // no custom filter function but still keeping it
-                return true;
-            },
-            pointToLayer(feature, layer) {
-                /*points to the layer with the latest day's data from the csv*/
-                if (feature.properties[todayString] && feature.properties[country] !=
-                    "Iran (Islamic Republic of)" && feature.properties[country] != "Mainland China" && feature
-                    .properties[country] != "Republic of Korea" && feature.properties[country] !=
-                    "Czech Republic") {
-                    if (feature.properties[todayString] < 20000 && feature.properties[todayString] != 0) {
-                        return L.circleMarker(layer, small_icon_r)
-                    } else if (feature.properties[todayString] >= 20000 && feature.properties[todayString] <
-                        100000) {
-                        return L.circleMarker(layer, medium_icon_r)
-                    } else if (feature.properties[todayString] >= 100000) {
-                        return L.circleMarker(layer, large_icon_r)
-                    }
-                } else if (feature.properties[yesterdayString] && feature.properties[country] !=
-                    "Iran (Islamic Republic of)" && feature.properties[country] != "Mainland China" && feature
-                    .properties[country] != "Republic of Korea" && feature.properties[country] !=
-                    "Czech Republic") {
-                    if (feature.properties[yesterdayString] < 20000 && feature.properties[yesterdayString] !=
-                        0) {
-                        return L.circleMarker(layer, small_icon_r)
-                    } else if (feature.properties[yesterdayString] >= 20000 && feature.properties[
-                            yesterdayString] < 100000) {
-                        return L.circleMarker(layer, medium_icon_r)
-                    } else if (feature.properties[yesterdayString] >= 100000) {
-                        return L.circleMarker(layer, large_icon_r)
-                    }
-                } else if (feature.properties[tDb_yesterdayString] && feature.properties[country] !=
-                    "Iran (Islamic Republic of)" && feature.properties[country] != "Mainland China" && feature
-                    .properties[country] != "Republic of Korea" && feature.properties[country] !=
-                    "Czech Republic") {
-                    if (feature.properties[tDb_yesterdayString] < 20000 && feature.properties[
-                            tDb_yesterdayString] != 0) {
-                        return L.circleMarker(layer, small_icon_r)
-                    } else if (feature.properties[tDb_yesterdayString] >= 20000 && feature.properties[
-                            tDb_yesterdayString] < 100000) {
-                        return L.circleMarker(layer, medium_icon_r)
-                    } else if (feature.properties[tDb_yesterdayString] >= 100000) {
-                        return L.circleMarker(layer, large_icon_r)
-                    }
-                }
-            },
-            onEachFeature(feature, layer) {
-                /*popup content*/
-                if (feature.properties[todayString]) {
-                    let content = "<b>Country/Region: </b>" + feature.properties[country] + "<br>" +
-                        "<b>Province/State: </b>" + feature.properties["Province/State"] + "<br>" +
-                        "<b>Recovered: </b>" + feature.properties[todayString] + "<br>" + "<b>Data Date: </b>" +
-                        [todayString];
-                    layer.bindPopup(content, {
-                        closeButton: false,
-                        offset: L.point(0, -5)
-                    });
-                    /* for labels inside circles*/
-                    let text = L.tooltip({
-                            permanent: true,
-                            direction: 'center',
-                            className: 'text'
-                        })
-                        .setContent(feature.properties[todayString])
-                        .setLatLng(layer.getLatLng());
-                    layer.bindTooltip(text)
-                } else if (feature.properties[yesterdayString]) {
-                    /*popup content*/
-                    let content = "<b>Country/Region: </b>" + feature.properties[country] + "<br>" +
-                        "<b>Province/State: </b>" + feature.properties["Province/State"] + "<br>" +
-                        "<b>Recovered: </b>" + feature.properties[yesterdayString] + "<br>" +
-                        "<b>Data Date: </b>" + [yesterdayString];
-                    layer.bindPopup(content, {
-                        closeButton: false,
-                        offset: L.point(0, -5)
-                    });
-                    /* for labels inside circles*/
-                    let text = L.tooltip({
-                            permanent: true,
-                            direction: 'center',
-                            className: 'text'
-                        })
-                        .setContent(feature.properties[yesterdayString])
-                        .setLatLng(layer.getLatLng());
-                    layer.bindTooltip(text)
-                } else {
-                    /*popup content*/
-                    let content = "<b>Country/Region: </b>" + feature.properties[country] + "<br>" +
-                        "<b>Province/State: </b>" + feature.properties["Province/State"] + "<br>" +
-                        "<b>Recovered: </b>" + feature.properties[tDb_yesterdayString] + "<br>" +
-                        "<b>Data Date: </b>" + [tDb_yesterdayString];
-                    layer.bindPopup(content, {
-                        closeButton: false,
-                        offset: L.point(0, -5)
-                    });
-                    /* for labels inside circles*/
-                    let text = L.tooltip({
-                            permanent: true,
-                            direction: 'center',
-                            className: 'text'
-                        })
-                        .setContent(feature.properties[tDb_yesterdayString])
-                        .setLatLng(layer.getLatLng());
-                    layer.bindTooltip(text)
-                }
-
-            },
-        });
-        /*csv resources called and assigned to a variable*/
 
 
         var deathsLayer = new L.layerGroup();
@@ -977,6 +860,7 @@
                         })
                     } else if (d[yesterdayString] >= 10000 && d[yesterdayString] < 20000) {
                         marker.setStyle({
+                            radius: 14,
                             fillColor: "#f768a1",
                             color: "#000",
                             weight: 0.2,
@@ -1008,7 +892,7 @@
                         })
                     } else if (d[tDb_Yesterday] >= 10000 && d[tDb_Yesterday] < 20000) {
                         marker.setStyle({
-
+                            radius: 14,
                             fillColor: "#f768a1",
                             color: "#000",
                             weight: 0.2,
@@ -1062,143 +946,143 @@
 
             });
 
-     
+
         var confirmedLayer = new L.layerGroup();
 
         function addConfirmedMarkers() {
-    data.forEach(function (d) {
-        let marker = L.circleMarker([+d.Lat, +d.Long]);
+            data.forEach(function (d) {
+                let marker = L.circleMarker([+d.Lat, +d.Long]);
 
 
-        if (d[todayString]) {
-            if (d[todayString] < 250000 && d[todayString] >= 0) {
-                marker.setStyle({
-                    radius: 8,
-                    fillColor: "#feb24c",
-                    color: "#000",
-                    weight: 0.2,
-                    opacity: 1,
-                    fillOpacity: 0.8,
+                if (d[todayString]) {
+                    if (d[todayString] < 250000 && d[todayString] >= 0) {
+                        marker.setStyle({
+                            radius: 8,
+                            fillColor: "#feb24c",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8,
 
-                })
-            } else if (d[todayString] >= 250000 && d[todayString] < 1000000) {
-                marker.setStyle({
-                    radius: 10,
-                    fillColor: "#fc4e2a",
-                    color: "#000",
-                    weight: 0.2,
-                    opacity: 1,
-                    fillOpacity: 0.8
-                })
+                        })
+                    } else if (d[todayString] >= 250000 && d[todayString] < 1000000) {
+                        marker.setStyle({
+                            radius: 10,
+                            fillColor: "#fc4e2a",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        })
 
-            } else if (d[todayString] >= 1000000 && d[todayString] < 4000000) {
-                marker.setStyle({
-                    radius: 14,
-                    fillColor: "#e31a1c",
-                    color: "#000",
-                    weight: 0.2,
-                    opacity: 1,
-                    fillOpacity: 0.8
-                })
+                    } else if (d[todayString] >= 1000000 && d[todayString] < 4000000) {
+                        marker.setStyle({
+                            radius: 14,
+                            fillColor: "#e31a1c",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        })
 
-            } else if (d[todayString] >= 4000000) {
-                marker.setStyle({
-                    radius: 18,
-                    fillColor: "#bd0026",
-                    color: "#000",
-                    weight: 0.2,
-                    opacity: 1,
-                    fillOpacity: 0.8
-                })
+                    } else if (d[todayString] >= 4000000) {
+                        marker.setStyle({
+                            radius: 18,
+                            fillColor: "#bd0026",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        })
 
-            };
-        } else if (d[yesterdayString]) {
+                    };
+                } else if (d[yesterdayString]) {
 
-            if (d[yesterdayString] < 250000 && d[yesterdayString] >= 0) {
-                marker.setStyle({
-                    radius: 8,
-                    fillColor: "#feb24c",
-                    color: "#000",
-                    weight: 0.2,
-                    opacity: 1,
-                    fillOpacity: 0.8,
+                    if (d[yesterdayString] < 250000 && d[yesterdayString] >= 0) {
+                        marker.setStyle({
+                            radius: 8,
+                            fillColor: "#feb24c",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8,
 
-                })
-            } else if (d[yesterdayString] >= 250000 && d[yesterdayString] < 1000000) {
-                marker.setStyle({
-                    radius: 10,
-                    fillColor: "#fc4e2a",
-                    color: "#000",
-                    weight: 0.2,
-                    opacity: 1,
-                    fillOpacity: 0.8
-                })
+                        })
+                    } else if (d[yesterdayString] >= 250000 && d[yesterdayString] < 1000000) {
+                        marker.setStyle({
+                            radius: 10,
+                            fillColor: "#fc4e2a",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        })
 
-            } else if (d[yesterdayString] >= 1000000 && d[yesterdayString] < 4000000) {
-                marker.setStyle({
-                    radius: 14,
-                    fillColor: "#e31a1c",
-                    color: "#000",
-                    weight: 0.2,
-                    opacity: 1,
-                    fillOpacity: 0.8
-                })
+                    } else if (d[yesterdayString] >= 1000000 && d[yesterdayString] < 4000000) {
+                        marker.setStyle({
+                            radius: 14,
+                            fillColor: "#e31a1c",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        })
 
-            } else if (d[yesterdayString] >= 4000000) {
-                marker.setStyle({
-                    radius: 18,
-                    fillColor: "#bd0026",
-                    color: "#000",
-                    weight: 0.2,
-                    opacity: 1,
-                    fillOpacity: 0.8
-                })
+                    } else if (d[yesterdayString] >= 4000000) {
+                        marker.setStyle({
+                            radius: 18,
+                            fillColor: "#bd0026",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        })
 
-            };
-        } else if (d[tDb_Yesterday]) {
-            if (d[tDb_Yesterday] < 250000 && d[tDb_Yesterday] >= 0) {
-                marker.setStyle({
-                    radius: 8,
-                    fillColor: "#feb24c",
-                    color: "#000",
-                    weight: 0.2,
-                    opacity: 1,
-                    fillOpacity: 0.8,
+                    };
+                } else if (d[tDb_Yesterday]) {
+                    if (d[tDb_Yesterday] < 250000 && d[tDb_Yesterday] >= 0) {
+                        marker.setStyle({
+                            radius: 8,
+                            fillColor: "#feb24c",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8,
 
-                })
-            } else if (d[tDb_Yesterday] >= 250000 && d[tDb_Yesterday] < 1000000) {
-                marker.setStyle({
-                    radius: 10,
-                    fillColor: "#fc4e2a",
-                    color: "#000",
-                    weight: 0.2,
-                    opacity: 1,
-                    fillOpacity: 0.8
-                })
+                        })
+                    } else if (d[tDb_Yesterday] >= 250000 && d[tDb_Yesterday] < 1000000) {
+                        marker.setStyle({
+                            radius: 10,
+                            fillColor: "#fc4e2a",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        })
 
-            } else if (d[tDb_Yesterday] >= 1000000 && d[tDb_Yesterday] < 4000000) {
-                marker.setStyle({
-                    radius: 14,
-                    fillColor: "#e31a1c",
-                    color: "#000",
-                    weight: 0.2,
-                    opacity: 1,
-                    fillOpacity: 0.8
-                })
+                    } else if (d[tDb_Yesterday] >= 1000000 && d[tDb_Yesterday] < 4000000) {
+                        marker.setStyle({
+                            radius: 14,
+                            fillColor: "#e31a1c",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        })
 
-            } else if (d[tDb_Yesterday] >= 4000000) {
-                marker.setStyle({
-                    radius: 18,
-                    fillColor: "#bd0026",
-                    color: "#000",
-                    weight: 0.2,
-                    opacity: 1,
-                    fillOpacity: 0.8
-                })
+                    } else if (d[tDb_Yesterday] >= 4000000) {
+                        marker.setStyle({
+                            radius: 18,
+                            fillColor: "#bd0026",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        })
 
-            };
+                    };
 
-        }
+                }
 
                 let content = "<b>Country/Region: </b>" + d[country] + "<br>" +
                     "<b>Province/State: </b>" + d["Province/State"] + "<br>" +
@@ -1231,9 +1115,148 @@
 
 
             });
-        let recovered = omnivore.csv(
-            'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv',
-            null, recoveredLayer);
+
+   
+
+        var recoveredLayer = new L.layerGroup();
+
+        function addRecoveredMarkers() {
+            data.forEach(function (d) {
+                let marker = L.circleMarker([+d.Lat, +d.Long]);
+
+
+                if (d[todayString]) {
+                    if (d[todayString] < 250000 && d[todayString] >= 0) {
+                        marker.setStyle({
+                            radius: 10,
+                            fillColor: "#7fcdbb",
+                            color: "000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8,
+
+                        })
+                    } else if (d[todayString] >= 250000 && d[todayString] < 1000000) {
+                        marker.setStyle({
+                            radius: 14,
+                            fillColor: "#1d91c0",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        })
+
+                    } else if (d[todayString] > 1000000) {
+                        marker.setStyle({
+                            radius: 18,
+                            fillColor: "#225ea8",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        })
+
+                    }
+                } else if (d[yesterdayString]) {
+
+                    if (d[yesterdayString] < 250000 && d[yesterdayString] >= 0) {
+                        marker.setStyle({
+                            radius: 10,
+                            fillColor: "#7fcdbb",
+                            color: "000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+
+                        })
+                    } else if (d[yesterdayString] >= 250000 && d[yesterdayString] < 1000000) {
+                        marker.setStyle({
+                            radius: 14,
+                            fillColor: "#1d91c0",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        })
+
+                    } else if (d[yesterdayString] > 1000000) {
+                        marker.setStyle({
+                            radius: 18,
+                            fillColor: "#225ea8",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        })
+
+                    }
+                } else if (d[tDb_Yesterday]) {
+                    if (d[tDb_Yesterday] < 250000 && d[tDb_Yesterday] >= 0) {
+                        marker.setStyle({
+                            radius: 10,
+                            fillColor: "#7fcdbb",
+                            color: "000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+
+                        })
+                    } else if (d[tDb_Yesterday] >= 250000 && d[tDb_Yesterday] < 1000000) {
+                        marker.setStyle({
+                            radius: 14,
+                            fillColor: "#1d91c0",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        })
+
+                    } else if (d[tDb_Yesterday] >= 1000000) {
+                        marker.setStyle({
+                            radius: 18,
+                            fillColor: "#225ea8",
+                            color: "#000",
+                            weight: 0.2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        })
+
+                    }
+
+                }
+
+                let content = "<b>Country/Region: </b>" + d[country] + "<br>" +
+                    "<b>Province/State: </b>" + d["Province/State"] + "<br>" +
+                    "<b>Recovered: </b>" + d[yesterdayString] + "<br>" +
+                    "<b>Data Date: </b>" + [yesterdayString];
+
+                let text = L.tooltip({
+                        permanent: true,
+                        direction: 'center',
+                        className: 'text'
+                    })
+                    .setContent(d[yesterdayString])
+                    .setLatLng(d["Lat"] + "," + d["Long"]);
+
+
+
+                marker.addTo(recoveredLayer).bindPopup(content).bindTooltip(text);
+            });
+        }
+
+
+
+        d3.csv(
+                'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
+            )
+            .then(function (csv) {
+                data = csv;
+
+                addRecoveredMarkers();
+
+
+            });
+
         //confirmed.addTo(map);
         let baseLayers = {
             //not any baselayers
@@ -1297,7 +1320,7 @@
         confirmedLegend.onAdd = function (map) {
             let div = L.DomUtil.create('div', 'info legend'),
                 grades = [200, 300, 400, 500],
-                labels2 = [0, 1000, 5000, 10000],
+                labels2 = ["0", "250k", "1m", "4m"],
                 labels = ['<strong>Legend</strong>', "Confirmed Cases"],
                 from, to;
             //iterate through grades and create a color field and label for each
@@ -1318,7 +1341,7 @@
         deathsLegend.onAdd = function (map) {
             let div = L.DomUtil.create('div', 'info legend'),
                 grades = [100, 200, 300],
-                labels2 = [0, 50, 500],
+                labels2 = ["0", "10k", "20k"],
                 labels = ['<strong>Legend</strong>', "Deaths"],
                 from, to;
             //iterate through grades and create a color field and label for each
@@ -1339,7 +1362,7 @@
 
             let div = L.DomUtil.create('div', 'info legend'),
                 grades = [100, 200, 300],
-                labels2 = [0, 1000, 2000],
+                labels2 = ["0", "250k", "1m"],
                 labels = ['<strong>Legend</strong>', "Recovered"],
                 from, to;
             //iterate through grades and create a color field and label for each
@@ -1370,7 +1393,7 @@
             confirmedLegend.remove(map);
             recoveredLegend.remove(map);
         };
-        recovered.beforeAdd = function (map) {
+        recoveredLayer.beforeAdd = function (map) {
             deathsLegend.remove(map);
             confirmedLegend.remove(map);
             recoveredLegend.addTo(map);
