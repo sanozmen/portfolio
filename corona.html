@@ -453,10 +453,10 @@
                         <p class="fa-pulse">X</p>
                     </span>
                 </h1>
-                <p class="lorem" style="margin-top:20px">Click either "X" on top left corner or <i
-                        class="fas fa-caret-right"></i> symbol on top right corner to hide the pane and see the map.</p>
+               <!-- <p class="lorem" style="margin-top:20px">Click either "X" on top left corner or <i
+                        class="fas fa-caret-right"></i> symbol on top right corner to hide the pane and see the map.</p> -->
 
-                <h4 style="margin-bottom:10px; font-family:'Ubuntu', sans-serif; font-weight: bold;">Global Coronavirus
+                <h4 style="margin-bottom:10px; margin-top:10px; font-family:'Ubuntu', sans-serif; font-weight: bold;">Global Coronavirus
                     Map</br>(Updated Daily)</h4>
                 
 
@@ -467,19 +467,26 @@
                     <h5 id="totalRecovered"></h5>
                 </div>
 
+                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify>  <a
+                        href="https://github.com/CSSEGISandData/COVID-19" target="_blank">
+                        Data </a> is provided by John Hopkin's researchers.</p>
+               
+                <h6 style="background: none;">How to use the map</h6>
+                <p style="margin-top:10px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify>Labels inside the circles represent the cumulative number of persons. Click on the radio buttons on the top-right corner to switch between layers. To open popup windows with more details such as the name of a location, date of data. </p>
+
                 <div id="containerLineConfirmed" style="width:100%; height:500px;"></div>
                 <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify>In order
-                    to see the graph in full screen you can click the symbol <i class="fa fa-bars"></i>
-                    on top right corner (not possible for mobile devices) of the graph. Hovering over the name of the
+                    to see the graph in full screen, you can click the symbol <i class="fa fa-bars"></i>
+                    on the top right corner (not possible for mobile devices) of the graph. Hovering over the name of the
                     country in the legend will highlight its line on the graph. To select countries of interest and
                     switch on/off others click on country names shown in the legend. </p>
                 <div class="Increase">
                     <h6 id="caseIncrease"></h6>
                 </div>
 
-                <div class="firstEverInfo">
+                <!--<div class="firstEverInfo">
                     <h6 id="firstCases"></h6>
-                </div>
+                </div> -->
 
                 <div class="percentConfirmed">
                     <h6 id="topFive"></h6>
@@ -489,9 +496,8 @@
                 </div>
                 <div id="containerLineDeaths" style="width:100%; height:500px;"></div>
                 <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify>In order
-                    to see the graph in full screen you can click the symbol <i class="fa fa-bars"></i> on top right
-                    corner
-                    (not possible for mobile devices) of the graph. Hovering over the name of the country in the legend
+                    to see the graph in full screen, you can click the symbol <i class="fa fa-bars"></i> on the top right
+                    corner (not possible for mobile devices) of the graph. Hovering over the name of the country in the legend
                     will highlight its line on the graph. To select countries of interest and switch on/off others click
                     on country names shown in the legend. </p>
                 <div class="Increase2">
@@ -513,17 +519,17 @@
 
                 <div id="containerLineRecovered" style="width:100%; height:500px;"></div>
                 <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify>In order
-                    to see the graph in full screen you can click the symbol <i class="fa fa-bars"></i>
-                    on top right corner (not possible for mobile devices) of the graph. Hovering over the name of the
+                    to see the graph in full screen, you can click the symbol <i class="fa fa-bars"></i>
+                    on the top right corner (not possible for mobile devices) of the graph. Hovering over the name of the
                     country in the legend will highlight its line on the graph. To select countries of interest and
                     switch on/off others click on country names shown in the legend. </p>
 
                 <div class="RecoveredInfo">
                     <h6 id="recoveredIncrease"></h6>
                 </div>
-                <div class="firstRecoveredInfo">
+                <!--<div class="firstRecoveredInfo">
                     <h6 id="firstRecovered"></h6>
-                </div>
+                </div> -->
                 <div class="percentRecoveredInfo">
                     <h6 id="topFiveRecovered"></h6>
                 </div>
@@ -531,24 +537,7 @@
 
 
 
-                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify>This
-                    interactive world map aims to track the global spread of 2019 Novel Coronavirus
-                    (COVID-19) outbreak, inspired by <a
-                        href="https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6"
-                        target="_blank"> this popular map</a> produced by researchers at Johns Hopkins CSSE. <a
-                        href="https://github.com/CSSEGISandData/COVID-19" target="_blank">
-                        Daily updated data </a> is also provided by John Hopkin's researchers.</p>
-                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify>There are
-                    3 different layers. First "Confirmed Cases"
-                    shows the cumulative number of infected individuals at those locations. Second one "Deaths"
-                    indicates cumulative number of deaths caused by
-                    this disease. Lastly, the layer "Recover" denotes
-                    the cumulative number of persons who got recovered. </p>
-                <h6 style="background: none;">How to use the map</h6>
-                <p style="margin-top:10px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify>Labels
-                    inside the circles represents the cumulative number of persons. Click on radio-buttons on top-right
-                    corner to switch between layers. In order to open popup windows
-                    with more details such as name of location, date of data. </p>
+                
                 <div id="containerBarConfirmed" style="width:100%; height:3500px;"></div>
                 <hr>
                 <div id="containerBarDeaths" style="width:100%; height:3500px;"></div>
@@ -1765,7 +1754,7 @@
 
                     //push the values the document
                     document.getElementById("caseIncrease").innerHTML =
-                        "<b>Top 10 countries with the highest daily increase in number of persons infected:</b> " +
+                        "<b>Daily Confirmed Cases per Country:</b> " +
                         "</br>" + topTenDiffString
 
                     //zip values from both lists perc change and labels
@@ -1900,11 +1889,11 @@
                     }
                     createString()
                     //push the values the document
-                    document.getElementById("firstCases").innerHTML =
+                   /* document.getElementById("firstCases").innerHTML =
                         "<b>Countries that most recently announced the first confirmed cases within their borders:</b> " +
-                        "</br>" + newCasesString
+                        "</br>" + newCasesString*/
                     document.getElementById("topFive").innerHTML =
-                        "<b>Countries with the highest daily % change in confirmed cases (over 100 cases): </b> " +
+                        "<b>Highest daily % change in confirmed cases: </b> " +
                         "</br>" + topFiveString
 
                     //////// Speed in reaching cases
@@ -1974,7 +1963,7 @@
                     fastestConfirmed100000 = fastestCountry
                     //push the values the document
                     document.getElementById("fastestConfirmed").innerHTML =
-                        "<b>Country (except China) fastest reaching to:</b> " + "</br>" + fastestConfirmed1000 +
+                        "<b>Country (except China) fastest reached to:</b> " + "</br>" + fastestConfirmed1000 +
                         "</br>" + fastestConfirmed5000 + "</br>" + fastestConfirmed10000 + "</br>" +
                         fastestConfirmed20000 + "</br>" + fastestConfirmed30000 + "</br>" +
                         fastestConfirmed50000 + "</br>" + fastestConfirmed70000 + "</br>" +
@@ -2531,7 +2520,7 @@
 
                     //push the values the document
                     document.getElementById("deathIncrease").innerHTML =
-                        "<b>Top 10 countries with the highest daily increase in number of deaths:</b> " +
+                        "<b>Top 10 countries with the highest daily number of deaths:</b> " +
                         "</br>" + topTenDiffString
 
                     //zip values from both lists perc change and labels
@@ -2738,7 +2727,7 @@
                     fastestDeath10000 = fastestCountry
                     //push the values the document
                     document.getElementById("fastestDeaths").innerHTML =
-                        "<b>Country (except China) fastest reaching to:</b> " + "</br>" + fastestDeath50 +
+                        "<b>Country (except China) fastest reached to:</b> " + "</br>" + fastestDeath50 +
                         "</br>" + fastestDeath100 + "</br>" + fastestDeath200 + "</br>" + fastestDeath500 +
                         "</br>" + fastestDeath1000 + "</br>" + fastestDeath2000 + "</br>" + fastestDeath5000 +
                         "</br>" + fastestDeath10000
@@ -3278,7 +3267,7 @@
 
                     //push the values the document
                     document.getElementById("recoveredIncrease").innerHTML =
-                        "<b>Top 10 countries with the highest daily increase in number of recovered:</b> " +
+                        "<b>Top 10 countries with the highest daily number of recovered:</b> " +
                         "</br>" + topTenDiffString
 
                     //zip values from both lists perc change and labels
@@ -3411,9 +3400,9 @@
                     }
                     createString()
                     //push the values the document
-                    document.getElementById("firstRecovered").innerHTML =
+                    /*document.getElementById("firstRecovered").innerHTML =
                         "<b>Countries that most recently announced the first recovered within their borders:</b> " +
-                        "</br>" + newCasesString
+                        "</br>" + newCasesString*/
                     document.getElementById("topFiveRecovered").innerHTML =
                         "<b>Countries with the highest daily % change in recovered (over 10 recovered): </b> " +
                         "</br>" + topFiveString
