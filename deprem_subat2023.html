@@ -243,7 +243,7 @@
             },
             onEachFeature: function (feature, layer) {
                 if (feature.properties) {
-                    let content = "Hasar Durumu:" + feature.properties.Name;
+                    let content = "Hasar Durumu:" + feature.properties.damage_gra;
                     layer.bindPopup(content, {
                         closeButton: true,
                         offset: L.point(0, -1)
@@ -257,29 +257,7 @@
         });
 
 
-        let kamplar = new L.geoJson(null, {
-            pointToLayer: function (feature, latlng) {
-                return L.marker(latlng, {
 
-                    icon: campIcon
-
-
-                });
-            },
-            onEachFeature: function (feature, layer) {
-                if (feature.properties) {
-                    var content = "Açıklama:" + feature.properties.obj_desc;
-                    layer.bindPopup(content, {
-                        closeButton: true,
-                        offset: L.point(0, -1)
-                    });
-                    layer.on("click", function () {
-                        layer.openPopup();
-                    });
-
-                }
-            }
-        });
 
 
      /*    binalarCluster = new L.MarkerClusterGroup({
@@ -296,7 +274,7 @@
             disableClusteringAtZoom: 16
         }); */
 
-        $.getJSON("assets/js/EMSR648_AOI19_GRA_PRODUCT_builtUpP_r1_v1.geojson", function (data) {
+        $.getJSON("assets/js/EMSR648_AOI19_GRA_PRODUCT_builtUpP_r1_v1.json", function (data) {
 
             binalar.addData(data);
             //binalarCluster.addLayer(binalar);
