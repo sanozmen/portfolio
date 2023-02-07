@@ -252,6 +252,29 @@
             }
         });
 
+        
+        let alanlar = new L.geoJson(null, {
+  style: function (feature) {
+    if (feature.properties.damage_gra == "Destroyed") {
+      return {color: "#ff0000"};
+    } else if (feature.properties.damage_gra == "Damaged") {
+      return {color: "#ffff00"};
+    } else if (feature.properties.damage_gra == "Possibly damaged") {
+      return {color: "#00ff00"};
+    }
+  },
+  onEachFeature: function (feature, layer) {
+    if (feature.properties.damage_gra == "Destroyed") {
+      layer.bindPopup("<b>Yıkılan Alan</b><br>");
+    } else if (feature.properties.damage_gra == "Damaged") {
+      layer.bindPopup("<b>Hasarlı Alan</b><br>");
+    } else if (feature.properties.damage_gra == "Possibly damaged") {
+      layer.bindPopup("<b>Muhtemel Hasarlı Alan</b><br>");
+    }
+  }
+});
+
+
 
 
 
@@ -271,11 +294,12 @@
         }); */
 
         $.getJSON("assets/js/EMSR648_AOI19_GRA_PRODUCT_builtUpP_r1_v1.json", function (data) {
-
             binalar.addData(data);
             //binalarCluster.addLayer(binalar);
+        });
 
-
+        $.getJSON("assets/js/EMSR648_AOI09_GRA_PRODUCT_builtUpA_r1_v1.json", function (data) {
+            alanlar.addData(data);
         });
 
 
@@ -283,7 +307,7 @@
 
 
         var map = L.map('map', {
-            zoom: 9,
+            zoom: 8,
             center: [37.71, 37.10],
             layers: [grayscale, binalar]
 
@@ -297,7 +321,8 @@
 
         var infoLayers = {
 
-            "Binalar": binalar
+            "Binalar": binalar,
+            "Alanlar": alanlar
            
         }
 
