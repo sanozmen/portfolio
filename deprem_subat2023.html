@@ -273,7 +273,7 @@ return {color: "##de2d26"};
 }
 },
 onEachFeature: function (feature, layer) {
-if (feature.properties.damage_gra == "Destroyed") {
+if (feature.properties.damage_gra == "Damaged") {
 layer.bindTooltip("<b>Yıkılan Alan</b><br>").openTooltip();
 layer.on("mouseover", function(e) {
 this.openPopup();
@@ -281,7 +281,7 @@ this.openPopup();
 layer.on("mouseout", function(e) {
 this.closePopup();
 });
-} else if (feature.properties.damage_gra == "Damaged") {
+} else if (feature.properties.damage_gra == "Possibly damaged") {
 layer.bindTooltip("<b>Hasarlı Alan</b><br>").openTooltip();
 layer.on("mouseover", function(e) {
 this.openPopup();
