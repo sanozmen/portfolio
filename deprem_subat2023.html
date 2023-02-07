@@ -242,7 +242,6 @@
                 return marker;
             },
             onEachFeature: function (feature, layer) {
-                conditionally show popup content on click changing depending on the attribute value
                 if (feature.properties.damage_gra == "Destroyed") {
                     layer.bindPopup("<b>Yıkılan Bina</b><br>");
                 } else if (feature.properties.damage_gra == "Damaged") {
@@ -250,7 +249,7 @@
                 } else if (feature.properties.damage_gra == "Possibly damaged") {
                     layer.bindPopup("<b>Muhtemel Hasarlı Bina</b><br>" );
                 };
-
+            }
         });
 
 
