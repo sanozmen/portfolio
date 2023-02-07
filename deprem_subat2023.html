@@ -240,38 +240,65 @@
                     });
                 };
                 return marker;
-            },
-            onEachFeature: function (feature, layer) {
-                if (feature.properties.damage_gra == "Destroyed") {
-                    layer.bindPopup("<b>Yıkılan Bina</b><br>");
-                } else if (feature.properties.damage_gra == "Damaged") {
-                    layer.bindPopup("<b>Hasarlı Bina</b><br>" );
-                } else if (feature.properties.damage_gra == "Possibly damaged") {
-                    layer.bindPopup("<b>Muhtemel Hasarlı Bina</b><br>" );
-                };
             }
         });
+binalar.on("mouseover", function(e) {
+    e.layer.openPopup();
+});
+binalar.on("mouseout", function(e) {
+    e.layer.closePopup();
+});
+binalar.on("add", function (e) {
+    e.layer.eachLayer(function (layer) {
+        if (layer.feature.properties.damage_gra == "Destroyed") {
+            layer.bindPopup("<b>Yıkılan Bina</b><br>");
+        } else if (layer.feature.properties.damage_gra == "Damaged") {
+            layer.bindPopup("<b>Hasarlı Bina</b><br>" );
+        } else if (layer.feature.properties.damage_gra == "Possibly damaged") {
+            layer.bindPopup("<b>Muhtemel Hasarlı Bina</b><br>" );
+        };
+    });
+});
+
 
         
-        let alanlar = new L.geoJson(null, {
-  style: function (feature) {
-    if (feature.properties.damage_gra == "Destroyed") {
-      return {color: "#ffeda0"};
-    } else if (feature.properties.damage_gra == "Damaged") {
-      return {color: "#feb24c"};
-    } else if (feature.properties.damage_gra == "No visible damage") {
-      return {color: "##de2d26"};
-    }
-  },
-  onEachFeature: function (feature, layer) {
-    if (feature.properties.damage_gra == "Destroyed") {
-      layer.bindPopup("<b>Yıkılan Alan</b><br>");
-    } else if (feature.properties.damage_gra == "Damaged") {
-      layer.bindPopup("<b>Hasarlı Alan</b><br>");
-    } else if (feature.properties.damage_gra == "No visible damage") {
-      layer.bindPopup("<b>Muhtemel Hasarlı Alan</b><br>");
-    }
-  }
+let alanlar = new L.geoJson(null, {
+style: function (feature) {
+if (feature.properties.damage_gra == "Destroyed") {
+return {color: "#ffeda0"};
+} else if (feature.properties.damage_gra == "Damaged") {
+return {color: "#feb24c"};
+} else if (feature.properties.damage_gra == "No visible damage") {
+return {color: "##de2d26"};
+}
+},
+onEachFeature: function (feature, layer) {
+if (feature.properties.damage_gra == "Destroyed") {
+layer.bindTooltip("<b>Yıkılan Alan</b><br>").openTooltip();
+layer.on("mouseover", function(e) {
+this.openPopup();
+});
+layer.on("mouseout", function(e) {
+this.closePopup();
+});
+} else if (feature.properties.damage_gra == "Damaged") {
+layer.bindTooltip("<b>Hasarlı Alan</b><br>").openTooltip();
+layer.on("mouseover", function(e) {
+this.openPopup();
+});
+layer.on("mouseout", function(e) {
+this.closePopup();
+});
+} else if (feature.properties.damage_gra == "No visible damage") {
+layer.bindTooltip("<b>Muhtemel Hasarlı Alan</b><br>").openTooltip();
+layer.on("mouseover", function(e) {
+this.openPopup();
+});
+layer.on("mouseout", function(e) {
+this.closePopup();
+});
+}
+}
 });
 
 
