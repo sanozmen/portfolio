@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset='utf-8' />
+    <title>Deprem-Subat 2023</title>
+    <meta name="description"
+        content="izmir, deprem, earthquake, geocoder,geology, geology map, geological map, harita, interaktif, interactive" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+     crossorigin=""/>
+
+    <link rel="stylesheet" href="assets/css/leaflet-sidebar.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.66.1/dist/L.Control.Locate.min.css" />
+    <link rel="stylesheet" href="assets/css/L.Control.MousePosition.css" />
+    <!-- bootstrap css-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+
+    <link rel="stylesheet" href="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.css" />
+    <!-- marker cluster styles-->
+    <link rel="stylesheet" type="text/css"
+        href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.Default.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.4/dist/MarkerCluster.css">
+    <!--font awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        html,
+        body,
+        #map {
+            height: 100%;
+            font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
+        }
+
+        .lorem {
+            font-style: italic;
+            color: #AAA;
+        }
+
+        .leaflet-control-layers-group-name {
+            font-weight: bold;
+            margin-bottom: .2em;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="sidebar" class="leaflet-sidebar collapsed">
+        <!-- Nav tabs -->
+        <div class="leaflet-sidebar-tabs">
+            <ul role="tablist">
+                <li><a href="#home" role="tab"><i class="fa fa-bars"></i></a></li>
+                <li><a href="index.html" role="tab"><img src="images/logo.svg" alt="" />></i></a></li>
+                <!-- <li class="disabled"><a href="#messages" role="tab"><i class="fa fa-envelope"></i></a></li> -->
+            </ul>
+            <ul role="tablist">
+                <li><a href="https://github.com/sanozmen/" role="tab" target="_blank"><i
+                            class="fa fa-github fa-lg"></i></a></li>
+            </ul>
+            <!--<ul role="tablist">
+                <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
+            </ul> -->
+        </div>
+
+        <!-- Tab panes -->
+        <div class="leaflet-sidebar-content">
+            <div class="leaflet-sidebar-pane" id="home">
+                <h1 class="leaflet-sidebar-header">
+                    <!-- in case of necessity write a title here such as "Minimize the bar" -->
+                    <p style="font-size: 15px">Paneli Küçült</p>
+                    <span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span>
+                </h1>
+
+
+
+                <h4 style="margin-top:30px;">İzmir Depremi-30.10.2020</h4>
+
+                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify>Harita
+                    30 Ekim 2020 Tarihinde İzmir'de
+                    meydana gelen deprem sonrasında yıkılan/hasar gören yapıların ve kurulan geçici kamp alanlarının
+                    konumlarını kamuoyu ile paylaşmayı
+                    amaçlar. Harita verisi <a
+                        href="https://emergency.copernicus.eu/mapping/ems-product-component/EMSR476_AOI01_GRA_PRODUCT_r1_RTP01/1"
+                        target="_blank">Copernicus Emergency Management Service (EMS)</a> websitesinden
+                    elde edilmiştir.
+                </p>
+
+
+
+
+                <!--<p style="margin-top:120px;  font-family:'Ubuntu', sans-serif; line-height: 5px; font-size: 0.75em" align=justify ><i> References</i></p>
+
+                 <p style="margin-top:5px;  font-family:'Ubuntu', sans-serif; line-height: 20px; font-size: 0.75em" align=justify ><i> Truck icon made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"              title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"              title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></i></p> -->
+
+
+
+
+                <!-- just added this button as a reminder for using this bar as button container in future works-->
+                <!-- <button type="button" class="btn btn-primary">Primary</button> -->
+
+            </div>
+
+            <div class="leaflet-sidebar-pane" id="profile">
+                <h1 class="leaflet-sidebar-header">Profile<span class="leaflet-sidebar-close"><i
+                            class="fa fa-caret-right"></i></span></h1>
+            </div>
+
+            <div class="leaflet-sidebar-pane" id="messages">
+                <h1 class="leaflet-sidebar-header">Messages<span class="leaflet-sidebar-close"><i
+                            class="fa fa-caret-right"></i></span></h1>
+            </div>
+
+            <div class="leaflet-sidebar-pane" id="settings">
+                <h1 class="leaflet-sidebar-header">Settings<span class="leaflet-sidebar-close"><i
+                            class="fa fa-caret-right"></i></span></h1>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="map"></div>
+
+
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+    crossorigin=""></script>
+    <script src="assets/js/leaflet-sidebar.js"></script>
+    <script src="assets/js/L.Control.MousePosition.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.66.1/dist/L.Control.Locate.min.js"
+        charset="utf-8"></script>
+    <!-- below is for bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script>
+    <!--for reading geojson via ajax-->
+    <script src="assets/js/leaflet-ajax.js"></script>
+    <!-- for titling the layer groups-->
+    <script src="https://rawgithub.com/ismyrnow/Leaflet.groupedlayercontrol/master/src/leaflet.groupedlayercontrol.js">
+    </script>
+
+
+    <!--for marker clustering-->
+    <script src="https://unpkg.com/leaflet.markercluster@1.0.4/dist/leaflet.markercluster.js"></script>
+
+    <script src="assets/js/leaflet.awesome-markers.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+        integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous">
+    </script>
+
+
+
+
+    <script>
+
+
+        let osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; OpenStreetMap contributors'
+        });
+
+
+        let grayscale = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 19
+        });
+
+
+        let Esri_WorldImagery = L.tileLayer(
+            'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+            });
+
+
+        let binalarIcon = L.Icon.extend({
+            options: {
+                iconSize: [36, 36],
+                iconAnchor: [18, 18],
+                popupAnchor: [0, -6]
+            }
+        });
+
+
+
+        let campIcon = new binalarIcon({
+            iconUrl: 'assets/markers/campground-solid.png'
+        });
+
+        // Create specific icons
+        let yikilanBinalarIcon = new binalarIcon({
+            iconUrl: 'assets/markers/house-damage-solid-yikilan.png'
+        });
+        let hasarliBinalarIcon = new binalarIcon({
+            iconUrl: 'assets/markers/house-damage-solid-hasarli.png'
+        });
+        let muhtemelHasarliBinalarIcon = new binalarIcon({
+            iconUrl: 'assets/markers/house-damage-muhtemel-hasarli.png'
+        });
+
+
+        let binalar = new L.geoJson(null, {
+            pointToLayer: function (feature, latlng) {
+                if (feature.properties.damage_gra == "Destroyed") {
+                    var marker = L.marker(latlng, {
+                        icon: yikilanBinalarIcon
+                    });
+                } else if (feature.properties.damage_gra == "Damaged") {
+                    var marker = L.marker(latlng, {
+                        icon: hasarliBinalarIcon
+                    });
+                } else if (feature.properties.damage_gra == "Possibly Damaged") {
+                    var marker = L.marker(latlng, {
+                        icon: muhtemelHasarliBinalarIcon
+                    });
+                };
+                return marker;
+            },
+            onEachFeature: function (feature, layer) {
+                if (feature.properties) {
+                    let content = "Hasar Durumu:" + feature.properties.Name;
+                    layer.bindPopup(content, {
+                        closeButton: true,
+                        offset: L.point(0, -1)
+                    });
+                    layer.on("click", function () {
+                        layer.openPopup();
+                    });
+
+                }
+            }
+        });
+
+
+        let kamplar = new L.geoJson(null, {
+            pointToLayer: function (feature, latlng) {
+                return L.marker(latlng, {
+
+                    icon: campIcon
+
+
+                });
+            },
+            onEachFeature: function (feature, layer) {
+                if (feature.properties) {
+                    var content = "Açıklama:" + feature.properties.obj_desc;
+                    layer.bindPopup(content, {
+                        closeButton: true,
+                        offset: L.point(0, -1)
+                    });
+                    layer.on("click", function () {
+                        layer.openPopup();
+                    });
+
+                }
+            }
+        });
+
+
+     /*    binalarCluster = new L.MarkerClusterGroup({
+            spiderfyOnMaxZoom: true,
+            showCoverageOnHover: true,
+            zoomToBoundsOnClick: true,
+            disableClusteringAtZoom: 16
+        });
+
+        kamplarCluster = new L.MarkerClusterGroup({
+            spiderfyOnMaxZoom: true,
+            showCoverageOnHover: true,
+            zoomToBoundsOnClick: true,
+            disableClusteringAtZoom: 16
+        }); */
+
+        $.getJSON("assets/js/EMSR648_AOI19_GRA_PRODUCT_builtUpP_r1_v1.geojson", function (data) {
+
+            binalar.addData(data);
+            //binalarCluster.addLayer(binalar);
+
+
+        });
+
+
+
+
+
+        var map = L.map('map', {
+            zoom: 12,
+            center: [37.49, 36.55],
+            layers: [Esri_WorldImagery, binalar]
+
+
+        });
+
+        var baseLayers = {
+            "Uydu Görüntüsü": Esri_WorldImagery,
+            "Gri Harita": grayscale
+        }
+
+        var infoLayers = {
+
+            "Binalar": binalar
+           
+        }
+
+        //setting the basic attributes of the map
+
+        map.setMinZoom(7);
+        map.setMaxZoom(18);
+
+        //initiating the side bar
+        var sidebar = L.control.sidebar({
+                container: 'sidebar',
+                position: 'right'
+            })
+            .addTo(map)
+        // add geolocator
+        L.control.locate({
+            strings: {
+                title: "Beni Bul",
+            }
+        }).addTo(map);
+
+        //add mouse position
+        L.control.mousePosition().addTo(map);
+        L.Control.geocoder({
+            position: "topleft"
+        }).addTo(map);
+
+        //Adding all layers and features to map
+        L.control.layers(baseLayers, infoLayers, {
+            position: "topleft"
+        }).addTo(map);
+    </script>
+</body>
+
+</html>
