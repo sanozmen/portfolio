@@ -289,14 +289,14 @@
         var map = L.map('map', {
             zoom: 9,
             center: [37.71, 37.10],
-            layers: [Esri_WorldImagery, binalar]
+            layers: [grayscale, binalar]
 
 
         });
 
         var baseLayers = {
-            "Uydu Görüntüsü": Esri_WorldImagery,
-            "Gri Harita": grayscale
+            "Gri Harita": grayscale,
+            "Uydu Görüntüsü": Esri_WorldImagery
         }
 
         var infoLayers = {
