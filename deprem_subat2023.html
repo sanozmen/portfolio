@@ -14,8 +14,7 @@
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
-     crossorigin=""/>
+        integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
 
     <link rel="stylesheet" href="assets/css/leaflet-sidebar.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -97,8 +96,7 @@
                     Subat 2023'te Turkiye'de
                     meydana gelen deprem sonrasında yıkılan/hasar gören yapıların
                     konumlarını kamuoyu ile paylaşmayı
-                    amaçlar. Harita verisi <a
-                        href="https://emergency.copernicus.eu/mapping/list-of-components/EMSR648"
+                    amaçlar. Harita verisi <a href="https://emergency.copernicus.eu/mapping/list-of-components/EMSR648"
                         target="_blank">Copernicus Emergency Management Service (EMS)</a> websitesinden
                     elde edilmiştir.
                 </p>
@@ -141,8 +139,7 @@
 
 
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
-    crossorigin=""></script>
+        integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
     <script src="assets/js/leaflet-sidebar.js"></script>
     <script src="assets/js/L.Control.MousePosition.js"></script>
 
@@ -178,8 +175,6 @@
 
 
     <script>
-
-
         let osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: 'Map data &copy; OpenStreetMap contributors'
         });
@@ -245,53 +240,59 @@
                 if (feature.properties.damage_gra == "Destroyed") {
                     layer.bindPopup("<b>Yıkılan Bina</b><br>");
                 } else if (feature.properties.damage_gra == "Damaged") {
-                    layer.bindPopup("<b>Hasarlı Bina</b><br>" );
+                    layer.bindPopup("<b>Hasarlı Bina</b><br>");
                 } else if (feature.properties.damage_gra == "Possibly damaged") {
-                    layer.bindPopup("<b>Muhtemel Hasarlı Bina</b><br>" );
+                    layer.bindPopup("<b>Muhtemel Hasarlı Bina</b><br>");
                 };
             }
         });
 
-        
+
         let alanlar = new L.geoJson(null, {
-  style: function (feature) {
-    if (feature.properties.damage_gra == "Damaged") {
-      return {color: "#ffeda0"};
-    } else if (feature.properties.damage_gra == "Possibly damaged") {
-      return {color: "#feb24c"};
-    } else if (feature.properties.damage_gra == "No visible damage") {
-      return {color: "#de2d26"};
-    }
-  },
-  onEachFeature: function (feature, layer) {
-    if (feature.properties.damage_gra == "Destroyed") {
-      layer.bindPopup("<b>Yıkılan Alan</b><br>");
-    } else if (feature.properties.damage_gra == "Damaged") {
-      layer.bindPopup("<b>Hasarlı Alan</b><br>");
-    } else if (feature.properties.damage_gra == "No visible damage") {
-      layer.bindPopup("<b>Muhtemel Hasarlı Alan</b><br>");
-    }
-  }
-});
-
-
-
-
-
-
-     /*    binalarCluster = new L.MarkerClusterGroup({
-            spiderfyOnMaxZoom: true,
-            showCoverageOnHover: true,
-            zoomToBoundsOnClick: true,
-            disableClusteringAtZoom: 16
+            style: function (feature) {
+                if (feature.properties.damage_gra == "Damaged") {
+                    return {
+                        color: "#bd0026"
+                    };
+                } else if (feature.properties.damage_gra == "Possibly damaged") {
+                    return {
+                        color: "#fd8d3c"
+                    };
+                } else if (feature.properties.damage_gra == "No visible damage") {
+                    return {
+                        color: "#ffffb2"
+                    };
+                }
+            },
+            onEachFeature: function (feature, layer) {
+                if (feature.properties.damage_gra == "Damaged") {
+                    layer.bindPopup("<b>Yıkılan Alan</b><br>");
+                } else if (feature.properties.damage_gra == "Possibly damaged") {
+                    layer.bindPopup("<b>Hasarlı Alan</b><br>");
+                } else if (feature.properties.damage_gra == "No visible damage") {
+                    layer.bindPopup("<b>Muhtemel Hasarlı Alan</b><br>");
+                }
+            }
         });
 
-        kamplarCluster = new L.MarkerClusterGroup({
-            spiderfyOnMaxZoom: true,
-            showCoverageOnHover: true,
-            zoomToBoundsOnClick: true,
-            disableClusteringAtZoom: 16
-        }); */
+
+
+
+
+
+        /*    binalarCluster = new L.MarkerClusterGroup({
+               spiderfyOnMaxZoom: true,
+               showCoverageOnHover: true,
+               zoomToBoundsOnClick: true,
+               disableClusteringAtZoom: 16
+           });
+
+           kamplarCluster = new L.MarkerClusterGroup({
+               spiderfyOnMaxZoom: true,
+               showCoverageOnHover: true,
+               zoomToBoundsOnClick: true,
+               disableClusteringAtZoom: 16
+           }); */
 
         $.getJSON("assets/js/EMSR648_AOI19_GRA_PRODUCT_builtUpP_r1_v1.json", function (data) {
             binalar.addData(data);
@@ -309,7 +310,7 @@
         var map = L.map('map', {
             zoom: 8,
             center: [37.71, 37.10],
-            layers: [grayscale, binalar,alanlar]
+            layers: [grayscale, binalar, alanlar]
 
 
         });
@@ -323,7 +324,7 @@
 
             "Binalar": binalar,
             "Alanlar": alanlar
-           
+
         }
 
         //setting the basic attributes of the map
