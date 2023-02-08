@@ -270,7 +270,7 @@
                 } else if (feature.properties.damage_gra == "Possibly damaged") {
                     layer.bindPopup("<b>Muhtemel Hasarlı Alan</b><br>");
                 } else if (feature.properties.damage_gra == "No visible damage") {
-                    layer.bindPopup("<b>Hasarsiz Gorunen Alan</b><br>");
+                    layer.bindPopup("<b>Hasarsız Gorunen Alan</b><br>");
                 }
             }
         });
@@ -299,7 +299,7 @@
             //binalarCluster.addLayer(binalar);
         });
 
-        $.getJSON("assets/js/EMSR648_AOI09_GRA_PRODUCT_builtUpA_r1_v1.json", function (data) {
+        $.getJSON("assets/js/EMSR648_AOI16_GRA_PRODUCT_builtUpA_r1_v1.json", function (data) {
             alanlar.addData(data);
         });
 
