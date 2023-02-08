@@ -266,11 +266,11 @@
             },
             onEachFeature: function (feature, layer) {
                 if (feature.properties.damage_gra == "Damaged") {
-                    layer.bindPopup("<b>Yıkılan Alan</b><br>");
-                } else if (feature.properties.damage_gra == "Possibly damaged") {
                     layer.bindPopup("<b>Hasarlı Alan</b><br>");
-                } else if (feature.properties.damage_gra == "No visible damage") {
+                } else if (feature.properties.damage_gra == "Possibly damaged") {
                     layer.bindPopup("<b>Muhtemel Hasarlı Alan</b><br>");
+                } else if (feature.properties.damage_gra == "No visible damage") {
+                    layer.bindPopup("<b>Hasarsiz Gorunen Alan</b><br>");
                 }
             }
         });
