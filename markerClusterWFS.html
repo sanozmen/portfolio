@@ -81,9 +81,9 @@
 
                 <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify > This map uses a basic self-configured PostGIS, Geoserver setup running on the cloud as its backend to render point data and Leaflet.js to visualize them. Additionally, I also utilized <i>dynamic side bar, cursor coordinate displayer, marker clustering </i> plugins for this project. </p>
 
-                <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify ><i>Points represent some of the mosques in Istanbul, Turkey. Data has been exported from open street maps. </p>
+               <!-- <p style="margin-top:30px; font-family:'Ubuntu', sans-serif; line-height: 20px" align=justify ><i>Points represent some of the mosques in Istanbul, Turkey. Data has been exported from open street maps. </p>
 
-                <!--<p style="margin-top:120px;  font-family:'Ubuntu', sans-serif; line-height: 5px; font-size: 0.75em" align=justify ><i> References</i></p>-->
+                <p style="margin-top:120px;  font-family:'Ubuntu', sans-serif; line-height: 5px; font-size: 0.75em" align=justify ><i> References</i></p>-->
 
 
                 <!-- just added this button as a reminder for using this bar as button container in future works-->
@@ -158,13 +158,13 @@
         //setting the basic attributes of the map
 
 //defining the url to the service
-var owsrootUrl = 'https://www.mapelse.me/geoserver/prt/ows';
+var owsrootUrl = 'http://geo.ipisresearch.be/geoserver/public/ows';
 
 var defaultParameters = {
     service : 'WFS',
     version : '2.0',
     request : 'GetFeature',
-    typeName : 'prt:mosqueistanbul',
+    typeName : 'public:caf_mines_curated_all_opendata_p_ipis',
     outputFormat : 'text/javascript',
     format_options : 'callback:getJson',
     SrsName : 'EPSG:4326'
@@ -193,7 +193,7 @@ var WFSLayer = new L.geoJson(null, {
       },
       onEachFeature: function (feature, layer) {
         if (feature.properties) {
-          var content =  feature.properties.amenity +"<br>"+ feature.properties.name;
+          var content =  feature.properties.project +"<br>"+ feature.properties.name;
           layer.bindPopup(content);
         }
       }
@@ -225,8 +225,8 @@ var WFScluster = L.markerClusterGroup({
 
   //initiating the map variable
         var map = L.map('map', {
-          zoom: 8,
-          center: [41.07521,29.05609],
+          zoom: 4,
+          center: [5.52,15.99],
           layers: [Esri_WorldImagery, WFScluster]
 
         });
