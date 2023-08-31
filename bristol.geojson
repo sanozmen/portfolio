@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "bristol",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 0, "width": 0.030564, "height": 0.046766, "angle": 90.424121, "area": 0.001429, "perimeter": 0.154659 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2.60631998883887, 51.464625628179441 ], [ -2.606546231951071, 51.434062339279826 ], [ -2.559781968554852, 51.43371616932 ], [ -2.55955572544265, 51.464279458219615 ], [ -2.60631998883887, 51.464625628179441 ] ] ] } }
+]
+}
